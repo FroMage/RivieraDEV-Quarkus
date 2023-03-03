@@ -1,0 +1,192 @@
+@import './variables';
+@import './mixins';
+
+@import './partials/common';
+@import './partials/countdown';
+@import './partials/person';
+@import './partials/schedule';
+@import './partials/talk';
+
+@include responsiveBackgroundImage(
+    '.live__nothing--next',
+    '../images/illustrations/responsives/team-mini'
+);
+
+.liveList {
+    &__link {
+        line-height: 2;
+    }
+}
+
+.live {
+    padding: $space-sm;
+
+    @media (min-width: $screen-md-min) {
+        padding: $space-md;
+    }
+
+    &__currentDate {
+        background: linear-gradient($color-blue, $color-blue-medium);
+        color: #fff;
+        padding: $space-sm;
+        font-size: $font-xl;
+        text-align: center;
+
+        @media (min-width: $screen-md-min) {
+            position: absolute;
+            top: $space-sm;
+            right: $space-sm;
+        }
+    }
+
+    &__when {
+        margin: 0;
+        color: $color-yellow;
+        font-size: $font-xxl;
+        font-weight: $bold;
+        border-bottom: $color-yellow $border-md solid;
+
+        &--next {
+            margin-top: $space-md;
+        }
+    }
+
+    &__nothing {
+        margin-top: $space-md;
+        font-size: $font-xxxl;
+
+        &--next {
+            background-position: 0 35%;
+        }
+    }
+
+    &__talks {
+        display: flex;
+        flex-direction: column;
+        justify-content: left;
+        align-items: stretch;
+        margin-top: $space-sm;
+
+        @media (min-width: $screen-md-min) {
+            flex-direction: row;
+        }
+    }
+}
+
+.liveTalk {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+
+    &:not(:last-child) {
+        margin-bottom: $space-xl;
+    }
+
+    @media (min-width: $screen-md-min) {
+        &:not(:last-child) {
+            margin-right: $space-sm;
+            margin-bottom: 0;
+        }
+    }
+
+    &__track {
+        font-size: $font-xxl;
+        margin: 0 0 $space-sm 0;
+        text-align: center;
+
+        &--smaller {
+            font-size: $font-xl;
+        }
+    }
+
+    &__content {
+        flex-grow: 2;
+
+        &--currentTrack {
+            box-shadow: $shadow-xl;
+        }
+    }
+
+    &__part1--currentTrack,
+    &__part2--currentTrack {
+        border-width: $border-lg;
+        border-style: solid;
+    }
+
+    &__part1--currentTrack {
+        border-bottom: 0;
+    }
+    &__part2--currentTrack {
+        border-top: 0;
+    }
+
+    &__part1--currentTrack,
+    &__part2--currentTrack {
+        &--blue {
+            border-color: $color-theme-blue;
+        }
+        &--yellow {
+            border-color: $color-theme-yellow;
+        }
+        &--purple {
+            border-color: $color-theme-purple;
+        }
+        &--green {
+            border-color: $color-theme-green;
+        }
+        &--orange {
+            border-color: $color-theme-orange;
+        }
+        &--red {
+            border-color: $color-theme-red;
+        }
+        &--pink {
+            border-color: $color-theme-pink;
+        }
+        &--turquoise {
+            border-color: $color-theme-turquoise;
+        }
+        &--brown {
+            border-color: $color-theme-brown;
+        }
+        &--grey,
+        &--none {
+            border-color: $color-theme-grey;
+        }
+    }
+
+    &__title {
+        font-size: $font-xl;
+        font-weight: $bold;
+
+        &--smaller {
+            font-size: $font-lg;
+        }
+    }
+
+    &__slotTrack {
+        &--smaller {
+            margin-top: $space-sm;
+        }
+    }
+
+    &__slotWhen,
+    &__slotDuration {
+        display: block;
+    }
+
+    &__slotWhen {
+        font-size: $font-lg;
+        font-weight: $semi-bold;
+        color: $color-black-light;
+    }
+
+    &__slotDuration,
+    &__infos {
+        color: $color-black-light;
+    }
+
+    &__speakers {
+        text-shadow: 0 0 2px $color-black;
+    }
+}

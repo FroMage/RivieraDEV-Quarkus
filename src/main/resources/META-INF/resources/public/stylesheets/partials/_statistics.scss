@@ -1,0 +1,64 @@
+.statistics {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    padding: $space-xxl 0;
+
+    @media (min-width: $screen-sm-min) {
+        flex-direction: row;
+    }
+
+    &__item {
+        flex: 1;
+        text-align: center;
+
+        &:not(:last-child) {
+            margin-bottom: $space-xxl;
+
+            @media (min-width: $screen-sm-min) {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    &__icon {
+        display: block;
+        background-repeat: no-repeat;
+        background-position: center;
+        height: $icon-size-xxxl;
+        width: 100%;
+        margin-bottom: $space-md;
+
+        &--attendees {
+            background-image: url(../images/icons/attendees.svg);
+        }
+        &--conferences {
+            background-image: url(../images/icons/sessions.svg);
+        }
+        &--workshops {
+            background-image: url(../images/icons/workshops.svg);
+        }
+    }
+
+    &__text {
+        font-size: $font-lg;
+        font-weight: $semi-bold;
+
+        @media (min-width: $screen-sm-min) {
+            font-size: $font-xl;
+        }
+    }
+
+    &__number {
+        font-size: $font-xxl;
+        font-weight: bold;
+        display: block;
+        color: $color-yellow;
+        line-height: 1;
+
+        @media (min-width: $screen-sm-min) {
+            font-size: $font-xxxl;
+        }
+    }
+}

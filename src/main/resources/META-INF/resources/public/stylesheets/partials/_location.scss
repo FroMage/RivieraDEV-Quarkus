@@ -1,0 +1,111 @@
+.location {
+    position: relative;
+
+    &__map {
+        display: none;
+
+        @media (min-width: $screen-md-min) {
+            width: 100%;
+            height: 700px;
+            display: block;
+        }
+    }
+
+    &__cardContainer {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        justify-items: center;
+
+        @media (min-width: $screen-sm-min) {
+            margin: $space-xxl 0;
+        }
+
+        @media (min-width: $screen-md-min) {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            flex-direction: column;
+            justify-items: flex-start;
+            margin: 0;
+            padding-left: $space-xxl;
+        }
+    }
+
+    &__card {
+        background-color: $color-gray-ultralight;
+
+        @media (min-width: $screen-sm-min) {
+            border: $border-sm solid $color-gray-light;
+            border-radius: $border-radius-md;
+            box-shadow: $shadow-md;
+            max-width: 50rem;
+        }
+    }
+
+    &__cardHeader {
+        padding: 20rem $space-xl $space-lg $space-xl;
+        background-image: url(../images/illustrations/location-mini.jpg);
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        color: $color-white;
+        font-size: $font-md;
+        font-weight: $semi-bold;
+
+        @media (min-width: $screen-sm-min) {
+            border-radius: $border-radius-md $border-radius-md 0 0;
+            font-size: $font-xxl;
+        }
+    }
+
+    &__cardContent {
+        padding: $space-lg;
+
+        @media (min-width: $screen-sm-min) {
+            padding: $space-xl;
+        }
+    }
+
+    &__intro,
+    &__address {
+        background-repeat: no-repeat;
+        background-position: left top;
+        background-size: $icon-size-lg $icon-size-lg;
+        padding-left: $icon-size-lg + $space-sm;
+
+        @media (min-width: $screen-sm-min) {
+            background-size: $icon-size-md $icon-size-md;
+            padding-left: $icon-size-md + $space-md;
+        }
+    }
+
+    &__intro {
+        margin-bottom: $space-xl;
+        background-image: url(../images/icons/love.svg);
+    }
+
+    &__address {
+        background-image: url(../images/icons/where.svg);
+    }
+
+    &__addressLine {
+        display: block;
+    }
+
+    &__buttonContainer {
+        text-align: center;
+        margin-top: $space-md;
+    }
+
+    &__mapMarker {
+        &__addressTitle {
+            font-weight: bold;
+        }
+
+        &__addressLine {
+            display: block;
+        }
+    }
+}

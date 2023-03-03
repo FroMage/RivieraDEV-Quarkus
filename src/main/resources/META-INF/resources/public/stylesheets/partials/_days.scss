@@ -1,0 +1,185 @@
+$days-illustration-size-md: 18rem;
+$days-illustration-size-sm: 10rem;
+
+.days {
+    padding-bottom: $space-xxl;
+
+    &__judcon {
+        height: 5em;
+        float: right;
+        margin-left: 1em;
+    }
+    
+    &__mainTitle {
+        padding: $space-md $content-space-xs;
+
+        @media (min-width: $screen-sm-min) {
+            padding: $space-lg $content-space-sm;
+        }
+    }
+
+    &__contents {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+        grid-template-areas:
+            'intro1'
+            'content1'
+            'intro2'
+            'content2';
+        margin-left: $space-sm;
+        margin-right: $space-sm;
+        margin-bottom: $space-xxl;
+
+        @media (min-width: $screen-md-min) {
+            grid-template-columns: 1fr 1fr;
+            grid-template-areas:
+                'intro1 intro2'
+                'content1 content2';
+            grid-column-gap: $space-md;
+            margin-left: 0;
+            margin-right: 0;
+        }
+    }
+
+    &__intro {
+        border: $border-sm solid $color-gray-light;
+        padding: $space-md;
+        flex: 1;
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        grid-template-rows: auto;
+        grid-template-areas:
+            'illustration titleDate'
+            'description description';
+        grid-column-gap: $space-md;
+        grid-row-gap: $space-md;
+        align-content: start;
+        border-color: $color-gray-light;
+        border-style: solid;
+        border-width: $border-sm $border-sm 0 $border-sm;
+        border-radius: $border-radius-md $border-radius-md 0 0;
+        box-shadow: $shadow-md;
+        background-color: $color-white;
+
+        @media (min-width: $screen-sm-min) {
+            padding: $space-lg;
+            grid-template-areas:
+                'illustration titleDate'
+                'illustration description';
+        }
+
+        &--1 {
+            grid-area: intro1;
+        }
+
+        &--2 {
+            grid-area: intro2;
+        }
+    }
+
+    &__illustration {
+        grid-area: illustration;
+        width: $days-illustration-size-sm;
+        height: $days-illustration-size-sm;
+        align-self: top;
+
+        @media (min-width: $screen-sm-min) {
+            width: $days-illustration-size-md;
+            height: $days-illustration-size-md;
+        }
+    }
+
+    &__titleDate {
+        grid-area: titleDate;
+        align-self: center;
+
+        @media (min-width: $screen-sm-min) {
+            align-self: flex-start;
+        }
+    }
+
+    &__title {
+        display: inline;
+        margin-top: 0;
+        font-weight: bold;
+        font-size: $font-md;
+
+        @media (min-width: $screen-sm-min) {
+            font-size: $font-lg;
+        }
+
+        &--1 {
+            color: $color-blue;
+        }
+        &--2 {
+            color: $color-turquoise;
+        }
+    }
+
+    &__date {
+        display: block;
+        font-weight: 300;
+
+        @media (min-width: $screen-sm-min) {
+            display: inline;
+            &:before {
+                content: '|';
+                font-weight: normal;
+                margin: $space-xxs;
+            }
+        }
+    }
+
+    &__desc {
+        grid-area: description;
+    }
+
+    &__content {
+        color: $color-white;
+        padding: $space-md;
+        border-color: $color-gray-light;
+        border-style: solid;
+        border-width: 0 1px 1px 1px;
+        border-radius: 0 0 $border-radius-md $border-radius-md;
+        box-shadow: $shadow-md;
+
+        @media (min-width: $screen-sm-min) {
+            padding: $space-lg;
+        }
+
+        &--1 {
+            grid-area: content1;
+            background: linear-gradient($color-blue, $color-blue-medium);
+            margin-bottom: $space-sm;
+
+            @media (min-width: $screen-sm-min) {
+                margin-bottom: $space-md;
+            }
+
+            @media (min-width: $screen-md-min) {
+                margin-bottom: 0;
+            }
+        }
+
+        &--2 {
+            grid-area: content2;
+            background: linear-gradient(
+                $color-turquoise-light,
+                $color-turquoise-dark
+            );
+        }
+    }
+
+    &__subtitle {
+        font-weight: bold;
+
+        &:first-child {
+            margin-top: 0;
+        }
+    }
+
+    &__buttonContainer {
+        text-align: center;
+    }
+}

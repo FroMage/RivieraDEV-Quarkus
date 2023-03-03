@@ -1,0 +1,16 @@
+{#if sponsors && sponsors.size() > 0}
+    <div class="partenaires__level">
+        <h3 class="partenaires__levelTitle partenaires__levelTitle--{level}">
+            {m:'views.application.sponsors.level.' + level}
+        </h3>
+        <div class="partenaires__list">
+            {#for sponsor in sponsors}
+                <a class="partenaire__link cardLink" href="{uri:Application.sponsor(sponsor.id)}" title="{sponsor.company}">
+                    <div class="partenaire__logo partenaire__logo--{level}">
+                        <img class="partenaire__logoImg" src="{uri:Application.sponsorLogo(sponsor.id)}" />
+                    </div>
+                </a>
+            {/for}
+        </div>
+    </div>
+{/if}

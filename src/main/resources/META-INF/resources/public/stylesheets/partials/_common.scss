@@ -1,0 +1,246 @@
+html {
+    height: 100%;
+    font-size: 10px;
+}
+
+body {
+    font-family: 'Muli', sans-serif;
+    font-size: $font-sm;
+    position: relative;
+    min-height: 100vh;
+    margin: 0;
+    color: $color-black-light;
+
+    @media (min-width: $screen-sm-min) {
+        font-size: $font-md;
+    }
+}
+
+.underStickyHeader {
+    @media (min-width: $screen-md-min) {
+        display: block;
+        position: relative;
+        top: -#{$navbar-small-height};
+        visibility: hidden;
+    }
+}
+
+.loading {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url(../images/Preloader_2.gif) center no-repeat #fff;
+}
+
+.title {
+    text-align: center;
+    color: $color-blue;
+    font-weight: 300;
+}
+
+.notFullWidth {
+    width: 100%;
+    margin: 0 auto;
+
+    @media (min-width: $screen-sm-min) {
+        width: $not-full-width-sm;
+    }
+    @media (min-width: $screen-md-min) {
+        width: $not-full-width-md;
+    }
+    @media (min-width: $screen-lg-min) {
+        width: $not-full-width-lg;
+    }
+}
+
+.grey {
+    background-color: $color-gray-ultralight;
+}
+
+.cardLink {
+    text-decoration: none;
+    color: inherit;
+    border-width: $border-sm;
+    border-style: solid;
+    border-radius: $border-radius-xs;
+    border-color: transparent;
+    transition: all 0.2s ease;
+
+    &:hover,
+    &:active,
+    &:focus {
+        text-decoration: none;
+        color: inherit;
+        box-shadow: $shadow-md;
+        border-color: $color-gray-light;
+    }
+}
+
+.button {
+    display: inline-block;
+    white-space: nowrap;
+    text-decoration: none;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: $font-sm;
+    font-weight: $semi-bold;
+    color: $color-yellow;
+    padding: 1.2rem 2rem;
+    border: none;
+    cursor: pointer;
+    // Use box-shadow instead of border because
+    // we don't want the size of the button to change on hover
+    // (1px normal, 2px hover)
+    box-shadow: 0 0 0 $border-sm $color-yellow;
+    border-radius: 3rem;
+    background-color: transparent;
+    transition: all 0.2s ease-in-out;
+
+    @media (min-width: $screen-sm-min) {
+        font-size: $font-md;
+    }
+
+    &:hover,
+    &:focus,
+    &:active {
+        color: $color-yellow;
+        text-decoration: none;
+        box-shadow: 0 0 0 $border-md $color-yellow;
+        background-color: rgba($color-yellow, 0.2);
+        outline: none;
+    }
+
+    &--primary {
+        color: $color-white;
+        background-color: $color-yellow;
+
+        &:hover,
+        &:focus,
+        &:active {
+            color: $color-white;
+            background-color: darken($color-yellow, 10%);
+            box-shadow: 0 0 0 $border-md darken($color-yellow, 10%);
+        }
+    }
+
+    &--white {
+        color: $color-white;
+        box-shadow: 0 0 0 $border-sm $color-white;
+
+        &:hover,
+        &:focus,
+        &:active {
+            color: white;
+            background-color: rgba($color-black, 0.05);
+            box-shadow: 0 0 0 $border-md $color-white;
+        }
+    }
+}
+
+a {
+    color: $color-blue;
+    text-decoration: underline;
+    &:hover,
+    &:active,
+    &:focus {
+        color: $color-blue-dark;
+    }
+}
+
+//Accessibility
+.sr-only {
+    position: absolute;
+    left: -1000rem;
+    top: auto;
+    width: 0.1rem;
+    height: 0.1rem;
+    overflow: hidden;
+    color: $color-black;
+    background-color: $color-white;
+}
+
+.home {
+    &__title {
+        font-size: $font-lg;
+        font-weight: $bold;
+        margin: $space-xs 0;
+
+        @media (min-width: $screen-sm-min) {
+            font-size: $font-xxxl;
+            margin: $space-sm 0;
+        }
+    }
+
+    &-subtitle {
+        font-size: $font-md;
+        text-align: center;
+
+        @media (min-width: $screen-sm-min) {
+            font-size: $font-xl;
+        }
+    }
+}
+
+.page {
+    &__header {
+        color: $color-white;
+        padding: $space-xxl;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+
+        @media (min-width: $screen-sm-min) {
+            padding: $space-xxxl;
+        }
+    }
+
+    &__mainTitle {
+        font-size: $font-xl;
+        font-weight: bold;
+        margin: $space-xs 0;
+
+        @media (min-width: $screen-sm-min) {
+            font-size: $font-xxxl;
+            margin: $space-md 0;
+        }
+    }
+
+    &__mainSubtitle {
+        font-size: $font-lg;
+        line-height: 1.5em;
+        font-weight: normal;
+    }
+
+    &__container {
+        margin-top: $space-xl;
+        margin-bottom: $space-xl;
+    }
+
+    &__title {
+        font-size: $font-md;
+        font-weight: bold;
+        margin: $space-md $content-space-xs;
+
+        @media (min-width: $screen-sm-min) {
+            font-size: $font-xxl;
+            margin: $space-lg $content-space-sm;
+        }
+    }
+}
+
+.data-unavailable {
+    font-size: 1.25em;
+
+    @media (min-width: $screen-md-min) {
+        text-align: center;
+    }
+}
+
+.video {
+    max-width: 700px;
+    margin: 0 auto;
+}

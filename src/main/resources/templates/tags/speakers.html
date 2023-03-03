@@ -1,0 +1,14 @@
+<div class="persons__list">
+    {#for speaker in speakers}
+        <a class="personSummary__link cardLink" href="{uri:Application.speaker(speaker.id)}" title="{speaker.firstName} {speaker.lastName}">
+            <figure class="personSummary">
+                <div class="personSummary__photo" style="background-image: url('{uri:Application.speakerPhoto(speaker.id)}')">
+                </div>
+                <figcaption class="personSummary__desc">
+                    <div class="personSummary__name">{speaker}</div>
+                    <div class="personSummary__title">{speaker.company}</div>
+                </figcaption>
+             </figure>
+        </a>
+    {/for}
+</div>

@@ -1,0 +1,43 @@
+{#let tracks=tracksPerDays.get(day)}
+<table class="fullSchedule">
+    
+    {#for slot in model_Slot:findPerDay(day)}
+        <tr>
+            <td class="fullSchedule__time">
+                <span>{slot.startDate.format('HH:mm')}</span>
+            </td>
+        </tr>
+
+        {#let allTracksEvent = slot.allTracksEvent}
+        {#if allTracksEvent } <!-- One talk for all tracks -->
+            <tr>
+                {#if allTracksEvent.isBreak != BreakType:NotABreak}
+                    <td class="fullSchedule__{allTracksEvent.isBreak.code}">
+                        <span class="fullSchedule__breakTitle">{allTracksEvent.title}</span>
+                    </td>
+                {#else}
+                    <td class="js-talksFilter-toFilter fullSchedule__talk__cell">
+                        <!-- If it's not a break, it's on all track like keynote -->
+                        {#talkItem talk=allTracksEvent/}
+                    </td>
+                {/if}
+            </tr>
+        {#else}
+            {#for track in tracks}
+                {#let talk = slot.getTalkPerTrack(track)}
+                {#if talk}
+                    <tr>
+                        <td class="js-talksFilter-toFilter fullSchedule__talk__cell">
+                            {#talkItem talk=talk/}
+                        </td>
+                    </tr>
+                {/if}
+                {/let}
+            {/for}
+        {/if}
+        {/let}
+    
+    {/for}
+    
+</table>
+{/let}

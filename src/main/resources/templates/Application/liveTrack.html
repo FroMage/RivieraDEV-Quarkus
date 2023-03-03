@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+
+<html lang="{inject:i18n.get()}">
+<head>
+<title>{m:views.application.schedule.title}</title>
+
+<link rel="icon" type="image/png" href="/public/images/favicon.png">
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Muli:300,400,600,700" rel="stylesheet">
+
+<!-- Custom -->
+<link rel="stylesheet" href="/public/stylesheets/live.scss">
+
+</head>
+<body>
+
+    <div class="live__currentDate">
+        <span id="js-live-currentDate"></span>
+    </div>
+
+    <div id="js-target" class="live"></div>
+
+    <!-- Modernizr build including the `webp` detect -->
+    <script src="/public/javascripts/libs/modernizr/modernizr-custom-webp.js"></script>
+    <script>
+        // Detect if webp is supported by the web browser
+        Modernizr.on('webp', function (isSupported) {
+            let body = document.getElementsByTagName('body')[0];
+            if (isSupported) {
+                // Has WebP support
+                body.classList.add('webp');
+            }
+            else {
+                // No WebP support
+                body.classList.add('no-webp');
+            }
+        });
+        
+        var globals = {
+                // Debugging by adding 3 days and 15 hours and 40 minutes
+                //nowOffset: 1000 * 60 * 60 * 24 * 1 + 1000 * 60 * 60 * 1 + 1000 * 60 * 40
+        		nowOffset: 0
+        };
+    </script>
+    
+    <!-- Add ellipsis when text is too long -->
+    <script src="/public/javascripts/libs/clamp.js"></script>
+
+    <!-- Fill and animate the Live page -->
+    <script src="/public/javascripts/live.js"></script>
+    <script>
+
+        const showTrack = "{track}";
+
+        const tracks = {
+            {#for track in tracks}
+                "{track.title}": [
+                    {#for talk in track.talks}
+                        {
+                            "title": "{talk.getTitle().jsonEscape()}",
+                            "description": "{talk.getDescription().jsonEscape()}", 
+                            "start": {talk.slot.startDate.time ?: "null"}, 
+                            "end": {talk.slot.endDate.time ?: "null"},
+                            {#if talk.theme}
+                                "theme": "{talk.theme}",
+                                "themeColor": "{talk.theme.color.code}",
+                            {/if}
+                            {#if talk.type}
+                                "type": "{talk.type}",
+                            {/if}
+                            {#if talk.level}
+                                "level": "{m:'views.application.schedule.level.' + talk.level.code}",
+                            {/if}
+                            {#if talk.language}
+                                "language": "{talk.language}",
+                            {/if}
+                            "track": "{track.title.jsonEscape()}", 
+                            "speakers": [
+                            {#for speaker in talk.speakers}
+                                {
+                                    "name": "{speaker.firstName.jsonEscape()} {speaker.lastName.jsonEscape()}",
+                                    "photo": "{uri:Application.speakerPhoto(speaker.id)}"
+                                }
+                                {#if !speaker_isLast},{/if}
+                            {/for}
+                            ]
+                        }
+                        {#if !talk_isLast},{/if}
+                    {/for}
+                ]
+                {#if !track_isLast},{/if} 
+            {/for}
+        };
+
+        initLiveSchedule(tracks, showTrack, globals);
+    </script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+{#include main.html}
+{#title}{talk.title} - {m:views.application.talk.title}{/title}
+
+<div class="page__header speakers__header">
+    <h1 class="page__mainTitle">{m:views.application.talk.title}</h1>
+</div>
+
+<div class="page__container notFullWidth">
+    {#talk talk=talk displayFullSchedule=displayFullSchedule/}
+</div>
+{/include}

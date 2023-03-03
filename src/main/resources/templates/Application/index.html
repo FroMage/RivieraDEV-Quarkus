@@ -1,0 +1,338 @@
+{#include main.html}
+{#title}{m:views.application.index.title}{/title}
+
+<div class="parallax parallax-home">
+
+    <div class="parallax__content">
+        <div class="parallax__logosContainer">
+            <div class="parallax__logos">
+                <img class="parallax__logo--rdev" src="/public/images/logos/logo_RD_full_white.svg" alt="Riviera DEV">
+                <img class="parallax__logo--judcon" src="/public/images/logos/quarkus_world_tour_white.svg" alt="Quarkus World Tour">
+            </div>
+        </div>
+        
+        <div class="parallax__info">
+            <span>{m:views.application.index.date}</span>
+            <div>
+                <img class="parallax__icon" src="/public/images/icons/where.svg" alt="">
+                <span>{m:views.application.index.place}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="registration">
+        <div class="registration__container">
+            <div class="registration__buttons js-registration-buttons">
+                {#if promotedPage == 'CFP'}
+                    <a class="button button--primary registration__button" href="{cfpUrl}" target="_blank">{m:views.application.index.cfp.join.short}</a>
+                {#else if promotedPage == 'TICKETS'}
+                    <a class="button button--primary registration__button" href="{uri:Application.subscribe()}">{m:views.application.index.tickets}</a>
+                {#else if promotedPage == 'SPONSORS'}
+                    <a class="button button--primary registration__button" href="{sponsoringLeafletUrl}">{m:views.application.index.sponsors.join}</a>
+                {/if}
+
+                {#if promotedPage2 == 'SPONSORS'}
+                    <a class="button registration__button" href="{sponsoringLeafletUrl}">{m:views.application.index.sponsors.join}</a>
+                {#else if promotedPage2 == 'SCHEDULE'}
+                    <a class="button registration__button" href="{uri:Application.schedule()}">{m:views.application.index.schedule.short}</a>
+                {#else if promotedPage2 == 'CFP'}
+                    <a class="button registration__button" href="{cfpUrl}" target="_blank">{m:views.application.index.cfp.join.short}</a>
+                {/if}
+            </div>
+        </div>
+    </div>
+
+</div> <!-- /.parallax -->
+
+<div class="introCountdown {#if displayCountdown} introCountdown--withCountdown {/if} notFullWidth">
+    
+    <div class="introCountdown__intro intro {#if displayCountdown} intro--withCountdown {/if}">
+      
+      <div class="intro__titles">
+        <h2 class="home__title">Riviera DEV 2023</h2>
+        <div class="intro__subtitle">
+          <span class="intro__subtitle1">{m:views.application.index.intro.subtitle1}</span>
+          <span class="intro__subtitle2">{m:views.application.index.intro.subtitle2}</span>
+        </div>
+      </div> <!-- /intro__titles -->
+
+      <div class="intro__questions">
+
+        <div class="intro__question question">
+          <div class="question__title question__title--what">{m:views.application.index.questions.what}</div>
+          <div class="question__answer">
+            {m:views.application.index.questions.what.answer}
+          </div>
+        </div> <!-- /intro__question -->
+
+        <div class="intro__question question">
+          <div class="question__title question__title--when">{m:views.application.index.questions.when}</div>
+          <div class="question__answer">
+            {m:views.application.index.questions.when.answer}
+          </div>
+        </div> <!-- /intro__question -->
+
+        <div class="intro__question question">
+          <div class="question__title question__title--where">{m:views.application.index.questions.where}</div>
+          <div class="question__answer">
+            {m:views.application.index.questions.where.answer}
+          </div>
+        </div> <!-- /intro__question -->
+
+      </div> <!-- /intro__questions -->
+    </div> <!-- /intro -->
+    
+    <!-- See countdown.js -->
+    <div id="js-countdown" class="countdownContainer"></div>
+
+</div> <!-- /introCountdown -->
+
+    <!-- Teaser vidéo -->
+    <!--<div class="video">
+        <div class="embed-responsive embed-responsive-16by9">
+            <iframe class="embed-responsive-item" frameborder="0" width="480" height="270" src="//www.dailymotion.com/embed/video/x5f9hm5" allowfullscreen></iframe>
+        </div>
+    </div>-->
+
+<div class="statistics notFullWidth">
+    <div class="statistics__item">
+        <span class="statistics__icon statistics__icon--attendees"></span>
+        <div class="statistics__text">
+            <span class="statistics__number">700</span>
+            {m:views.application.index.stats.attendees}
+        </div>
+    </div>
+    <div class="statistics__item">
+        <span class="statistics__icon statistics__icon--conferences"></span>
+        <div class="statistics__text">
+            <span class="statistics__number">50</span>
+            {m:views.application.index.stats.sessions}
+        </div>
+    </div>
+    <div class="statistics__item">
+        <span class="statistics__icon statistics__icon--workshops"></span>
+        <div class="statistics__text">
+            <span class="statistics__number">30</span>
+            {m:views.application.index.stats.workshops}
+        </div>
+    </div>
+</div>
+
+<div class="aboutUs">
+    <div class="aboutUs__item aboutUs__aboutUs">
+            <h2 class="home__title aboutUs__title">{m:views.application.index.aboutUs.title}</h2>
+            <p>{m:views.application.index.aboutUs.dna}</p>
+            <p>{m:views.application.index.aboutUs.goal}</p>
+            
+            <div class="aboutUs__buttonContainer">
+                <a class="button aboutUs__button" href="{uri:Application.photos()}">{m:views.application.index.aboutUs.seePhotos}</a>
+            </div>
+            
+    </div>
+    <div class="aboutUs__item aboutUs__photo2"></div>
+    <div class="aboutUs__item aboutUs__photo3"></div>
+</div> <!-- ./aboutUs -->
+
+<div class="days">
+    <div class="days__container notFullWidth">
+        <h2 class="days__mainTitle home__title">{m:views.application.index.days.title}</h2>
+
+        <div class="days__contents">
+
+            <div class="days__intro days__intro--1">
+                <img class="days__illustration" src="/public/images/mascotte/Ray_Deep_Dive.png" alt="">
+                <div class="days__titleDate">
+                    <h3 class="days__title days__title--1">{m:views.application.index.days.deepdive.title}</h3><!-- Do not remove this comment 
+                    --><div class="days__date">{m:views.application.index.days.deepdive.date}</div>
+                </div>
+                <div class="days__desc">{m:views.application.index.days.deepdive.desc().raw}</div>
+            </div>
+            <div class="days__content days__content--1">
+                <h3 class="days__subtitle">{m:views.application.index.days.deepdive.conf.title}</h3>
+                <p>{m:views.application.index.days.deepdive.conf.desc}</p>
+                <h3 class="days__subtitle">{m:views.application.index.days.deepdive.workshop.title}</h3>
+                <p>{m:views.application.index.days.deepdive.workshop.desc}</p>
+                
+                <h3 class="days__subtitle">{m:views.application.index.days.deepdive.judcon.title}</h3>
+                <p>
+                	<img class="days__judcon" src="/public/images/logos/quarkus_world_tour_wings.svg" alt="Quarkus World Tour">
+                	{m:views.application.index.days.deepdive.judcon.desc}
+                </p>
+            </div>
+
+            <div class="days__intro days__intro--2">
+                <img class="days__illustration" src="/public/images/mascotte/Ray_ITv2.1.png" alt="">
+                <div class="days__titleDate">
+                    <h3 class="days__title days__title--1">{m:views.application.index.days.conf.title}</h3>
+                    <div class="days__date">{m:views.application.index.days.conf.date}</div>
+                </div>
+                <div class="days__desc">{m:views.application.index.days.conf.desc}</div>
+            </div>
+            <div class="days__content days__content--2">
+                <h3 class="days__subtitle">{m:views.application.index.days.conf.keynote.title}</h3>
+                <p>{m:views.application.index.days.conf.keynote.desc}</p>
+                <h3 class="days__subtitle">{m:views.application.index.days.conf.conf.title}</h3>
+                <p>{m:views.application.index.days.conf.conf.desc}</p>
+                <h3 class="days__subtitle">{m:views.application.index.days.conf.snorkeling.title}</h3>
+                <p>{m:views.application.index.days.conf.snorkeling.desc}</p>
+                <h3 class="days__subtitle">{m:views.application.index.days.conf.notjustcoders.title}</h3>
+                <p>{m:views.application.index.days.conf.notjustcoders.desc}</p>
+                <h3 class="days__subtitle">{m:views.application.index.days.conf.judcon.title}</h3>
+                <p>
+                	<img class="days__judcon" src="/public/images/logos/quarkus_world_tour_wings.svg" alt="Quarkus World Tour">
+                	{m:views.application.index.days.conf.judcon.desc}
+                </p>
+            </div>
+        
+        </div> <!-- /.days__contents -->
+
+        <div class="days__buttonContainer">
+            <a class="button button--primary" href="{uri:Application.schedule()}">{m:views.application.index.schedule}</a>
+        </div>
+
+    </div> <!-- /.days__container -->
+
+</div> <!-- /.days -->
+
+<!--
+
+<div class="judcon grey">
+    <div class="judcon__container notFullWidth">
+        <h2 class="judcon__mainTitle home__title">
+            {m:views.application.index.judcon.title}
+        </h2>
+        <div class="judcon__content">
+            <figure class="personSummary judcon__person">
+                <div class="personSummary__photo" style="background-image: url('/public/images/illustrations/Mark_Little.jpg')">
+                </div>
+                <figcaption class="personSummary__desc">
+                    <div class="personSummary__name">Mark Little</div>
+                    <div class="personSummary__title">VP Red Hat<br>CTO JBoss</div>
+                </figcaption>
+            </figure>
+                    
+            <div class="judcon__quoteContainer">
+                <div class="judcon__quote">
+                    <p>
+                        It’s been a while since I sponsored the first <strong>JUDCon</strong> at Riviera DEV and each year the attendance at the event gets larger and larger to match the great feedback we receive from the participants around the richness of the agenda and the great speakers who turn up. 
+                    </p>
+                    <p>
+                        I’m sure this year will be the same, with some wonderful sessions on a range of topics including Quarkus, Camel-K, Keycloak, Strimzi/Kafka etc. 
+                    </p>
+                    <p>
+                        It’s also important for everyone to remember or realise that many of those projects have been driven by our French code developers either working for <strong>Red Hat</strong> or other companies so it’s always a pleasure for me to help bring those sessions back to the French communities like this!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> --> <!-- /.judcon -->
+
+{#if !displayPreviousSpeakers && speakersStar != null && speakersStar.size() > 0}
+<div class="speakers">
+    <div class="speakers__container notFullWidth">
+        <h2 class="home__title speakers__title">{m:views.application.index.speakers}</h2>
+        {#speakers speakers=speakersStar/}
+
+        <div class="speakers__buttonContainer">
+            <a class="button" href="{uri:Application.speakers()}">{m:views.application.index.speakers.link}</a>
+        </div>
+    </div>
+</div>
+{#else if speakersPreviousYears != null && speakersPreviousYears.size() > 0}
+<div class="speakers">
+    <div class="speakers__container notFullWidth">
+        <h2 class="home__title speakers__title">{m:views.application.index.speakers}</h2>
+        <div class="speakers__previousTitle">{m:tags.previousSpeakers.title}</div>
+        {#previousSpeakers speakers=speakersPreviousYears/}
+        
+        {#if cfpIsOpened}
+        <div class="speakers__buttonContainer">
+            <a class="button" href="{cfpUrl}" target="_blank">{m:views.application.index.cfp.join}</a>
+        </div>
+        {/if}
+
+    </div>
+</div>
+#{/if}
+
+
+<div class="location">
+    <div id="location-map" class="location__map"></div>
+    <div class="location__cardContainer">
+        <div class="location__card">
+            <div class="location__cardHeader">
+                {m:views.application.index.location.title}
+            </div>
+            <div class="location__cardContent">
+                <div class="location__intro">
+                    {m:views.application.index.location.intro}
+                </div>
+                <div class="location__address">
+                    <span class="location__addressLine">SKEMA Business School - Sophia Antipolis</span>
+                    <span class="location__addressLine">Sophia Antipolis</span>
+                    <span class="location__addressLine">60 Rue Fedor Dostoïevski</span>
+                    <span class="location__addressLine">06902 Valbonne</span>
+                    <span class="location__addressLine">France</span>
+                </div>
+                <div class="location__buttonContainer">
+                    <a class="button location__button" href="{uri:Application.access}" role="button">
+                        {m:views.application.index.location.access}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> <!-- /.location -->
+
+<div class="newsletter grey">
+    <h2 class="home__title newsletter__title">
+        {m:views.application.index.get-in-touch().raw()}
+    </h2>
+    {#newsletter /}
+</div> <!-- /.newletter -->
+
+
+<a id="sponsors" class="underStickyHeader"></a>
+<div class="partenaires">
+    <div class="partenaires__container notFullWidth">
+        <h2 class="home__title partenaires__title">
+            {m:views.application.index.sponsors}
+        </h2>
+
+        {#if sponsors != null && !sponsors.isEmpty()}
+            <div class="partenaires__levels">
+                {#for sponsorShip in sponsors.keySet()}
+                    {#sponsorsByLevel sponsors=sponsors.get(sponsorShip) level=sponsorShip.code lunchesAndPartySoldOut=lunchesAndPartySoldOut/}
+                {/for}
+            </div>
+        {/if}
+
+        {#sponsorsPreviousYears sponsorsPreviousYears=sponsorsPreviousYears /}
+
+        <div class="partenaires__buttonContainer">
+            <a class="button" href="{sponsoringLeafletUrl}">{m:views.application.index.sponsors.join}</a>
+        </div>
+
+    </div>
+</div> <!-- /.partenaires -->
+
+
+<!-- Countdown -->
+<script src="/public/javascripts/libs/jquery.countdown.min.js"></script>
+<script type="module">
+    import initCountdown from "/public/javascripts/countdown.js";
+    initCountdown(
+        {
+            eventStartDate: "{eventStartDateStr}", 
+            eventEndDate: "{eventEndDateStr}"
+        },
+        {
+            countDownDaysLabel: "{m:tags.countdown.days}",
+            countDownHoursLabel: "{m:tags.countdown.hours}",
+            countDownMinutesLabel: "{m:tags.countdown.minutes}",
+            countDownSecondsLabel: "{m:tags.countdown.seconds}",
+        }
+    );
+</script>
+{/include}

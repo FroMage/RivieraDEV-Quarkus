@@ -1,0 +1,27 @@
+.registration {
+    text-align: center;
+
+    @media (min-width: $screen-sm-min) {
+        margin-top: $space-xxl;
+    }
+
+    &__container {
+        display: inline-block;
+    }
+
+    &__buttons {
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+        grid-gap: $space-lg;
+
+        @media (min-width: $screen-sm-min) {
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr;
+        }
+    }
+
+    &__button {
+        flex: 1;
+    }
+}

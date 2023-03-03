@@ -1,0 +1,15 @@
+.diaporama{
+    width: 100%;
+
+    &-row{
+        margin-left: 0;
+        margin-right: 0;
+    }
+
+    &-item{
+        margin: 0;
+        //padding: 1px;
+        padding: 0;
+        max-width: 100%;
+    }
+}

@@ -1,0 +1,193 @@
+{#include main.html}
+{#title}{m:views.application.subscribe.title}{/title}
+
+<div class="page__header subscribe__header">
+    <h1 class="page__mainTitle">
+        {m:views.application.subscribe.title}
+    </h1>
+    <div class="page__mainSubtitle">
+        {m:views.application.subscribe.subtitle}
+    </div>
+</div>
+
+<div class="page__container notFullWidth">
+
+    <h2 class="page__title">
+        {m:views.application.subscribe.title.pack}
+    </h2>
+
+    <div class="passes">
+        {#for pricePack in pricePackCurrentStateList}
+            <div class="pass__mainContainer 
+                        pass__mainContainer--{pricePack.type.code} 
+                        {#if pricePack.soldOut}pass__mainContainer--soldout{/if}">
+                
+                {#if pricePack.soldOut}
+                    <div class="pass__soldout">
+                        <img class="pass__soldoutImg" 
+                            src="/public/images/sold-out.png"
+                            alt="{m:views.application.subscribe.pass.sold.out}"
+                        />
+                    </div>
+                {/if}
+
+                <div class="pass__main">
+                    <h3 class="pass__name">
+                        <span class="pass__pass pass__pass--{pricePack.type.code}">
+                            {m:views.application.subscribe.pass.pass}
+                        </span>
+                        {m:'views.application.subscribe.pass.' + pricePack.type.code +
+                        '.name'}
+                    </h3>
+                    <div class="pass__days">
+                        {m:'views.application.subscribe.pass.' + pricePack.type.code +
+                        '.days'}
+                    </div>
+                </div>
+                <div class="pass__prices">
+                    <div class="pass__price">
+                        {pricePack.currentPrice} €{#if pricePack.maxPrice != null }*{/if}
+                    </div>
+                    {#if pricePack.maxPrice != null }
+                        <div class="pass__maxPrice">
+                            {pricePack.maxPrice} €
+                        </div>
+                    {/if}
+                    <div class="pass__studentPrice">
+                        {m:views.application.subscribe.pass.student(pricePack.studentPrice)}
+                    </div>
+                    
+                    {#if ticketingIsOpen}
+                        <a class="button button--white 
+                                pass__buy pass__buy--{pricePack.type.code}
+                                {#if pricePack.soldOut}pass__buy--soldout{/if}"
+                            href="{ticketingUrl}"
+                            target="_blank"
+                        >
+                            {m:views.application.subscribe.pass.buy}
+                        </a>
+                    {#else}
+                        <div class="pass__saleover">
+                            {m:views.application.subscribe.pass.salenotyet}
+                        </div>
+                    {/if}
+                </div>
+            </div>
+            <div class="pass__descriptionContainer 
+                        pass__descriptionContainer--{pricePack.type.code}
+                        {#if pricePack.soldOut}pass__descriptionContainer--soldout{/if}">
+                <ul class="pass__description">
+                    {#if pricePack.type.code == 'deepdive' || pricePack.type.code == 'combi'}
+                        <li class="pass__descriptionItem">
+                            {m:views.application.subscribe.pass.include.deepdive.conferences}
+                        </li>
+                        <li class="pass__descriptionItem">
+                            {m:views.application.subscribe.pass.include.deepdive.workshops}
+                        </li>
+                    {/if}
+                    {#if pricePack.type.code == 'conference' || pricePack.type.code == 'combi'}
+                        <li class="pass__descriptionItem">
+                            {m:views.application.subscribe.pass.include.conference.conferences}
+                        </li>
+                        <li class="pass__descriptionItem">
+                            {m:views.application.subscribe.pass.include.conference.snorkeling}
+                        </li>
+                        <li class="pass__descriptionItem">
+                            {m:views.application.subscribe.pass.include.conference.notjustcoders}
+                        </li>
+                    {/if}
+                    {#if pricePack.type.code == 'deepdive'}
+                        <li class="pass__descriptionItem">
+                            {m:views.application.subscribe.pass.include.buffet}
+                        </li>
+                    {/if}
+                    {#if pricePack.type.code == 'conference' || pricePack.type.code == 'combi'}
+                        <li class="pass__descriptionItem">
+                            {m:views.application.subscribe.pass.include.buffets}
+                        </li>
+                        <li class="pass__descriptionItem">
+                            {m:views.application.subscribe.pass.include.party}
+                        </li>
+                    {/if}
+                    {#if pricePack.maxPrice != null && pricePack.remainingDays != null}
+                        <div class="pass__remainingDays">
+                            * &{'views.application.subscribe.pass.remainingDays', 'views.application.subscribe.pass.period.' + pricePack.currentPeriod.code, pricePack.remainingDays}
+                        </div>
+                    {/if}
+                </ul>
+            </div>
+        {/for}
+    </div> <!-- /.passes -->
+
+
+    {#if ticketingTrainingIsOpen}
+    <h2 class="page__title">
+        {m:views.application.subscribe.title.training}
+    </h2>
+    <div class="training">
+        <div class="pass__mainContainer pass__mainContainer--training">
+            <div class="pass__main">
+                <h3 class="pass__name">
+                    <span class="pass__pass pass__pass--training">
+                        {m:views.application.subscribe.pass.pass}
+                    </span>
+                    {m:views.application.subscribe.pass.training.name}
+                </h3>
+                <div class="pass__days">
+                    {m:views.application.subscribe.pass.combi.days}
+                </div>
+            </div>
+            <div class="pass__prices">
+                <div class="pass__price">
+                    200 €
+                </div>
+                
+                {#if ticketingIsOpen}
+                    <a class="button button--white pass__buy pass__buy--training"
+                        href="{ticketingTrainingUrl}"
+                        target="_blank">
+                        {m:views.application.subscribe.pass.training.button}
+                    </a>
+                {#else}
+                    <div class="pass__saleover">
+                        {m:views.application.subscribe.pass.salenotyet}
+                    </div>
+                {/if}
+            </div>
+        </div>
+        <div class="pass__descriptionContainer pass__descriptionContainer--training">
+            <ul class="pass__description">
+                <li class="pass__descriptionItem">
+                    {m:views.application.subscribe.pass.include.deepdive.conferences}
+                </li>
+                <li class="pass__descriptionItem">
+                    {m:views.application.subscribe.pass.include.deepdive.workshops}
+                </li>
+                <li class="pass__descriptionItem">
+                    {m:views.application.subscribe.pass.include.conference.conferences}
+                </li>
+                <li class="pass__descriptionItem">
+                    {m:views.application.subscribe.pass.include.conference.snorkeling}
+                </li>
+                <li class="pass__descriptionItem">
+                    {m:views.application.subscribe.pass.include.conference.notjustcoders}
+                </li>
+                <li class="pass__descriptionItem">
+                    {m:views.application.subscribe.pass.include.buffets}
+                </li>
+                <li class="pass__descriptionItem">
+                    {m:views.application.subscribe.pass.include.party}
+                </li>
+            </ul>
+        </div>
+        <div class="training__description">
+            <p>{m:views.application.subscribe.pass.training.text1}</p>
+            <p>{m:views.application.subscribe.pass.training.text2}</p>
+            <p>{m:views.application.subscribe.pass.training.text3}</p>
+            <p>{m:views.application.subscribe.pass.training.text4}</p>
+        </div>
+    </div>
+    {/if}
+
+</div>
+{/include}

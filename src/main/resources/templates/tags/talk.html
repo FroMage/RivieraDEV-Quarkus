@@ -1,0 +1,57 @@
+<div class="talkDetails">
+    <div class="talkDetails__header">
+        <div class="talkDetails__header--title">
+            <div class="talkDetails__micro">
+                <div class="talkDetails__title">&laquo; {talk.title} &raquo;</div>
+            </div>
+            {#if talk.speakers}
+            <div class="talkDetails__speakers">
+                {#for speaker in talk.speakers}
+                <div class="talkDetails__speaker">
+                    <a  class="talkDetails__speaker--link"
+                        href="{uri:Application.speaker(speaker.id)}">{speaker}</a>
+                </div>
+                {/for}
+            </div>
+            {/if}
+        </div>
+        <div class="talkDetails__header--schedule">
+            <div>
+                {talk.slot.startDate.format('HH:mm')} - {talk.slot.endDate.format('HH:mm')}
+            </div>
+            <div class="talkDetails__track">
+                {talk.track.title}
+            </div>
+        </div>
+    </div>
+    <div class="talkDetails__body">
+        {talk.getDescription().md()}
+        <div class="talkDetails__metadata">
+            {#if talk.theme}
+            <span class="talkDetails__metadata--item">{talk.theme}</span>
+            {/if} {#if talk.type}
+            <span class="talkDetails__metadata--item">{talk.type}</span>
+            {/if} {#if talk.level}
+            <span class="talkDetails__metadata--item"
+                >{m:'views.application.schedule.level.' + talk.level.code}</span
+            >
+            {/if} {#if talk.language}
+            <span class="talkDetails__metadata--item"
+                >{m:'views.application.talk.' + talk.language}</span>
+            {/if}
+        </div>
+        
+        {#if talk.slidesUrl}
+            <div class="talkDetails__slides">
+                <a href="{talk.slidesUrl}" target="_blank" class="button button--primary">
+                    <img
+                        src="/public/images/icons/computer-screen.svg"
+                        alt=""
+                        class="talkDetails__slidesIcon"
+                    />
+                    <span class="talkDetails__slidesLabel">{m:views.application.talk.slides}</span>
+                </a>
+            </div>
+        {/if}
+    </div>
+</div>

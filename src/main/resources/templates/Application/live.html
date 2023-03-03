@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html lang="{inject:i18n.get()}">
+<head>
+<title>{m:views.application.schedule.title}</title>
+
+<link rel="icon" type="image/png" href="/public/images/favicon.png">
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Muli:300,400,600,700" rel="stylesheet"> 
+
+<!-- Custom -->
+<link rel="stylesheet" href="/public/stylesheets/live.scss">
+
+</head>
+<body>
+
+	<div class="liveList notFullWidth">
+
+		<ul>
+				<li>
+					<a href="{uri:Application.liveTrack("All")}" class="liveList__link">
+						All tracks
+					</a>
+				</li>
+
+		    {#for trackItem in tracks}
+					<li>
+						<a href="/live/{trackItem.title.urlPathEncode()}" class="liveList__link">
+							{trackItem.title}
+						</a>
+					</li>
+				{/for}
+		</ul>
+
+	</div>
+	<!-- /.live__tracksList -->
+
+</body>
+</html>

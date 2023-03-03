@@ -1,0 +1,357 @@
+body .burgerMenu:before {
+    content: '';
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background: black;
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+body.burgerMenu--open .burgerMenu:before {
+    right: 0;
+    opacity: 0.5;
+}
+
+.burgerMenu {
+    display: block;
+    position: absolute;
+    padding-top: 2rem;
+    padding-left: 2rem;
+    top: 0;
+    left: 0;
+
+    z-index: 1;
+
+    -webkit-user-select: none;
+    user-select: none;
+
+    // Used on the body tag
+    &--open {
+        overflow: hidden;
+    }
+
+    & input {
+        display: block;
+        width: 3rem;
+        height: 3rem;
+        position: absolute;
+        top: $space-sm;
+        left: $space-sm;
+
+        cursor: pointer;
+
+        opacity: 0; /* hide this */
+        z-index: 2; /* and place it over the hamburger */
+
+        -webkit-touch-callout: none;
+    }
+
+    /*
+        * Just a quick hamburger
+        */
+    &__slice {
+        display: block;
+        width: 2rem;
+        height: 0.3rem;
+        margin-bottom: 0.45rem;
+        position: relative;
+
+        background: $color-white;
+        border-radius: 3px;
+
+        z-index: 1;
+
+        transform-origin: 0.4rem 0;
+
+        transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1),
+            background 0.5s cubic-bezier(0.77, 0.2, 0.05, 1), opacity 0.55s ease;
+
+        &:first-child {
+            transform-origin: 0% 0%;
+        }
+
+        &:nth-last-child(2) {
+            transform-origin: 0% 100%;
+        }
+    }
+
+    /* 
+        * Transform all the slices of hamburger
+        * into a crossmark.
+        */
+    & input:checked ~ .burgerMenu__slice {
+        opacity: 1;
+        transform: rotate(45deg);
+        background: $color-white;
+    }
+
+    /*
+        * But let's hide the middle one.
+        */
+    & input:checked ~ .burgerMenu__slice:nth-last-child(3) {
+        opacity: 0;
+        transform: rotate(0deg) scale(0.2, 0.2);
+    }
+
+    /*
+        * Ohyeah and the last one should go the other direction
+        */
+    & input:checked ~ .burgerMenu__slice:nth-last-child(2) {
+        opacity: 1;
+        transform: rotate(-45deg) translate(0.4rem, -0.3rem);
+    }
+
+    /*
+        * And let's fade it in from the left
+        */
+    & input:checked ~ &__content {
+        transform: scale(1, 1);
+        opacity: 1;
+    }
+
+    /*
+        * Make this absolute positioned
+        * at the top left of the screen
+        */
+    &__content {
+        position: absolute;
+        min-height: 100vh;
+        width: 85vw;
+        margin: -4.3rem 0 0 0;
+        left: 0;
+
+        background: $color-white;
+        list-style-type: none;
+        -webkit-font-smoothing: antialiased;
+        /* to stop flickering of text in safari */
+
+        transform-origin: 0% 0%;
+        transform: translate(-100%, 0);
+
+        transition: transform 0.5s cubic-bezier(0.77, 0.2, 0.05, 1);
+    }
+
+    &__items {
+        padding: 0;
+        margin: 0;
+    }
+
+    &__item {
+        display: block;
+        padding: 1.5rem 3rem;
+        font-size: $font-md;
+        font-weight: $semi-bold;
+        text-decoration: none;
+        color: $color-black-light;
+
+        &--current {
+            background-color: $color-gray-ultralight;
+        }
+    }
+
+    &__langue {
+        display: inline;
+        color: inherit;
+        text-decoration: none;
+
+        &:first-child {
+            padding-right: 0.5rem;
+        }
+
+        &:last-child {
+            padding-left: 0.5rem;
+        }
+
+        &--selected {
+            color: $color-yellow;
+        }
+    }
+
+    &__langueSeparator {
+        display: inline;
+        color: inherit;
+    }
+
+    &__welcome {
+        background-color: $color-blue;
+        padding: 5rem 0 2.5rem;
+        text-align: center;
+        color: $color-white;
+
+        &--logo {
+            width: 55vw;
+        }
+
+        &--info {
+            font-weight: bold;
+
+            & p {
+                margin: 0.5rem 0;
+            }
+        }
+    }
+}
+
+.menu {
+    display: none;
+}
+
+@media (min-width: $screen-md-min) {
+    .burgerMenu {
+        display: none;
+    }
+
+    .menu {
+        display: block;
+
+        padding: $space-sm 2%;
+        z-index: 10;
+        font-size: $font-xs;
+        position: fixed;
+        right: 0;
+        left: 0;
+        text-align: right;
+        height: 3rem;
+        color: white;
+
+        &__logo {
+            float: left;
+        }
+
+        &__items {
+            padding-top: 0.5rem;
+        }
+
+        &__item {
+            display: inline-block;
+            padding: $space-sm;
+            margin-left: $space-sm;
+            color: inherit;
+            text-decoration: none;
+            cursor: pointer;
+            text-transform: uppercase;
+            font-size: $font-xs;
+            font-weight: $bold;
+
+            &:hover {
+                color: $color-blue;
+                text-decoration: none;
+                border-bottom: $border-md solid $color-blue;
+            }
+
+            &--current {
+                color: $color-yellow;
+                border-bottom: $border-md solid $color-yellow;
+            }
+        }
+
+        &__langue {
+            color: inherit;
+            text-decoration: none;
+            padding-left: 0;
+            padding-right: 0;
+
+            &:last-child {
+                margin-left: 0;
+            }
+
+            &--selected,
+            &--selected:hover {
+                color: $color-yellow;
+            }
+        }
+
+        &__langueSeparator {
+            display: inline;
+            color: inherit;
+        }
+    }
+
+    .navbar-animated {
+        transition: all 0.5s;
+
+        &-small {
+            background-color: white;
+            color: black;
+            height: $navbar-small-height;
+            box-shadow: 0 3px 6px $color-black-transparent3;
+
+            .navbar-animated-brand {
+                opacity: 1;
+            }
+
+            .navbar-rivieradev {
+                height: $navbar-small-height;
+                line-height: $navbar-small-height;
+            }
+        }
+
+        &-logos {
+            margin-left: 0.5em;
+        }
+
+        &-brand {
+            opacity: 0;
+            padding: 0;
+            height: auto;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+        }
+
+        &-logo {
+            transition: all 0.3s;
+            padding: 0;
+            margin: 0;
+
+            img {
+                height: 100%;
+            }
+        }
+    }
+
+    .navbar {
+        $navbar-height: 0rem;
+
+        &-brand,
+        &-brand:hover,
+        &-brand:visited {
+            color: $color-gray-dark;
+            text-decoration: none;
+        }
+
+        &-rivieradev {
+            margin-right: 0.3em;
+            height: $navbar-height;
+            line-height: $navbar-height;
+        }
+        &-RedHat {
+            font-size: 0.65em;
+            display: none;
+
+            @media (min-width: $screen-lg-min) {
+                display: flex;
+            }
+
+            & img.navbar-RedHat--logo {
+                display: inline-block;
+                align-self: flex-end;
+                height: 4em;
+                margin-right: 0.5em;
+                margin-bottom: 0.25em;
+            }
+            &--featuring {
+                display: inline-block;
+                height: 1em;
+                line-height: 1em;
+                align-self: flex-end;
+                margin-bottom: 0.45em;
+                text-decoration: none;
+            }
+        }
+    }
+}

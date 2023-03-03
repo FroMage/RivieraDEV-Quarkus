@@ -1,0 +1,253 @@
+.talk-theme {
+    padding: 0 0.4em;
+    border-radius: 4px;
+    color: white;
+    margin-bottom: 0.5em;
+    display: inline-block;
+
+    &-blue {
+        background-color: $color-blue;
+
+        .talksFilter-options &:hover,
+        &:focus {
+            background-color: lighten($color-blue, 7%);
+        }
+    }
+
+    &-yellow {
+        background-color: $color-yellow;
+
+        .talksFilter-options &:hover,
+        &:focus {
+            background-color: lighten($color-yellow, 10%);
+        }
+    }
+
+    &-green {
+        background-color: $color-theme-green;
+
+        .talksFilter-options &:hover,
+        &:focus {
+            background-color: lighten($color-theme-green, 10%);
+        }
+    }
+
+    &-purple {
+        background-color: $color-theme-purple;
+
+        .talksFilter-options &:hover,
+        &:focus {
+            background-color: lighten($color-theme-purple, 10%);
+        }
+    }
+
+    &-orange {
+        background-color: $color-theme-orange;
+
+        .talksFilter-options &:hover,
+        &:focus {
+            background-color: lighten($color-theme-orange, 12%);
+        }
+    }
+
+    &-red {
+        background-color: $color-theme-red;
+
+        .talksFilter-options &:hover,
+        &:focus {
+            background-color: lighten($color-theme-red, 8%);
+        }
+    }
+
+    &-pink {
+        background-color: $color-theme-pink;
+
+        .talksFilter-options &:hover,
+        &:focus {
+            background-color: lighten($color-theme-pink, 10%);
+        }
+    }
+
+    &-turquoise {
+        background-color: $color-theme-turquoise;
+
+        .talksFilter-options &:hover,
+        &:focus {
+            background-color: lighten($color-theme-turquoise, 8%);
+        }
+    }
+
+    &-brown {
+        background-color: $color-theme-brown;
+
+        .talksFilter-options &:hover,
+        &:focus {
+            background-color: lighten($color-theme-brown, 8%);
+        }
+    }
+}
+
+.talk-level {
+    font-style: italic;
+    background-color: $color-gray;
+    padding: 0 0.4em;
+    border-radius: 4px;
+    display: inline-block;
+    margin: 0 0 0.5em 0.3em;
+
+    .talksFilter-options &:hover,
+    &:focus {
+        background-color: lighten($color-gray, 10%);
+    }
+}
+
+.talk-language {
+    border: 1.5px solid $color-blue-gray;
+    color: $color-blue-gray;
+    padding: 0 0.4em;
+    border-radius: 4px;
+    display: inline-block;
+    margin: 0 0 0.5em 0.3em;
+    font-size: 0.9em;
+
+    .talksFilter-options &:hover,
+    &:focus {
+        border-color: lighten($color-blue-gray, 20%);
+    }
+}
+
+.talk-type {
+    font-style: italic;
+    background-color: $color-blue-gray;
+    color: $color-white;
+    padding: 0 0.4em;
+    border-radius: 4px;
+    display: inline-block;
+    margin: 0 0 0.5em 0.3em;
+
+    .talksFilter-options &:hover,
+    &:focus {
+        background-color: lighten($color-blue-gray, 12%);
+    }
+}
+
+.talkDetails {
+    position: relative;
+    $borderRadius: 0.5rem;
+
+    margin: 0 auto;
+
+    @media (min-width: $screen-sm-min) {
+        width: 70%;
+    }
+
+    &__header {
+        border-radius: $borderRadius $borderRadius 0 0;
+        color: $color-white;
+        margin: 0 auto;
+        padding: 5%;
+        text-align: center;
+        background-color: $color-yellow;
+
+        &--title,
+        &--schedule {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        &--schedule {
+            margin-top: $space-sm;
+        }
+    }
+
+    &__micro {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &__micro:before {
+        content: '';
+        display: inline-block;
+        width: 1.5em;
+        height: 1.5em;
+        background-image: url(../images/icons/microphone-white.svg);
+        background-repeat: no-repeat;
+    }
+
+    &__speakers,
+    &__track {
+        margin-left: $space-sm;
+        padding-left: $space-sm;
+        text-align: left;
+        border-left: $color-white 1px solid;
+    }
+
+    &__speaker {
+        &--link {
+            text-decoration: none;
+            color: $color-white;
+            transition: text-decoration 0.3s;
+            &:hover {
+                color: $color-white;
+                text-decoration: underline;
+            }
+        }
+    }
+
+    &__body {
+        padding: 2% 10%;
+        border-radius: 0 0 $borderRadius $borderRadius;
+        background-color: $color-gray-ultralight;
+        font-size: $font-sm;
+        line-height: 1.4em;
+    }
+
+    &__metadata {
+        font-size: $font-xxs;
+        font-weight: $semi-bold;
+        margin: 1.5em;
+        line-height: 2.5em;
+        text-align: center;
+        &--item {
+            padding: 0.3em 1.5em;
+            border-radius: 2em;
+            background-color: $color-gray-light;
+            border: $color-gray solid 1px;
+            margin: 0 1%;
+
+            &:first-child {
+                margin-left: 0;
+            }
+
+            &:last-child {
+                margin-right: 0;
+            }
+        }
+    }
+
+    &__slides {
+        text-align: center;
+        margin-bottom: $space-sm;
+    }
+
+    &__slidesIcon {
+        width: $icon-size-sm;
+        height: $icon-size-sm;
+        fill: currentColor;
+        vertical-align: middle;
+        margin-right: $space-xxs;
+    }
+
+    &__slidesLabel {
+        vertical-align: middle;
+    }
+
+    &__admin {
+        font-size: $font-xs;
+        position: absolute;
+        bottom: $space-sm;
+        right: $space-sm;
+    }
+}

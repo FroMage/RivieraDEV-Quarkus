@@ -1,0 +1,14 @@
+{#include main.html}
+{#title}{m:views.application.speakers.title}{/title}
+
+<div class="page__header speakers__header">
+    <h1 class="page__mainTitle">{m:views.application.speakers.title}</h1>
+    <div class="page__mainSubtitle speakers__mainSubtitle">
+        <p>{m:views.application.speakers.subtitle}</p>
+    </div>
+</div>
+
+<div class="page__container notFullWidth">
+    {#speakers speakers=speakers/}
+</div>
+{/include}

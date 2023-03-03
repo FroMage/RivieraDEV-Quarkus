@@ -1,28 +1,566 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <!-- You can pass parameters from your templates to your main template and insert them -->
-    <title>{#insert title/}</title>
-    <style type="text/css">
-    .head {
-      border-bottom: 1px solid black;
-      margin-bottom: 1em;
-    }
-    .head div {
-      display: inline-block;
-      margin: 0.5em;
-    }
-    </style>
-    {#insert moreStyles /}
-    {#insert moreScripts /}
-  </head>
-  <body>
-    <div class="head">
-      <!-- You can make links to actions using the uri: namespace -->
-      <div><a href="{uri:Todos.index}">Index</a></div>
-      <div><a href="{uri:Todos.todos}">Todos</a></div>
-    </div>
-    <!-- This inserts the body of your templates -->
-    {#insert /}
-  </body>
+
+<html lang="{inject:i18n.get()}">
+    <head>
+        <title>{#insert title/} - Riviera DEV 2023</title>
+        <meta name="description" content="{m:views.application.openGraph}" />
+
+        <link
+            rel="icon"
+            type="image/png"
+            href="/public/images/favicon.png"
+        />
+        <!--
+            <link rel="shortcut icon" type="image/x-icon" href="/public/images/favicon.ico">
+        -->
+
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+        />
+
+        <!-- Twitter Card data -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@RivieraDEV" />
+        <meta name="twitter:title" content="Riviera DEV" />
+        <meta
+            name="twitter:description"
+            content="{m:views.application.openGraph}"
+        />
+        <meta
+            name="twitter:image"
+            content="/public/images/logo_twitter_cards_2023.jpg"
+        />
+        <meta name="twitter:image:alt" content="Riviera DEV" />
+
+        <!-- Open Graph data -->
+        <meta property="og:title" content="Riviera DEV" />
+        <meta
+            property="og:description"
+            content="{m:views.application.openGraph}"
+        />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="{uriabs:Application.index}" />
+        <meta
+            property="og:image"
+            content="/public/images/logo_open_graph_2023.jpg"
+        />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Muli:300,400,600,700" rel="stylesheet"> 
+
+        <!-- Font awesome -->
+        <script
+            defer
+            src="https://use.fontawesome.com/releases/v5.8.1/js/all.js"
+            integrity="sha384-g5uSoOSBd7KkhAMlnQILrecXvzst9TdC09/VM+pjDTCM+1il8RHz5fKANTFFb+gQ"
+            crossorigin="anonymous"
+        ></script>
+
+        <!-- SwiperJS -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.0/css/swiper.min.css"
+        />
+
+        <!-- Custom -->
+        <link rel="stylesheet" href="/public/stylesheets/style.css" />
+
+        <!--
+            jQuery is still necessary for the countdown, we have to use another lib to get rid of jQuery.
+        -->
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+        {#insert moreStyles/}
+    </head>
+
+    <body>
+        <div class="loading"></div>
+
+        <!-- Mobile Menu -->
+        <nav role="navigation" class="js-burgerMenu">
+            <div class="burgerMenu">
+                <!--
+                A fake / hidden checkbox is used as click reciever,
+                so you can use the :checked selector on it.
+                -->
+                <input type="checkbox" id="js-burgerMenu-input" />
+
+                <!--
+                Some spans to act as a hamburger.
+                -->
+                <span class="burgerMenu__slice"></span>
+                <span class="burgerMenu__slice"></span>
+                <span class="burgerMenu__slice"></span>
+
+                <div class="burgerMenu__content">
+                    <div class="burgerMenu__welcome">
+                        <img
+                            class="burgerMenu__welcome--logo"
+                            src="/public/images/logos/logo_RD_full_white.svg"
+                            alt="RivieraDEV"
+                        />
+                        <div class="burgerMenu__welcome--info">
+                            <p>{m:views.application.index.date}</p>
+                            <p>{m:views.application.index.place}</p>
+                        </div>
+                    </div>
+
+                    <a
+                        href="{uri:Application.index}"
+                        class="burgerMenu__item {#if request.action == 'Application.index'}burgerMenu__item--current{/if}"
+                    >
+                        {m:views.main.home}
+                    </a>
+
+                    {#if ticketingIsOpen}
+                    <a
+                        href="{uri:Application.subscribe}"
+                        class="burgerMenu__item {#if request.action == 'Application.subscribe'}burgerMenu__item--current{/if}"
+                    >
+                        {m:views.main.tickets}
+                    </a>
+                    {/if}
+
+                    <a
+                        href="{uri:Application.schedule}"
+                        class="burgerMenu__item {#if request.action == 'Application.schedule'}menu__item--current{/if}"
+                    >
+                        {m:views.main.schedule}
+                    </a>
+
+                    {#if displayNewSpeakers}
+                    <a
+                        href="{uri:Application.speakers}"
+                        class="burgerMenu__item {#if request.action == 'Application.speakers'}menu__item--current{/if}"
+                    >
+                        {m:views.main.speakers}
+                    </a>
+                    {/if}
+
+                    {#if cfpIsOpened}
+                    <a
+                        href="{cfpUrl}"
+                        class="burgerMenu__item"
+                        target="_blank"
+                    >
+                        {m:views.main.cfp}
+                    </a>
+                    {/if}
+
+                    <a
+                        href="{uri:Application.photos}"
+                        class="burgerMenu__item {#if request.action == 'Application.photos'}menu__item--current{/if}"
+                    >
+                        {m:views.main.photos}
+                    </a>
+
+                    <a
+                        href="{uri:Application.schools}"
+                        class="burgerMenu__item {#if request.action == 'Application.schools'}menu__item--current{/if}"
+                    >
+                        {m:views.main.schools}
+                    </a>
+
+                    <a
+                        href="{uri:Application.index}#sponsors"
+                        class="burgerMenu__item"
+                        onclick="forceToggleBurgerMenu()"
+                    >
+                        {m:views.main.sponsors}
+                    </a>
+
+                    <a
+                        href="{uri:Application.organisers}"
+                        class="burgerMenu__item {#if request.action == 'Application.organisers' || request.action == 'Application.organiser'}burgerMenu__item--current{/if}"
+                    >
+                        {m:views.main.team}
+                    </a>
+
+                    <!-- <a
+                        href="{uri:Application.access}"
+                        class="burgerMenu__item {#if request.action == 'Application.access'}burgerMenu__item--current{/if}"
+                    >
+                        {m:views.main.access}
+                    </a> -->
+
+                    <div class="burgerMenu__item">
+                        <a
+                            href="{uri:Application.en(request.url)}"
+                            class="burgerMenu__langue {#if inject:i18n.get() == 'en'}burgerMenu__langue--selected{/if}"
+                        >
+                            {m:views.main.language.en}
+                        </a>
+                        <span class="burgerMenu__langueSeparator">/</span>
+                        <a
+                            href="{uri:Application.fr(request.url)}"
+                            class="burgerMenu__langue {#if inject:i18n.get() == 'fr'}burgerMenu__langue--selected{/if}"
+                        >
+                            {m:views.main.language.fr}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Desktop Menu -->
+        <nav class="menu js-navbar-animated">
+            <div class="menu__logo">
+                <a
+                    class="navbar-brand navbar-animated-brand"
+                    href="{uri:Application.index}"
+                >
+                    <span class="navbar-rivieradev navbar-animated-logo">
+                        <img
+                            src="/public/images/logo_RD_black.svg"
+                            alt="RivieraDEV"
+                        />
+                    </span>
+                    <span
+                        id="navbar-RedHat"
+                        class="navbar-RedHat navbar-animated-logo"
+                        href="/"
+                    >
+                        <span class="navbar-RedHat--featuring">with</span
+                        ><!-- Do not remove this comment
+                        --><img
+                            src="/public/images/logos/quarkus_world_tour.svg"
+                            alt="Quarkus World Tour"
+                            class="navbar-RedHat--logo"
+                        />
+                    </span>
+                </a>
+            </div>
+            <div class="menu__items">
+                <a
+                    href="{uri:Application.index}"
+                    class="menu__item {#if request.action == 'Application.index'}menu__item--current{/if}"
+                >
+                    {m:views.main.home}
+                </a>
+
+                {#if ticketingIsOpen}
+                <a
+                    href="{uri:Application.subscribe}"
+                    class="menu__item {#if request.action == 'Application.subscribe'}menu__item--current{/if}"
+                >
+                    {m:views.main.tickets}
+                </a>
+                {/if}
+
+                <a
+                    href="{uri:Application.schedule}"
+                    class="menu__item {#if request.action == 'Application.schedule'}menu__item--current{/if}"
+                >
+                    {m:views.main.schedule}
+                </a>
+
+                {#if displayNewSpeakers}
+                <a
+                    href="{uri:Application.speakers}"
+                    class="menu__item {#if request.action == 'Application.speakers'}menu__item--current{/if}"
+                >
+                    {m:views.main.speakers}
+                </a>
+                {/if}
+
+                {#if cfpIsOpened}
+                <a
+                    href="{cfpUrl}"
+                    class="menu__item"
+                    target="_blank"
+                >
+                    {m:views.main.cfp}
+                </a>
+                {/if}
+
+                <a
+                    href="{uri:Application.schools}"
+                    class="menu__item {#if request.action == 'Application.schools'}menu__item--current{/if}"
+                >
+                    {m:views.main.schools}
+                </a>
+
+                <a
+                    href="{uri:Application.photos}"
+                    class="menu__item {#if request.action == 'Application.photos'}menu__item--current{/if}"
+                >
+                    {m:views.main.photos}
+                </a>
+
+                
+                <a
+                    href="{uri:Application.index}#sponsors"
+                    class="menu__item"
+                >
+                    {m:views.main.sponsors}
+                </a>
+
+                <a
+                    href="{uri:Application.organisers}"
+                    class="menu__item {#if request.action == 'Application.organisers' || request.action == 'Application.organiser'}menu__item--current{/if}"
+                >
+                    {m:views.main.team}
+                </a>
+
+                <!-- <a
+                    href="{uri:Application.access}"
+                    class="menu__item {#if request.action == 'Application.access'}menu__item--current{/if}"
+                >
+                    {m:views.main.access}
+                </a> -->
+
+                <a
+                    href="{uri:Application.en(request.url)}"
+                    class="menu__item menu__langue {#if inject:i18n.get() == 'en'}menu__langue--selected{/if}"
+                >
+                    {m:views.main.language.en}
+                </a>
+                <span class="menu__langueSeparator">/</span>
+                <a
+                    href="{uri:Application.fr(request.url)}"
+                    class="menu__item menu__langue {#if inject:i18n.get() == 'fr'}menu__langue--selected{/if}"
+                >
+                    {m:views.main.language.fr}
+                </a>
+            </div>
+        </nav>
+
+        {#if flash:message || flash:message2}
+        <div class="alert alert-success">
+            {#if flash:message}
+            <li>{flash:message}</li>
+            {/if} {#if flash:message2}
+            <li>{flash:message2}</li>
+            {/if}
+        </div>
+        {/if}
+
+        <!-- <div class="container"> -->
+        {#insert /}
+        <!-- </div> -->
+
+        <footer class="footer">
+            <div class="footer__logo">
+                <img
+                    class="footer__logoImg"
+                    src="/public/images/logos/logo_RD_full_white.svg"
+                    alt="RivieraDEV"
+                />
+            </div>
+
+            <div class="footer__archives">
+                    <h2 class="footer__title">{m:views.main.archives}</h2>
+                    <div class="footer__archivesListContainer">
+                        <ul class="footer__list footer__archivesList">
+                            <li class="footer__listItem">
+                                <a href="//2021.rivieradev.fr"
+                                    >{m:views.main.editions.2021}</a
+                                >
+                            </li>
+                            <li class="footer__listItem">
+                                <a href="//2019.rivieradev.fr"
+                                    >{m:views.main.editions.2019}</a
+                                >
+                            </li>
+                            <li class="footer__listItem">
+                                <a href="//2018.rivieradev.fr"
+                                    >{m:views.main.editions.2018}</a
+                                >
+                            </li>
+                            <li class="footer__listItem">
+                                <a href="//2017.rivieradev.fr"
+                                    >{m:views.main.editions.2017}</a
+                                >
+                            </li>
+                            <li class="footer__listItem">
+                                <a href="//2016.rivieradev.fr"
+                                    >{m:views.main.editions.2016}</a
+                                >
+                            </li>
+                            <li class="footer__listItem">
+                                <a href="//2015.rivieradev.fr"
+                                    >{m:views.main.editions.2015}</a
+                                >
+                            </li>
+                            <li class="footer__listItem">
+                                <a href="//2011.rivieradev.fr"
+                                    >{m:views.main.editions.2011}</a
+                                >
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            <div class="footer__about">
+                <h2 class="footer__title">{m:views.main.about}</h2>
+                <div class="footer__aboutListContainer">
+                    <ul class="footer__list footer__aboutList">
+                        <li class="footer__listItem">
+                            <a href="{uri:Application.organisers}">{m:views.main.about.team}</a>
+                        </li>
+                        <li class="footer__listItem">
+                            <a href="{uri:Application.coc}">{m:views.main.about.coc}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer__admin">
+                    <h2 class="footer__title">
+                        {m:views.main.private} {#if inject:user}[{inject:user}]{/if}
+                    </h2>
+                    <ul class="footer__list footer__adminList">
+                        {#if inject:user}
+                        <li class="footer__listItem">
+                            <a href="/_renarde/backoffice/index">Admin</a>
+                        </li>
+                        <li class="footer__listItem">
+                            <a href="{uri:RenardeSecurityController.logout}">Logout</a>
+                        </li>
+                        {#else}
+                        <li class="footer__listItem">
+                            <a href="{uri:RenardeFormLoginController.login}">Login</a>
+                        </li>
+                        {/if} 
+                        
+                    </ul>
+                </div>
+            <!-- /.footer__archives -->
+
+            <div class="footer__followContact">
+                <div class="footer__follow">
+                    <h2 class="footer__title">{m:views.main.follow}</h2>
+                    <ul class="footer__followList">
+                        <li>
+                            <a
+                                class="footer__rs footer__rs--twitter"
+                                href="https://twitter.com/rivieradev"
+                            >
+                                <i
+                                    class="fab fa-twitter"
+                                    alt="Twitter"
+                                    class="footer__rsImg"
+                                ></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                class="footer__rs footer__rs--facebook"
+                                href="https://www.facebook.com/RivieraDEVConf/"
+                            >
+                                <i
+                                    class="fab fa-facebook-f"
+                                    alt="Facebook"
+                                    class="footer__rsImg"
+                                ></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                class="footer__rs footer__rs--linkedin"
+                                href="https://www.linkedin.com/company/11054475/"
+                            >
+                                <i
+                                    class="fab fa-linkedin-in"
+                                    alt="LinkedIn"
+                                    class="footer__rsImg"
+                                ></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a
+                                class="footer__rs footer__rs--instagram"
+                                href="https://www.instagram.com/rivieradevconf/"
+                            >
+                                <i
+                                    class="fab fa-instagram"
+                                    alt="Instagram"
+                                    class="footer__rsImg"
+                                ></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.footer__follow -->
+
+                <div class="footer__contact">
+                    <h2 class="footer__title footer__contactTitle">
+                        {m:views.main.contact}
+                    </h2>
+                    <span class="footer__contactMail">info@rivieradev.fr</span>
+                </div>
+            </div>
+            <!-- /.footer__followContact -->
+
+            <div class="footer__copyright">
+                Copyright &copy; 2011-2023 Riviera JUG / Riviera DEV. All rights
+                reserved.
+            </div>
+        </footer>
+
+        <!-- External libs -->
+
+        <!-- Modernizr build including the `webp` detect -->
+        <script src="/public/javascripts/libs/modernizr/modernizr-custom-webp.js"></script>
+
+        <!-- Custom JS -->
+        <script src="/public/javascripts/navbar-animated.js"></script>
+        <script src="/public/javascripts/map.js"></script>
+        <script src="/public/javascripts/schedule-filter.js"></script>
+        <script src="/public/javascripts/talk-like.js"></script>
+
+        <!-- Google maps API -->
+        {#if googleMapApiKey??}
+        <script
+            async
+            defer
+            src="https://maps.googleapis.com/maps/api/js?key={googleMapApiKey}&callback=initMap"
+        ></script>
+        {/if}
+
+        {#insert moreScripts/}
+        <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-24807954-1']);
+            _gaq.push(['_setDomainName', 'none']);
+            _gaq.push(['_setAllowLinker', true]);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script');
+                ga.type = 'text/javascript';
+                ga.async = true;
+                ga.src =
+                    ('https:' == document.location.protocol
+                        ? 'https://ssl'
+                        : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0];
+                s.parentNode.insertBefore(ga, s);
+            })();
+
+            window.onload = function() {
+                // Animate loader off screen
+                $('.loading').fadeOut('slow');
+                window.onload = initLikedTalks;
+                window.initBurgerMenu();
+            };
+
+            // Detect if webp is supported by the web browser
+            Modernizr.on('webp', function (isSupported) {
+                let body = document.getElementsByTagName('body')[0];
+                if (isSupported) {
+                    // Has WebP support
+                    body.classList.add('webp');
+                }
+                else {
+                    // No WebP support
+                    body.classList.add('no-webp');
+                }
+            });
+        </script>
+    </body>
 </html>

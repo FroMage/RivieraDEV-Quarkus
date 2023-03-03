@@ -11,10 +11,12 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
-    <quarkus.platform.group-id>io.quarkus.platform</quarkus.platform.group-id>
-    <quarkus.platform.version>2.16.1.Final</quarkus.platform.version>
+    <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
+    <quarkus.platform.version>3.0.0.Alpha3</quarkus.platform.version>
     <skipITs>true</skipITs>
     <surefire-plugin.version>3.0.0-M7</surefire-plugin.version>
+    <renarde.version>3.0.1-SNAPSHOT</renarde.version>
+    <web-assets.version>999-SNAPSHOT</web-assets.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -31,11 +33,30 @@
     <dependency>
       <groupId>io.quarkiverse.renarde</groupId>
       <artifactId>quarkus-renarde</artifactId>
-      <version>1.0.4</version>
+      <version>${renarde.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkiverse.renarde</groupId>
+      <artifactId>quarkus-renarde-security</artifactId>
+      <version>${renarde.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkiverse.renarde</groupId>
+      <artifactId>quarkus-renarde-backoffice</artifactId>
+      <version>${renarde.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkiverse.web-assets</groupId>
+      <artifactId>quarkus-web-assets-sass</artifactId>
+      <version>${web-assets.version}</version>
     </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-hibernate-orm-panache</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-jdbc-postgresql</artifactId>
     </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>
@@ -44,6 +65,11 @@
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-hibernate-orm</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.github.rjeschke</groupId>
+      <artifactId>txtmark</artifactId>
+      <version>0.13</version>
     </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>

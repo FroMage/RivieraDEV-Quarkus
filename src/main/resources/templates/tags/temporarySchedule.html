@@ -1,0 +1,33 @@
+<table class="tempSchedule">
+
+    <col class="tempSchedule__col--time">
+    <col class="tempSchedule__col">
+
+    {#for slot in models.TemporarySlot.findPerDay(day)}
+        <tr>
+            <th class="tempSchedule__time" scope="row">
+                <span>{slot.startDate.format('HH:mm')}</span>
+            </th>
+
+            {#if slot.isBreak != null && slot.isBreak != models.BreakType.NotABreak}
+                <td class="tempSchedule__{slot.isBreak.code}">
+                    <span class="tempSchedule__breakTitle">
+                        {#if inject:i18n.get() == "en" && slot.labelEN}
+                            {slot.labelEN}
+                        {#else}
+                            {slot.labelFR}
+                        {/if}
+                    </span>
+                </td>
+            {#else}
+                <td class="tempSchedule__cell">
+                    {#if inject:i18n.get() == "en" && slot.labelEN}
+                        {slot.labelEN}
+                    {#else}
+                        {slot.labelFR}
+                    {/if}
+                </td>
+            {/if}
+        </tr>
+    {/for}
+</table>

@@ -1,0 +1,27 @@
+{#include main.html}
+{#title}Upload program form{/title}
+
+<div class="page-title-container parallax parallax-page parallax-page-about">
+	<h1 class="title page-title"><span>Admin Actions</span></h1>
+</div>
+
+{#form uri:Admin.uploadProgram() enctype='multipart/form-data'}
+
+<fieldset>
+    <legend>Upload a JSON program</legend>
+    <div class="control-group {#errorClassBootstrap 'program'/}">
+        <label class="control-label" for="program">Program JSON file</label>
+        <div class="controls">
+            <input name="program" type="file" value="{flash:program}" title="Choose file to upload"/>
+            <span class="help-inline">​{#error 'program'/}</span>
+        </div>
+    </div>
+    <div class="form-actions">
+        <a class="btn" href="{uri:Application.index()}" title="Cancel and go back to the root">Cancel</a>​
+        <input type="submit" class="btn btn-primary" value="Upload program"
+            title="Upload this JSON program"/>
+    </div>
+</fieldset>
+
+{/form}
+{/include}

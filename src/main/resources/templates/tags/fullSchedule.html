@@ -1,0 +1,41 @@
+{#let tracks=tracksPerDays.get(day)}
+
+<table class="fullSchedule">
+
+    <col class="fullSchedule__col--time">
+    {#for track in tracks}
+        <col class="fullSchedule__col--{tracks.size()}tracks">
+    {/for}
+    
+    {#for slot in model_Slot:findMultiPerDay(day)}
+    <tr>
+        <th class="fullSchedule__time" scope="row">
+            <span>{slot.startDate.format('HH:mm')}</span>
+        </th>
+
+        {#let allTracksEvent = slot.allTracksEvent}
+        {#if allTracksEvent } <!-- One talk for all tracks -->
+            {#if allTracksEvent.isBreak != BreakType:NotABreak}
+            <td colspan="{tracks.size()}" class="fullSchedule__{allTracksEvent.isBreak.code}">
+                <span class="fullSchedule__breakTitle">{allTracksEvent.title}</span>
+            </td>
+            {#else}
+            <td colspan="{tracks.size()}" class="js-talksFilter-toFilter js-fullSchedule-talk-cell fullSchedule__talk__cell">
+                <!-- If it's not a break, it's on all track like keynote -->
+                {#talkItem talk=allTracksEvent/}
+            </td>
+            {/if}
+        {#else}
+            {#for track in tracks}
+                <td class="js-talksFilter-toFilter js-fullSchedule-talk-cell fullSchedule__talk__cell">
+                    {#for talk in slot.getTalksPerTrack(track)}
+                        {#talkItem talk=talk/}
+                    {/for}
+                </td>
+            {/for}
+        {/if}
+        {/let}
+    </tr>
+    {/for}
+</table>
+{/let}

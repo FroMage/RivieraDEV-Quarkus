@@ -1,0 +1,69 @@
+{#if talk}
+    {#if !talk.isHiddenInTalksPage}
+        <a href="{uri:Application.talk(talk.id)}"
+            class="fullSchedule__talk__item
+                fullSchedule__talk__item--link
+                talksFilter-item
+                js-fullSchedule-talk-item
+                js-talksFilter-item 
+                {#if talk.theme}js-talksFilter-theme-{talk.theme.theme.slugify()}{/if} 
+                js-talksFilter-level-{talk.level.code}
+                {#if talk.type}js-talksFilter-type-{talk.type.toString().slugify()}{/if}
+                js-talksFilter-language-{talk.language.toString().slugify()}">
+
+            <div class="fullSchedule__talk__part1">
+                <div class="fullSchedule__talk__title">{talk.title}</div>
+
+                <div class="fullSchedule__talk__slotTrack">
+                    <div class="fullSchedule__talk__slot">
+                        {talk.slot.startDate.format('HH:mm')} - {talk.slot.endDate.format('HH:mm')}
+                    </div>
+                    <div class="fullSchedule__talk__track">
+                        {talk.track.title}
+                    </div>
+                </div>
+
+                <div class="fullSchedule__talk__infos">
+                    {#if talk.theme}
+                        <div class="fullSchedule__talk__theme">{talk.theme}</div>
+                    {/if}
+                    {#if talk.type}
+                        <div class="fullSchedule__talk__type">{talk.type}</div>
+                    {/if}
+                    {#if talk.level}
+                        <div class="fullSchedule__talk__level">{m:'views.application.schedule.level.' + talk.level.code}</div>
+                    {/if}
+                    {#if talk.language}
+                        <div class="fullSchedule__talk__language" aria-label="{m:'views.application.schedule.language.' + talk.language}">
+                            {talk.language}
+                        </div>
+                    {/if}
+                </div>
+            </div>
+            
+            <div class="fullSchedule__talk__part2 fullSchedule__talk__part2--{talk.theme ? talk.theme.color.code : 'none'}">
+                <ul class="fullSchedule__talk__speakers">
+                    {#for speaker in talk.speakers}
+                        <li class="fullSchedule__talk__speaker">
+                            <div
+                                class="fullSchedule__talk__speakerPhoto"
+                                style="background-image: url('{uri:Application.speakerPhoto(speaker.id)}')"
+                            ></div>
+                            <span class="fullSchedule__talk__speakerName" href="{uri:Application.speaker(speaker.id)}">
+                                {speaker.firstName} {speaker.lastName}
+                            </span>
+                        </li>
+                    {/for}
+                </ul>
+                
+                <div class="fullSchedule__talk__like">
+                    <span class="fullSchedule__talk__likeHeart js-talksFilter-like-icon" data-talk="{talk.id}" onclick="event.preventDefault(); likeTalk(this,'{talk.id}')"></span>
+                </div>
+            </div>
+        </a>
+    {#else}
+        <div class="fullSchedule__talk__item js-fullSchedule-talk-item fullSchedule__talk__part">
+            <span class="fullSchedule__talk__title">{talk.title}</span>
+        </div>
+    {/if}
+{/if}

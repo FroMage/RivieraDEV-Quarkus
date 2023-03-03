@@ -1,0 +1,36 @@
+
+@include responsiveBackgroundImage(
+    '.speakers__header',
+    '../images/illustrations/responsives/speakers-mini'
+);
+
+.speakers {
+    margin: 0 $space-md;
+
+    @media (min-width: $screen-sm-min) {
+        margin: $space-xxl 0;
+    }
+
+    &__header {
+        background-position: top;
+    }
+
+    &__mainSubtitle {
+        p {
+            margin: 0;
+        }
+        a {
+            color: $color-white;
+        }
+    }
+
+    &__buttonContainer {
+        text-align: center;
+        margin: $space-lg 0;
+    }
+
+    &__previousTitle {
+        font-size: 1.5em;
+        margin-bottom: 1.1em;
+    }
+}

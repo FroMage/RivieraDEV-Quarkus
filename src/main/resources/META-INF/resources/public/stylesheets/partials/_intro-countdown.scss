@@ -1,0 +1,172 @@
+$counter-item-size: 12rem;
+
+.introCountdown {
+    /* To be displayed partially on Welcome picture */
+    margin-top: -10%;
+
+    display: grid;
+
+    &--withCountdown {
+        @media (min-width: $screen-md-min) {
+            grid-template-columns: auto auto;
+        }
+    }
+}
+
+.intro {
+    background-color: $color-gray-ultralight;
+    padding: $content-space-xs;
+    display: grid;
+    text-align: center;
+
+    @media (min-width: $screen-sm-min) {
+        padding: $content-space-sm;
+        border-radius: $border-radius-md;
+        text-align: left;
+    }
+
+    &--withCountdown {
+        @media (min-width: $screen-sm-min) {
+            border-radius: $border-radius-md $border-radius-md 0 0;
+        }
+
+        @media (min-width: $screen-md-min) {
+            border-radius: $border-radius-md 0 0 $border-radius-md;
+        }
+    }
+
+    &__subtitle {
+        font-size: $font-md;
+        margin: $space-sm 0 $space-md 0;
+
+        @media (min-width: $screen-sm-min) {
+            font-size: $font-xl;
+            margin: $space-md 0 $space-lg 0;
+        }
+    }
+    &__subtitle1 {
+        display: block;
+    }
+
+    &__subtitle3 {
+        display: block;
+        font-size: $font-sm;
+        margin-top: $space-md;
+
+        @media (min-width: $screen-sm-min) {
+            font-size: $font-lg;
+        }
+    }
+
+    &__questions {
+        display: grid;
+        row-gap: $space-md;
+
+        @media (min-width: $screen-sm-min) {
+            grid-template-columns: 1fr 1fr 1fr;
+            row-gap: $space-sm;
+        }
+    }
+}
+
+.question {
+    &__title {
+        grid-area: title;
+        align-self: center;
+        font-size: $font-lg;
+        font-weight: $bold;
+        margin-bottom: $space-sm;
+
+        &::before {
+            content: '';
+            display: inline-block;
+            margin-right: $space-sm;
+            width: $icon-size-lg;
+            height: $icon-size-lg;
+            background-repeat: no-repeat;
+            background-position: center;
+            vertical-align: middle;
+
+            @media (min-width: $screen-sm-min) {
+                width: $icon-size-lg;
+                height: $icon-size-lg;
+            }
+        }
+
+        &--what::before {
+            background-image: url(../images/icons/what.svg);
+        }
+        &--when::before {
+            background-image: url(../images/icons/when.svg);
+        }
+        &--where::before {
+            background-image: url(../images/icons/where.svg);
+        }
+    }
+
+    &__answer {
+        font-size: $font-sm;
+        font-weight: 300;
+
+        @media (min-width: $screen-sm-min) {
+            font-size: $font-md;
+        }
+    }
+}
+
+.countdownContainer {
+    background: linear-gradient($color-blue, $color-blue-medium);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @media (min-width: $screen-sm-min) {
+        border-radius: 0 0 $border-radius-md $border-radius-md;
+    }
+
+    @media (min-width: $screen-md-min) {
+        background: linear-gradient(to right, $color-blue, $color-blue-medium);
+        border-radius: 0 $border-radius-md $border-radius-md 0;
+    }
+}
+
+.countdown {
+    padding: $content-space-xs;
+    display: grid;
+    column-gap: $content-space-xs;
+    row-gap: $content-space-xs;
+    grid-template-columns: $counter-item-size $counter-item-size;
+    grid-template-rows: $counter-item-size $counter-item-size;
+    justify-content: center;
+
+    @media (min-width: $screen-sm-min) {
+        padding: $content-space-sm;
+        grid-template-columns: $counter-item-size $counter-item-size $counter-item-size $counter-item-size;
+        grid-template-rows: $counter-item-size;
+    }
+
+    @media (min-width: $screen-md-min) {
+        grid-template-columns: $counter-item-size $counter-item-size;
+        grid-template-rows: $counter-item-size $counter-item-size;
+    }
+
+    &__item {
+        background-color: $color-blue-light;
+        color: $color-white;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+    }
+
+    &__number {
+        font-size: $font-xxxl;
+        font-weight: $bold;
+        margin-bottom: $space-sm;
+    }
+
+    &__desc {
+        text-transform: uppercase;
+        font-size: $font-xs;
+    }
+}

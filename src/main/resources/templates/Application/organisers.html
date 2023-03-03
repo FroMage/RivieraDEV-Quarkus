@@ -1,0 +1,19 @@
+{#include main.html}
+{#title}{m:views.application.orgas.title}{/title}
+
+<div class="page__header orgas__header">
+    <h1 class="page__mainTitle">{m:views.application.orgas.title}</h1>
+    <div class="page__mainSubtitle orgas__mainSubtitle">
+        <p>{m:views.application.orgas.text.1().raw}</p>
+        <p>{m:views.application.orgas.text.2().raw}</p>
+        <p>{m:views.application.orgas.text.3().raw}</p>
+    </div>
+    <a class="button orgas__button" href="mailto:info@rivieradev.fr"
+        >{m:views.application.orgas.contact}</a
+    >
+</div>
+
+<div class="page__container notFullWidth">
+    {#organisers orgas=orgas/}
+</div>
+{/include}

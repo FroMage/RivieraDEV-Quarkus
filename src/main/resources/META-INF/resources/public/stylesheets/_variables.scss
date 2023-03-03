@@ -1,0 +1,108 @@
+$screen-xs-max: 767px;
+$screen-sm-min: 768px;
+$screen-sm-max: 991px;
+$screen-md-min: 992px;
+$screen-md-max: 1199px;
+$screen-lg-min: 1200px;
+
+$not-full-width-sm: 750px;
+$not-full-width-md: 970px;
+$not-full-width-lg: 1170px;
+
+$color-blue-light: #32cfeb;
+$color-blue: #19b8d5;
+$color-blue-medium: #1dc9f2;
+$color-blue-dark: #00709d;
+$color-blue-transparent: rgba(0, 144, 205, 0.8);
+
+$color-yellow: #fdba1d;
+$color-yellow-transparent: rgba(#fdb742, 0.8);
+$color-yellow-light: #fbc02c;
+$color-yellow-ultralight: #fefaf1;
+
+$color-purple-transparent: rgba(140, 70, 162, 0.8);
+
+$color-green-transparent: rgba(115, 173, 5, 0.8);
+
+$color-turquoise-light: #00ceb6;
+$color-turquoise: #00c2a7;
+$color-turquoise-dark: #03b18f;
+
+$color-gray: #9a9a93;
+$color-gray-dark: #777;
+$color-gray-light: #ddd;
+$color-gray-ultralight: #f8f7f7;
+
+$color-black-light: #474747;
+$color-black-transparent: rgba(51, 51, 51, 0.4);
+$color-black-transparent2: rgba(0, 0, 0, 0.6);
+$color-black-transparent3: rgba(0, 0, 0, 0.16);
+$color-black: #000;
+$color-white: #fff;
+
+$color-blue-gray: #516279;
+
+$color-platinum: #ac2742;
+$color-gold: #dd7e00;
+$color-silver: #3363c9;
+
+$space-xxxl: 10rem; // 100px
+$space-xxl: 5rem; // 50px
+$space-xl: 4rem; // 40px
+$space-lg: 3rem; // 30px
+$space-md: 2rem; // 20px
+$space-sm: 1rem; // 10px
+$space-xs: 0.8rem; // 8px
+$space-xxs: 0.6rem; // 6px
+
+$content-space-xs: $space-md;
+$content-space-sm: $space-xl;
+
+$border-sm: 1px;
+$border-md: 2px;
+$border-lg: 4px;
+$border-radius-xs: 4px;
+$border-radius-sm: 10px;
+$border-radius-md: 16px;
+
+$font-xxxl: 4rem; // 40px
+$font-xxl: 3rem; // 30px
+$font-xl: 2.5rem; // 25px
+$font-lg: 2rem; // 20px
+$font-md: 1.8rem; // 18px
+$font-sm: 1.6rem; // 16px
+$font-xs: 1.4rem; // 14px
+$font-xxs: 1.2rem; // 12px
+
+$light: 300;
+$regular: 400;
+$semi-bold: 600;
+$bold: 700;
+
+$icon-size-sm: 1.8rem; // 18px
+$icon-size-md: 2rem; // 20px
+$icon-size-lg: 3rem; // 30px
+$icon-size-xl: 4rem; // 40px
+$icon-size-xxl: 6rem; // 60px
+$icon-size-xxxl: 8rem; // 80px
+
+$footer-height: 15em;
+
+$shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.2);
+$shadow-md: 0 3px 6px rgba(0, 0, 0, 0.2);
+$shadow-lg: 0 3px 6px rgba(0, 0, 0, 0.6);
+$shadow-xl: 0 3px 12px rgba(0, 0, 0, 0.7);
+
+$navbar-small-height: 4.5rem;
+
+$color-theme-blue: #4b78cb;
+$color-theme-yellow: #fdba1d;
+$color-theme-purple: #bf3fa7;
+$color-theme-green: #4bac76;
+$color-theme-orange: #f6922e;
+$color-theme-red: #f34e66;
+$color-theme-pink: #e3248b;
+$color-theme-turquoise: #33bab5;
+$color-theme-brown: #dca242;
+$color-theme-grey: #c1c1c1;
+$color-theme-none: #c1c1c1;

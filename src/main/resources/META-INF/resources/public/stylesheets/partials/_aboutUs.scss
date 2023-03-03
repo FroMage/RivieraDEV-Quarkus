@@ -1,0 +1,88 @@
+
+@include responsiveBackgroundImage(
+    '.aboutUs__aboutUs',
+    '../images/illustrations/responsives/about_us_1-mini'
+);
+
+.aboutUs {
+    color: $color-white;
+
+    @media (min-width: $screen-sm-min) {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        grid-template-areas:
+            'photo1 photo2'
+            'photo1 photo3';
+        grid-gap: $border-sm;
+    }
+
+    &__item {
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    &__aboutUs {
+        grid-area: photo1;
+        padding: $space-md;
+
+        @media (min-width: $screen-sm-min) {
+            font-size: $font-lg;
+            padding-top: $space-xxxl;
+            padding-right: $space-xxl;
+            padding-bottom: $space-xxxl;
+
+            // Technic to have the same left alignement even in full width
+            padding-left: calc(
+                ((100% * 1.5 - #{$not-full-width-sm}) / 2) + #{$content-space-sm}
+            );
+        }
+
+        @media (min-width: $screen-md-min) {
+            padding-left: calc(
+                ((100% * 1.5 - #{$not-full-width-md}) / 2) + #{$content-space-sm}
+            );
+        }
+
+        @media (min-width: $screen-lg-min) {
+            padding-left: calc(
+                ((100% * 1.5 - #{$not-full-width-lg}) / 2) + #{$content-space-sm}
+            );
+        }
+    }
+
+    &__title {
+        margin: $space-md 0;
+    }
+
+    &__buttonContainer {
+        text-align: center;
+
+        @media (min-width: $screen-sm-min) {
+            text-align: left;
+        }
+    }
+
+    &__button {
+        display: inline-block;
+        margin-top: $space-md;
+    }
+
+    &__photo2,
+    &__photo3 {
+        display: none;
+
+        @media (min-width: $screen-sm-min) {
+            display: block;
+        }
+    }
+
+    &__photo2 {
+        grid-area: photo2;
+        background-image: url(../images/illustrations/about_us_2-mini.jpg);
+    }
+    &__photo3 {
+        grid-area: photo3;
+        background-image: url(../images/illustrations/about_us_3-mini.jpg);
+    }
+}

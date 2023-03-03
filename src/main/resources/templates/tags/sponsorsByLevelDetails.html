@@ -1,0 +1,58 @@
+{#if !sponsors.empty}
+<div class="">
+
+    <div class="partenaires-title partenaires-title-{level}"><h2 class="partenaires-title-text">{m:'views.application.sponsors.level.' + _level}</h2></div>
+
+    {#for sponsor in sponsors}
+        <div class="row partenaireDetails" id="{sponsor.company.slugify()}">
+
+            <div class="col-sm-3">
+                <div class="partenaireDetails-logo text-center">
+                    {#if sponsor.companyURL}
+                        <a href="{sponsor.companyURL}" title="{sponsor.company}">
+                    {/if}
+                    <img class="partenaireDetails-logo-img" src="{uri:Application.sponsorLogo(sponsor.id)}" alt=""/>
+                    {#if sponsor.companyURL}
+                        </a>
+                    {/if}
+                </div>
+            </div>
+
+            <div class="col-sm-5 partenaireDetails-desc">
+                <h3 class="partenaireDetails-name">
+                    {#if sponsor.companyURL}
+                        <a href="{sponsor.companyURL}" title="{sponsor.company}">
+                    {/if}
+                    {sponsor.company}
+                    {#if sponsor.companyURL}
+                        </a>
+                    {/if}
+                </h3>
+                <div class="partenaireDetails-about">
+                    {#if inject:i18n.get() == "en" && sponsor.aboutEN}
+                        {sponsor.aboutEN.md()}
+                    {#else}
+                        {sponsor.about.md()}
+                    {/if}
+                </div>
+            </div>
+
+            <div class="col-sm-4 partenaireDetails-links">
+                {#if sponsor.companyURL}
+                <div class="partenaireDetails-link">
+                    <i class="fas fa-globe partenaireDetails-icon" title="{m:views.application.common.website}"></i> 
+                    <a href="{sponsor.companyURL}" title="{sponsor.company}">{sponsor.companyURL}</a>
+                </div>
+                {/if}
+                {#if sponsor.twitterAccount}
+                <div class="partenaireDetails-link">
+                    <i class="fab fa-twitter partenaireDetails-icon" title="{m:views.application.common.twitter}"></i> 
+                    <a href="http://twitter.com/{sponsor.twitterAccount}">@{sponsor.twitterAccount}</a>
+                </div>
+                {/if}
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    {/for}
+</div>
+{/if}

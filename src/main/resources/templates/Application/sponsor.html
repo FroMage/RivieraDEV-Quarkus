@@ -1,0 +1,52 @@
+{#include main.html}
+{#title}{sponsor.company} - {m:views.application.sponsor.title}{/title}
+
+<div class="page__header partenaireDetails__headerPage">
+    <h1 class="page__mainTitle">{m:views.application.sponsor.title}</h1>
+</div>
+
+<div class="page__container notFullWidth">
+        <div class="partenaireDetails">
+            <div class="partenaireDetails__header">
+                <h2 class="partenaireDetails__name">{sponsor.company}</h2>
+                <div class="partenaireDetails__network">
+                    {#if sponsor.companyURL}
+                        <div class="partenaireDetails__website">
+                            <a href="{sponsor.companyURL}" target="_blank">{sponsor.companyURL}</a>
+                        </div>
+                    {/if}
+                    {#if sponsor.otherURL}
+                        <div class="partenaireDetails__website">
+                            <a href="{sponsor.otherURL}" target="_blank">{sponsor.otherURL}</a>
+                        </div>
+                    {/if}
+                    {#if sponsor.linkedInAccount}
+                        <div class="partenaireDetails__linkedin">
+                            <a href="https://www.linkedin.com/company/{sponsor.linkedInAccount}" target="_blank">{sponsor.linkedInAccount}</a>
+                        </div>
+                    {/if}
+                    {#if sponsor.twitterAccount}
+                        <div class="partenaireDetails__twitter">
+                        <a
+                            href="https://twitter.com/{sponsor.twitterAccount}"
+                            target="_blank"
+                            >@{sponsor.twitterAccount}</a>
+                        </div>
+                    {/if}
+                </div>
+            </div>
+            <div class="partenaireDetails__body">
+                <img class="partenaireDetails__logo" src="{uri:Application.sponsorLogo(sponsor.id)}" alt=""/>
+                <div class="partenaireDetails__desc">
+                    {#if inject:i18n.get() == "en" && sponsor.aboutEN}
+                        {sponsor.aboutEN.md()}
+                    {#else}
+                        {sponsor.about.md()}
+                    {/if}
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+{/include}
+    

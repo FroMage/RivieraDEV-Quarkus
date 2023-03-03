@@ -1,0 +1,118 @@
+{#include main.html}
+{#title}{m:views.application.schedule.title}{/title}
+
+<div class="page__header schedule__header">
+    <h1 class="page__mainTitle">
+        {m:views.application.schedule.title}
+    </h1>
+    <div class="page__mainSubtitle">
+           {m:views.application.schedule.subtitle}
+    </div>
+</div>
+
+<div class="page__container schedule__container">
+
+    {#if !displayFullSchedule}
+        <div class="schedule__intro">
+            {#if displayNewSpeakers && displayTalks}
+                <p>{m:views.application.schedule.unavailable.speakers.available}</p>
+            {#else}
+                <p>{m:views.application.schedule.unavailable}</p>
+            {/if}
+            
+            {#if days != null && days.size() > 0}        
+                <p>{m:views.application.schedule.unavailable.intro}</p>
+            {/if}
+        </div>
+    {/if}
+
+	{#if days != null && days.size() > 0}
+
+        <div class="schedule__days">
+            {#for day in days}
+                <h2 class="schedule__day fullSchedule-day js-schedule-day{day_index + 1} schedule-day{day_index + 1}" onclick="scheduleSwiper.slideTo({day_index})">
+                    <span class="schedule__day--desktop">{day.format('EEEE dd MMMM yyyy')}</span>
+                    <span class="schedule__day--mobile">{day.format('EEEE dd').replace(' ', '<br>').raw}</span>
+                </h2>
+            {/for}
+        </div>
+
+    {/if}
+
+    {#if displayFullSchedule }
+
+        {#filterForTalks themes=themes levels=levels types=types languages=languages/}
+
+        <div class="schedule__legend">
+            {#for theme in themes}
+                <div class="schedule__legend--item">
+                    <span class="schedule__legend--bullet fullSchedule__talk__part2--{theme.color.code}"></span>
+                    <span class="schedule__legend--text">{theme}</span>
+                </div>
+            {/for}
+        </div>
+
+        <div class="schedule__likeExplanation">
+            {m:views.application.schedule.like.explanation().raw}
+        </div>
+
+    {/if}
+
+    <!-- Slider main container -->
+    <div class="swiper-container schedule__swiper">
+        <div class="swiper-wrapper">
+            {#for day in days}
+                <div class="swiper-slide">
+                    <div class="schedule--desktop">
+                        {#if displayFullSchedule}
+                            {#fullSchedule day=day tracksPerDays=tracksPerDays/}
+                        {#else}
+                            {#temporarySchedule day=day/}
+                        {/if}
+                    </div>
+
+                    <div class="schedule--mobile">
+                        {#if displayFullSchedule}
+                            {#fullScheduleXs day=day tracksPerDays=tracksPerDays/}
+                        {#else}
+                            {#temporaryScheduleXs day=day/}
+                        {/if}
+                    </div>
+                </div>
+            {/for}
+        </div>
+    </div>
+
+    {#if !displayFullSchedule}
+        <div class="newsletter">
+            <h2 class="home__title newsletter__title">
+                {m:views.application.index.get-in-touch().raw}
+            </h2>
+            {#newsletter /}
+        </div> <!-- /.newletter -->
+	{/if}
+</div>
+
+<!-- External Lib : SwiperJS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.5.0/js/swiper.min.js"></script>
+<script>
+let scheduleSwiper = new Swiper ('.swiper-container',{
+    autoHeight: true
+});
+let updateDateSelected = () => {
+    // Revove 'selected' class on previous tab
+    let previousTab = document.getElementsByClassName('js-schedule-day' + (scheduleSwiper.previousIndex + 1));
+    if(previousTab && previousTab.length === 1){
+        previousTab[0].classList.remove('schedule__day--selected');
+    }
+    // Add 'selected' class on new active tab
+    let newTab = document.getElementsByClassName('js-schedule-day' + (scheduleSwiper.activeIndex + 1));
+    if(newTab && newTab.length === 1){
+        newTab[0].classList.add('schedule__day--selected');
+    }
+};
+scheduleSwiper.on('slideChange', updateDateSelected);
+// Init first select tab
+updateDateSelected();
+</script>
+{/include}

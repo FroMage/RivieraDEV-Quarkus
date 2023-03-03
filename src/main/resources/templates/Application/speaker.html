@@ -1,0 +1,52 @@
+{#include main.html}
+{#title}{speaker} - {m:views.application.speaker.title}{/title}
+
+<div class="page__header speakers__header">
+    <h1 class="page__mainTitle">{m:views.application.speaker.title}</h1>
+</div>
+
+<div class="page__container notFullWidth">
+    <div class="personDetails">
+        <div class="personDetails__header">
+            <figure class="personSummary personDetails__header--content">
+                <div
+                    class="personSummary__photo personDetails__header--photo"
+                    style="background-image: url('{uri:Application.speakerPhoto(speaker.id)}')"
+                ></div>
+                <figcaption class="personDetails__desc">
+                    <div class="personDetails__name">{speaker}</div>
+                    <div class="personDetails__title">{speaker.company}</div>
+                    <div class="personDetails__network">
+                        {#if speaker.twitterAccount}
+                        <div class="personDetails__twitter">
+                            <a
+                                href="https://twitter.com/{speaker.twitterAccount}"
+                                target="_blank"
+                                >@{speaker.twitterAccount}</a
+                            >
+                        </div>
+                        {/if} {#if speaker.blogURL}
+                        <div class="personDetails__blog">
+                            <a href="{speaker.blogURL}" target="_blank"
+                                >{speaker.blogURL}</a
+                            >
+                        </div>
+                        {/if}
+                    </div>
+                </figcaption>
+            </figure>
+        </div>
+        <div class="personDetails__body">
+            {speaker.biography.md()}
+            <div class="personDetails__talks">
+                {#for talk in speaker.talks}
+                <div class="personDetails__micro">
+                    <a  class="personDetails__talk"
+                        href="{uri:Application.talk(talk.id)}"><span class="personDetails__talk--quote">&laquo;</span>{talk.title}<span class="personDetails__talk--quote">&raquo;</span></a>
+                </div>
+                {/for}
+            </div>
+        </div>
+    </div>
+</div>
+{/include}

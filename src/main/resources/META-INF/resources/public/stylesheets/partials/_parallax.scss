@@ -1,0 +1,125 @@
+.no-webp .parallax {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
+        url(../images/photos/2018-mobile.jpg);
+
+    @media (min-width: $screen-sm-min) {
+        background-image: linear-gradient(
+                rgba(0, 0, 0, 0.45),
+                rgba(0, 0, 0, 0.45)
+            ),
+            url(../images/photos/2018-tablet.jpg);
+    }
+
+    @media (min-width: $screen-md-min) {
+        background-image: linear-gradient(
+                rgba(0, 0, 0, 0.45),
+                rgba(0, 0, 0, 0.45)
+            ),
+            url(../images/photos/2018.jpg);
+    }
+}
+
+.parallax {
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding: 25vh 0 55vh;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45)),
+        url(../images/photos/2018-mobile.webp);
+
+    @media (min-width: $screen-sm-min) {
+        background-image: linear-gradient(
+                rgba(0, 0, 0, 0.45),
+                rgba(0, 0, 0, 0.45)
+            ),
+            url(../images/photos/2018-tablet.webp);
+    }
+
+    @media (min-width: $screen-md-min) {
+        background-image: linear-gradient(
+                rgba(0, 0, 0, 0.45),
+                rgba(0, 0, 0, 0.45)
+            ),
+            url(../images/photos/2018.webp);
+    }
+
+    &__content {
+        text-align: center;
+    }
+
+    &__logosContainer {
+        display: inline-block;
+    }
+
+    &__logos {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        margin-bottom: $space-lg;
+    }
+
+    &__logo--rdev {
+        width: 45vw;
+        margin-bottom: $space-sm;
+
+        @media (min-width: $screen-sm-min) {
+            width: 35vw;
+        }
+    }
+    &__logo--judcon {
+        width: 20vw;
+
+        @media (min-width: $screen-sm-min) {
+            width: 10vw;
+        }
+    }
+
+    &__info {
+        color: white;
+        font-size: $font-lg;
+        font-weight: $light;
+        margin-bottom: 3rem;
+        text-transform: uppercase;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        @media (min-width: $screen-sm-min) {
+            flex-direction: row;
+            font-size: $font-xl;
+        }
+    }
+
+    &__icon {
+        width: $font-xl;
+        vertical-align: baseline;
+        color: $color-yellow;
+        margin: 0 $space-xxs 0 0;
+        width: $icon-size-sm;
+
+        @media (min-width: $screen-sm-min) {
+            margin: 0 $space-sm;
+        }
+    }
+
+    &__cancelled {
+        img {
+            max-width: 100%;
+        }
+    }
+
+    &__cancelledInfo {
+        color: $color-white;
+        font-size: $font-xxl;
+        font-weight: $light;
+
+        a {
+            color: #fe0000;
+
+            &:hover,
+            &:focus {
+                color: darken(#fe0000, 10%);
+            }
+        }
+    }
+}

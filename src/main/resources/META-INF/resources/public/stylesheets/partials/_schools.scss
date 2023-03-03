@@ -1,0 +1,82 @@
+@include responsiveBackgroundImage(
+    '.schools__header',
+    '../images/illustrations/responsives/schools-mini'
+);
+
+.schools {
+    &__header {
+        background-position: 75% -80px;
+
+        @media (min-width: $screen-md-min) {
+            background-position: 75% 0;
+        }
+
+        @media (min-width: $screen-lg-min) {
+            background-position: 0 20%;
+        }
+    }
+
+    &__mainSubtitle {
+        p {
+            margin: 0;
+        }
+        a {
+            color: $color-white;
+        }
+    }
+
+    &__tweets {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        align-items: center;
+
+        @media (min-width: $screen-md-min) {
+            flex-direction: row;
+            align-items: flex-start;
+        }
+
+        .twitter-tweet {
+            flex: 1;
+
+            &:not(:last-child) {
+                margin-right: $space-md;
+            }
+        }
+    }
+
+    &__sponsors {
+        margin-top: $space-xxl;
+
+        @media (min-width: $screen-sm-min) {
+            margin-top: $space-xxxl;
+        }
+
+        .partenaires {
+            &__levelTitle {
+                display: none;
+            }
+
+            &__level {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    &__sponsorsTitle {
+        margin: 0 $content-space-xs $space-md $content-space-xs;
+        text-align: center;
+        font-size: $font-xl;
+        font-weight: 300;
+
+        @media (min-width: $screen-sm-min) {
+            margin: 0 $content-space-sm $space-sm $content-space-sm;
+            font-size: $font-xxxl;
+        }
+    }
+
+    &__buttonContainer {
+        text-align: center;
+    }
+}
