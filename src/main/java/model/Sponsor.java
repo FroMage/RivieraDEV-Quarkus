@@ -5,38 +5,36 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
 import javax.imageio.ImageIO;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Lob;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreUpdate;
-import jakarta.validation.constraints.NotBlank;
 
-import org.hibernate.annotations.Type;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.URL;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import io.quarkus.logging.Log;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Sponsor extends PanacheEntity implements Comparable<Sponsor> {
 	@NotBlank
 	public String company;
-	@Type(type="org.hibernate.type.TextType")
-	@Lob
+	@JdbcTypeCode(Types.LONGVARCHAR)
 	@NotBlank
 	@Length(max = 10000)
 	public String about;
-	@Type(type="org.hibernate.type.TextType")
-	@Lob
+	@JdbcTypeCode(Types.LONGVARCHAR)
 	@NotBlank
 	@Length(max = 10000)
 	public String aboutEN;

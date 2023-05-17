@@ -1,11 +1,12 @@
 package model;
 
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.hibernate.annotations.Type;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.validator.constraints.Length;
 
 import io.quarkiverse.renarde.util.I18N;
@@ -16,10 +17,8 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
-import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -33,13 +32,11 @@ public class Talk extends PanacheEntity implements Comparable<Talk> {
 	public String titleFR;
 	
 	// At least one description must be filled
-	@Type(type="org.hibernate.type.TextType")
-	@Lob
+	@JdbcTypeCode(Types.LONGVARCHAR)
 	@Length(max = 10000)
 	public String descriptionEN;
 
-	@Type(type="org.hibernate.type.TextType")
-	@Lob
+	@JdbcTypeCode(Types.LONGVARCHAR)
 	@Length(max = 10000)
 	public String descriptionFR; 
 	

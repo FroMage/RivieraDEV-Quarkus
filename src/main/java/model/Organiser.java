@@ -1,18 +1,17 @@
 package model;
 
 import java.sql.Blob;
+import java.sql.Types;
 import java.util.List;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Lob;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-
-import org.hibernate.annotations.Type;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.URL;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import jakarta.persistence.Entity;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 public class Organiser extends PanacheEntity {
@@ -20,8 +19,7 @@ public class Organiser extends PanacheEntity {
 	@NotEmpty
 	public String lastName;
 	public String title;
-	@Type(type="org.hibernate.type.TextType")
-	@Lob
+	@JdbcTypeCode(Types.LONGVARCHAR)
 	@NotBlank
 	@Length(max = 10000)
 	public String biography;

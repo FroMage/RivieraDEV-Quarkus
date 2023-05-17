@@ -1,19 +1,18 @@
 package model;
 
 import java.sql.Blob;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Lob;
-import jakarta.persistence.ManyToMany;
-import jakarta.validation.constraints.NotBlank;
-
-import org.hibernate.annotations.Type;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.URL;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToMany;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Speaker extends PanacheEntity implements Comparable<Speaker> {
@@ -21,8 +20,7 @@ public class Speaker extends PanacheEntity implements Comparable<Speaker> {
 	@NotBlank
 	public String lastName;
 	public String title;
-	@Type(type="org.hibernate.type.TextType")
-	@Lob
+	@JdbcTypeCode(Types.LONGVARCHAR)
 	@NotBlank
 	@Length(max = 10000)
 	public String biography;
