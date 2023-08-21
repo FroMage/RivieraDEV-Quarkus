@@ -20,7 +20,6 @@ import org.jboss.resteasy.reactive.PartType;
 import org.jboss.resteasy.reactive.RestForm;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.quarkiverse.renarde.Controller;
 import io.quarkiverse.renarde.util.FileUtils;
@@ -29,7 +28,6 @@ import io.quarkus.qute.CheckedTemplate;
 import io.quarkus.qute.TemplateInstance;
 import io.quarkus.security.Authenticated;
 import io.smallrye.common.annotation.Blocking;
-import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.core.MediaType;
@@ -115,20 +113,16 @@ public class Admin extends Controller {
     	public static native TemplateInstance uploadProgramForm();
 
 		public static native TemplateInstance speakerEmails(List<Speaker> speakers);
+
+		public static native TemplateInstance index();
     }
     
     public TemplateInstance uploadProgramForm() {
     	return Templates.uploadProgramForm();
     }
     
-    @Inject
-    ObjectMapper mapper;
-    
     @POST
-    // requires https://github.com/quarkusio/quarkus/pull/31550
-//    public void uploadProgram(@RestForm @PartType(MediaType.APPLICATION_JSON) ProgramUpload program) throws FileNotFoundException, IOException {
-    public void uploadProgram(@RestForm("program") String json) throws FileNotFoundException, IOException {
-    	ProgramUpload program = mapper.readValue(json, ProgramUpload.class);
+    public void uploadProgram(@RestForm @PartType(MediaType.APPLICATION_JSON) ProgramUpload program) throws FileNotFoundException, IOException {
         flash("message", "Uploaded stuff");
         
         Map<String,Speaker> jsonSpeakerIds = new HashMap<>();
@@ -298,5 +292,9 @@ public class Admin extends Controller {
     public TemplateInstance speakerEmails() {
         List<Speaker> speakers = Speaker.list("ORDER BY firstName,lastName");
         return Templates.speakerEmails(speakers);
+    }
+
+    public TemplateInstance index() {
+        return Templates.index();
     }
 }

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+
+<html lang="{inject:i18n.get()}">
+    <head>
+        <title>{#insert title/} - Riviera DEV 2023 - ADMIN</title>
+
+        <link
+            rel="icon"
+            type="image/png"
+            href="/public/images/favicon.png"
+        />
+
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+        />
+
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Muli:300,400,600,700" rel="stylesheet"> 
+
+        <!-- Font awesome -->
+        <script
+            defer
+            src="https://use.fontawesome.com/releases/v5.8.1/js/all.js"
+            integrity="sha384-g5uSoOSBd7KkhAMlnQILrecXvzst9TdC09/VM+pjDTCM+1il8RHz5fKANTFFb+gQ"
+            crossorigin="anonymous"
+        ></script>
+
+        <!-- Custom -->
+        <link rel="stylesheet" href="/public/stylesheets/style.css" />
+
+        <!--
+            jQuery is still necessary for the countdown, we have to use another lib to get rid of jQuery.
+        -->
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+		<style>
+			.warning {
+				padding: 1em;
+				margin: 1em;
+				background: #ff5555;
+			}
+			.warning a {
+				color: black;
+			}
+			.warning a.float {
+				float: right;
+			}
+			header {
+				border-bottom: 1px solid gray;
+			}
+			body {
+				margin: 1em;
+			}
+		</style>
+
+        {#insert moreStyles/}
+    </head>
+
+    <body>
+    	<div class="warning">
+    		<a href="{uri:Admin.index}">ADMINISTRATIVE TASKS</a>, logged in as {inject:user} (<a href="{uri:RenardeSecurityController.logout}">logout</a>).
+			<a class="float" href="{uri:Application.index}">Regular website</a>
+    	</div>
+
+        {#if flash:message || flash:message2}
+        <div class="alert alert-success">
+            {#if flash:message}
+            <li>{flash:message}</li>
+            {/if} {#if flash:message2}
+            <li>{flash:message2}</li>
+            {/if}
+        </div>
+        {/if}
+
+        <!-- <div class="container"> -->
+        {#insert /}
+        <!-- </div> -->
+
+        <!-- External libs -->
+
+        <!-- Modernizr build including the `webp` detect -->
+
+        <!-- Custom JS -->
+
+        {#insert moreScripts/}
+    </body>
+</html>
