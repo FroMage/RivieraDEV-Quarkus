@@ -115,6 +115,8 @@ public class Admin extends Controller {
 		public static native TemplateInstance speakerEmails(List<Speaker> speakers);
 
 		public static native TemplateInstance index();
+
+		public static native TemplateInstance speakerEmailsCompany(List<Speaker> speakers);
     }
     
     public TemplateInstance uploadProgramForm() {
@@ -294,6 +296,11 @@ public class Admin extends Controller {
         return Templates.speakerEmails(speakers);
     }
 
+    public TemplateInstance speakerEmailCompany() {
+        List<Speaker> speakers = Speaker.list("ORDER BY firstName,lastName");
+        return Templates.speakerEmailsCompany(speakers);
+    }
+    
     public TemplateInstance index() {
         return Templates.index();
     }
