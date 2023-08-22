@@ -82,6 +82,9 @@ public class Application extends ControllerWithUser<User> {
 				Map<Date, List<Track>> tracksPerDays, List<TalkTheme> themes, List<TalkType> types, Level[] levels,
 				Language[] languages);
 
+		public static native TemplateInstance talks(List<TalkTheme> themes, Level[] levels, List<Talk> talks,
+				List<TalkType> types, Language[] languages);
+
 		public static native TemplateInstance speakers(List<Speaker> speakers, List<Speaker> speakersPreviousYears,
 				boolean displayPreviousSpeakers);
 
@@ -314,6 +317,22 @@ public class Application extends ControllerWithUser<User> {
         return Templates.scheduleSuperSecret(days, tracks, tracksPerDays, themes, types, levels, languages);
     }
 
+    @Path("/talks")
+    public TemplateInstance talks() {
+        if (!Configuration.displayTalks()) {
+            index();
+        }
+
+        List<TalkTheme> themes = TalkTheme.findUsedThemes();
+        Level[] levels = Level.values();
+        List<TalkType> types = TalkType.findUsedTypes();
+        Collections.sort(types);
+        List<Talk> talks = Talk.list("isHiddenInTalksPage = false");
+        Collections.sort(talks);
+        Language[] languages = Language.values();
+        return Templates.talks(themes, levels, talks, types, languages);
+    }
+    
     @Path("/speakers")
     public TemplateInstance speakers() {
         List<Speaker> speakers = Speaker.list("ORDER BY lastName, firstName");

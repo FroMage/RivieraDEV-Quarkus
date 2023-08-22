@@ -17,10 +17,14 @@
         </div>
         <div class="talkDetails__header--schedule">
             <div>
-                {talk.slot.startDate.format('HH:mm')} - {talk.slot.endDate.format('HH:mm')}
+            	{#if talk.slot}
+	                {talk.slot.startDate.format('HH:mm')} - {talk.slot.endDate.format('HH:mm')}
+	            {/if}
             </div>
             <div class="talkDetails__track">
-                {talk.track.title}
+            	{#if talk.track}
+	                {talk.track.title}
+	            {/if}
             </div>
         </div>
     </div>

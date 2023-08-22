@@ -1,0 +1,34 @@
+{#include main.html}
+{#title}{m:views.application.talks.title}{/title}
+
+<div class="page__header talks__header">
+    <h1 class="page__mainTitle">{m:views.application.talks.title}</h1>
+    <div class="page__mainSubtitle talks__mainSubtitle">
+        <p>{m:views.application.talks.subtitle}</p>
+    </div>
+</div>
+
+<div class="page__container notFullWidth">
+
+    {#filterForTalks themes=themes levels=levels types=types languages=languages /}
+
+    <div class="talks js-talksFilter-toFilter">
+
+        {#for talk in talks}
+
+            {#if talk.isBreak == BreakType:NotABreak}
+
+                <div class="row talkDetails talkDetails-all talksFilter-item
+                            js-talksFilter-item 
+                            js-talksFilter-theme-{talk.theme.theme.slugify()??} 
+                            js-talksFilter-level-{talk.level.code??}
+                            js-talksFilter-type-{talk.type.toString().slugify()??}
+                            js-talksFilter-language-${talk.language.toString().slugify()??}">
+                    {#talk talk=talk/}
+                </div> <!-- ./row -->
+
+            {/if}
+
+        {/for}
+    </div>
+{/include}
