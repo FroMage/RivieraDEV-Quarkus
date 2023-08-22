@@ -9,24 +9,40 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.7.0/css/reveal.min.css">
 		<link rel="stylesheet" href="/public/stylesheets/fishmarket.css">
 
-        <!-- Google Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Muli:300,400,600,700" rel="stylesheet"> 
+		<!-- Google Fonts -->
+		<link href="https://fonts.googleapis.com/css?family=Muli:300,400,600,700" rel="stylesheet"> 
 	</head>
 	<body>
 		<div class="reveal">
 			<div class="slides">
-			{#for slot in Slot:findMultiPerDay(day)}
+			{#for slot in model_Slot:findMultiPerDay(day)}
 				{#for track in tracksForDay}
 					{#for talk in slot.getTalksPerTrack(track)}
 					<section>
 						<div class="card">
 							<div class="talk">
-								{#for speaker in talk.speakers}
-								<img class="speaker" 
-									src="{uri:Application.speakerPhoto(speaker.id)}" 
-									alt="{speaker.firstName} {speaker.lastName}" />
-								{/for}
+								<div class="speakers">
+									{#for speaker in talk.speakers}
+									<div class="speaker">
+										<span class="speaker_name">
+											{speaker.firstName} {speaker.lastName}
+										</span>
+										<img class="speaker_logo" 
+											src="{uri:Application.speakerPhoto(speaker.id)}" 
+											alt="{speaker.firstName} {speaker.lastName}" />
+									</div>
+									{/for}
+								</div>
 								<h1>{talk.title}</h1>
+								<div class="slot">
+									{#if talk.slot}
+										{talk.slot.startDate.format('HH:mm')} - {talk.slot.endDate.format('HH:mm')}
+									{/if}
+									—
+									{#if talk.track}
+										{talk.track.title}
+									{/if}
+								</div>
 							</div>
 							<div class="timer">30</div>
 						</div>
