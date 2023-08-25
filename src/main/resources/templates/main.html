@@ -8,10 +8,10 @@
         <link
             rel="icon"
             type="image/png"
-            href="/public/images/favicon.png"
+            href="/static/images/favicon.png"
         />
         <!--
-            <link rel="shortcut icon" type="image/x-icon" href="/public/images/favicon.ico">
+            <link rel="shortcut icon" type="image/x-icon" href="/static/images/favicon.ico">
         -->
 
         <meta charset="utf-8" />
@@ -30,7 +30,7 @@
         />
         <meta
             name="twitter:image"
-            content="/public/images/logo_twitter_cards_2023.jpg"
+            content="/static/images/logo_twitter_cards_2023.jpg"
         />
         <meta name="twitter:image:alt" content="Riviera DEV" />
 
@@ -44,7 +44,7 @@
         <meta property="og:url" content="{uriabs:Application.index}" />
         <meta
             property="og:image"
-            content="/public/images/logo_open_graph_2023.jpg"
+            content="/static/images/logo_open_graph_2023.jpg"
         />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
@@ -67,7 +67,7 @@
         />
 
         <!-- Custom -->
-        <link rel="stylesheet" href="/public/stylesheets/style.css" />
+        {#bundle key="style" tag="style"/}
 
         <!--
             jQuery is still necessary for the countdown, we have to use another lib to get rid of jQuery.
@@ -100,7 +100,7 @@
                     <div class="burgerMenu__welcome">
                         <img
                             class="burgerMenu__welcome--logo"
-                            src="/public/images/logos/logo_RD_full_white.svg"
+                            src="/static/images/logos/logo_RD_full_white.svg"
                             alt="RivieraDEV"
                         />
                         <div class="burgerMenu__welcome--info">
@@ -215,7 +215,7 @@
                 >
                     <span class="navbar-rivieradev navbar-animated-logo">
                         <img
-                            src="/public/images/logo_RD_black.svg"
+                            src="/static/images/logo_RD_black.svg"
                             alt="RivieraDEV"
                         />
                     </span>
@@ -227,7 +227,7 @@
                         <span class="navbar-RedHat--featuring">with</span
                         ><!-- Do not remove this comment
                         --><img
-                            src="/public/images/logos/quarkus_world_tour.svg"
+                            src="/static/images/logos/quarkus_world_tour.svg"
                             alt="Quarkus World Tour"
                             class="navbar-RedHat--logo"
                         />
@@ -347,7 +347,7 @@
             <div class="footer__logo">
                 <img
                     class="footer__logoImg"
-                    src="/public/images/logos/logo_RD_full_white.svg"
+                    src="/static/images/logos/logo_RD_full_white.svg"
                     alt="RivieraDEV"
                 />
             </div>
@@ -505,13 +505,13 @@
         <!-- External libs -->
 
         <!-- Modernizr build including the `webp` detect -->
-        <script src="/public/javascripts/libs/modernizr/modernizr-custom-webp.js"></script>
+        <script src="/static/javascripts/libs/modernizr/modernizr-custom-webp.js"></script>
 
         <!-- Custom JS -->
-        <script src="/public/javascripts/navbar-animated.js"></script>
-        <script src="/public/javascripts/map.js"></script>
-        <script src="/public/javascripts/schedule-filter.js"></script>
-        <script src="/public/javascripts/talk-like.js"></script>
+        <script src="/static/javascripts/navbar-animated.js"></script>
+        <script src="/static/javascripts/map.js"></script>
+        <script src="/static/javascripts/schedule-filter.js"></script>
+        <script src="/static/javascripts/talk-like.js"></script>
 
         <!-- Google maps API -->
         {#if googleMapApiKey??}

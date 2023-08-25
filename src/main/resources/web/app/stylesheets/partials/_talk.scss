@@ -1,6 +1,6 @@
 @include responsiveBackgroundImage(
     '.talks__header',
-    '../images/illustrations/responsives/speakers-mini'
+    '/static/images/illustrations/responsives/speakers-mini'
 );
 
 .talk-theme {
@@ -177,7 +177,7 @@
         display: inline-block;
         width: 1.5em;
         height: 1.5em;
-        background-image: url(../images/icons/microphone-white.svg);
+        background-image: url(/static/images/icons/microphone-white.svg);
         background-repeat: no-repeat;
     }
 

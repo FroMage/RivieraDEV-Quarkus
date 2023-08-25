@@ -12,11 +12,11 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
     <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
-    <quarkus.platform.version>3.2.4.Final</quarkus.platform.version>
+    <quarkus.platform.version>3.3.0</quarkus.platform.version>
     <skipITs>true</skipITs>
     <surefire-plugin.version>3.0.0-M7</surefire-plugin.version>
-    <renarde.version>3.0.4-SNAPSHOT</renarde.version>
-    <web-assets.version>999-SNAPSHOT</web-assets.version>
+    <renarde.version>3.0.4</renarde.version>
+    <web-bundler.version>1.1.1</web-bundler.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -46,9 +46,9 @@
       <version>${renarde.version}</version>
     </dependency>
     <dependency>
-      <groupId>io.quarkiverse.web-assets</groupId>
-      <artifactId>quarkus-web-assets-sass</artifactId>
-      <version>${web-assets.version}</version>
+      <groupId>io.quarkiverse.web-bundler</groupId>
+      <artifactId>quarkus-web-bundler</artifactId>
+      <version>${web-bundler.version}</version>
     </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>

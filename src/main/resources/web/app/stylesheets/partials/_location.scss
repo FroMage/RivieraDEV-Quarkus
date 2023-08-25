@@ -46,7 +46,7 @@
 
     &__cardHeader {
         padding: 20rem $space-xl $space-lg $space-xl;
-        background-image: url(../images/illustrations/location-mini.jpg);
+        background-image: url(/static/images/illustrations/location-mini.jpg);
         background-position: center;
         background-repeat: no-repeat;
         background-size: cover;
@@ -83,11 +83,11 @@
 
     &__intro {
         margin-bottom: $space-xl;
-        background-image: url(../images/icons/love.svg);
+        background-image: url(/static/images/icons/love.svg);
     }
 
     &__address {
-        background-image: url(../images/icons/where.svg);
+        background-image: url(/static/images/icons/where.svg);
     }
 
     &__addressLine {

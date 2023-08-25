@@ -1,14 +1,14 @@
 .no-webp .access {
     &__header {
         @include backgroundImageWithDarkGradient(
-            '../images/illustrations/access-mini.jpg'
+            '/static/images/illustrations/access-mini.jpg'
         );
     }
 }
 
 @include responsiveBackgroundImage(
     '.access__header',
-    '../images/illustrations/responsives/access-mini'
+    '/static/images/illustrations/responsives/access-mini'
 );
 
 .access {
@@ -124,31 +124,31 @@
 
     &__where {
         margin-bottom: $space-xl;
-        background-image: url(../images/icons/where-2.svg);
+        background-image: url(/static/images/icons/where-2.svg);
     }
 
     &__how {
-        background-image: url(../images/icons/how-to-get-here.svg);
+        background-image: url(/static/images/icons/how-to-get-here.svg);
     }
 
     &__bike {
-        background-image: url(../images/icons/bike.svg);
+        background-image: url(/static/images/icons/bike.svg);
         background-size: 150px 150px;
     }
     
     &__car {
-        background-image: url(../images/icons/car.svg);
+        background-image: url(/static/images/icons/car.svg);
     }
 
     &__plane {
-        background-image: url(../images/icons/plane.svg);
+        background-image: url(/static/images/icons/plane.svg);
     }
 
     &__bus {
-        background-image: url(../images/icons/bus.svg);
+        background-image: url(/static/images/icons/bus.svg);
     }
 
     &__train {
-        background-image: url(../images/icons/train.svg);
+        background-image: url(/static/images/icons/train.svg);
     }
 }

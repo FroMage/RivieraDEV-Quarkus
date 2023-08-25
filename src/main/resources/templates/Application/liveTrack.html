@@ -4,7 +4,7 @@
 <head>
 <title>{m:views.application.schedule.title}</title>
 
-<link rel="icon" type="image/png" href="/public/images/favicon.png">
+<link rel="icon" type="image/png" href="/static/images/favicon.png">
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
@@ -13,7 +13,7 @@
 <link href="https://fonts.googleapis.com/css?family=Muli:300,400,600,700" rel="stylesheet">
 
 <!-- Custom -->
-<link rel="stylesheet" href="/public/stylesheets/live.scss">
+{#bundle key="live" tag="style"/}
 
 </head>
 <body>
@@ -25,7 +25,7 @@
     <div id="js-target" class="live"></div>
 
     <!-- Modernizr build including the `webp` detect -->
-    <script src="/public/javascripts/libs/modernizr/modernizr-custom-webp.js"></script>
+    <script src="/static/javascripts/libs/modernizr/modernizr-custom-webp.js"></script>
     <script>
         // Detect if webp is supported by the web browser
         Modernizr.on('webp', function (isSupported) {
@@ -48,10 +48,10 @@
     </script>
     
     <!-- Add ellipsis when text is too long -->
-    <script src="/public/javascripts/libs/clamp.js"></script>
+    <script src="/static/javascripts/libs/clamp.js"></script>
 
     <!-- Fill and animate the Live page -->
-    <script src="/public/javascripts/live.js"></script>
+    <script src="/static/javascripts/live.js"></script>
     <script>
 
         const showTrack = "{track}";

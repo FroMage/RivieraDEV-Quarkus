@@ -2,27 +2,27 @@ $avatar-size: 30px;
 
 @include responsiveBackgroundImage(
     '.schedule__header',
-    '../images/illustrations/responsives/program-mini'
+    '/static/images/illustrations/responsives/program-mini'
 );
 
 @include responsiveBackgroundImage(
     '.fullSchedule__breakfast, .tempSchedule__breakfast',
-    '../images/illustrations/responsives/croissants-mini'
+    '/static/images/illustrations/responsives/croissants-mini'
 );
 
 @include responsiveBackgroundImage(
     '.fullSchedule__lunch, .tempSchedule__lunch',
-    '../images/illustrations/responsives/lunch-mini'
+    '/static/images/illustrations/responsives/lunch-mini'
 );
 
 @include responsiveBackgroundImage(
     '.fullSchedule__cofeeBreak, .tempSchedule__cofeeBreak',
-    '../images/illustrations/responsives/cofee_break-mini'
+    '/static/images/illustrations/responsives/cofee_break-mini'
 );
 
 @include responsiveBackgroundImage(
     '.fullSchedule__party, .tempSchedule__party',
-    '../images/illustrations/responsives/guitars-mini'
+    '/static/images/illustrations/responsives/guitars-mini'
 );
 
 .schedule {
@@ -395,16 +395,16 @@ $avatar-size: 30px;
         }
 
         &__theme {
-            background-image: url(../images/icons/talk-theme.svg);
+            background-image: url(/static/images/icons/talk-theme.svg);
         }
         &__type {
-            background-image: url(../images/icons/talk-type.svg);
+            background-image: url(/static/images/icons/talk-type.svg);
         }
         &__level {
-            background-image: url(../images/icons/talk-level.svg);
+            background-image: url(/static/images/icons/talk-level.svg);
         }
         &__language {
-            background-image: url(../images/icons/talk-lang.svg);
+            background-image: url(/static/images/icons/talk-lang.svg);
         }
 
         &__speakers {
@@ -453,10 +453,10 @@ $avatar-size: 30px;
             background-repeat: no-repeat;
             background-position: center;
             background-size: cover;
-            background-image: url(../images/icons/heart.svg);
+            background-image: url(/static/images/icons/heart.svg);
 
             &[data-like='true'] {
-                background-image: url(../images/icons/heart-selected.svg);
+                background-image: url(/static/images/icons/heart-selected.svg);
             }
         }
     }

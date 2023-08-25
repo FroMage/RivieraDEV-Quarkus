@@ -58,12 +58,12 @@ $quote-size: 3rem;
                 flex-shrink: 0;
             }
             &:before {
-                background-image: url('../images/icons/quote_left.svg');
+                background-image: url('/static/images/icons/quote_left.svg');
                 align-self: flex-start;
                 margin-right: $space-sm;
             }
             &:after {
-                background-image: url('../images/icons/quote_right.svg');
+                background-image: url('/static/images/icons/quote_right.svg');
                 align-self: flex-end;
                 margin-left: $space-sm;
             }

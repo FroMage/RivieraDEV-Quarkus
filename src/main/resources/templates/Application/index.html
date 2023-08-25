@@ -6,15 +6,15 @@
     <div class="parallax__content">
         <div class="parallax__logosContainer">
             <div class="parallax__logos">
-                <img class="parallax__logo--rdev" src="/public/images/logos/logo_RD_full_white.svg" alt="Riviera DEV">
-                <img class="parallax__logo--judcon" src="/public/images/logos/quarkus_world_tour_white.svg" alt="Quarkus World Tour">
+                <img class="parallax__logo--rdev" src="/static/images/logos/logo_RD_full_white.svg" alt="Riviera DEV">
+                <img class="parallax__logo--judcon" src="/static/images/logos/quarkus_world_tour_white.svg" alt="Quarkus World Tour">
             </div>
         </div>
         
         <div class="parallax__info">
             <span>{m:views.application.index.date}</span>
             <div>
-                <img class="parallax__icon" src="/public/images/icons/where.svg" alt="">
+                <img class="parallax__icon" src="/static/images/icons/where.svg" alt="">
                 <span>{m:views.application.index.place}</span>
             </div>
         </div>
@@ -140,7 +140,7 @@
         <div class="days__contents">
 
             <div class="days__intro days__intro--1">
-                <img class="days__illustration" src="/public/images/mascotte/Ray_Deep_Dive.png" alt="">
+                <img class="days__illustration" src="/static/images/mascotte/Ray_Deep_Dive.png" alt="">
                 <div class="days__titleDate">
                     <h3 class="days__title days__title--1">{m:views.application.index.days.deepdive.title}</h3><!-- Do not remove this comment 
                     --><div class="days__date">{m:views.application.index.days.deepdive.date}</div>
@@ -155,13 +155,13 @@
                 
                 <h3 class="days__subtitle">{m:views.application.index.days.deepdive.judcon.title}</h3>
                 <p>
-                	<img class="days__judcon" src="/public/images/logos/quarkus_world_tour_wings.svg" alt="Quarkus World Tour">
+                	<img class="days__judcon" src="/static/images/logos/quarkus_world_tour_wings.svg" alt="Quarkus World Tour">
                 	{m:views.application.index.days.deepdive.judcon.desc}
                 </p>
             </div>
 
             <div class="days__intro days__intro--2">
-                <img class="days__illustration" src="/public/images/mascotte/Ray_ITv2.1.png" alt="">
+                <img class="days__illustration" src="/static/images/mascotte/Ray_ITv2.1.png" alt="">
                 <div class="days__titleDate">
                     <h3 class="days__title days__title--1">{m:views.application.index.days.conf.title}</h3>
                     <div class="days__date">{m:views.application.index.days.conf.date}</div>
@@ -179,7 +179,7 @@
                 <p>{m:views.application.index.days.conf.notjustcoders.desc}</p>
                 <h3 class="days__subtitle">{m:views.application.index.days.conf.judcon.title}</h3>
                 <p>
-                	<img class="days__judcon" src="/public/images/logos/quarkus_world_tour_wings.svg" alt="Quarkus World Tour">
+                	<img class="days__judcon" src="/static/images/logos/quarkus_world_tour_wings.svg" alt="Quarkus World Tour">
                 	{m:views.application.index.days.conf.judcon.desc}
                 </p>
             </div>
@@ -203,7 +203,7 @@
         </h2>
         <div class="judcon__content">
             <figure class="personSummary judcon__person">
-                <div class="personSummary__photo" style="background-image: url('/public/images/illustrations/Mark_Little.jpg')">
+                <div class="personSummary__photo" style="background-image: url('/static/images/illustrations/Mark_Little.jpg')">
                 </div>
                 <figcaption class="personSummary__desc">
                     <div class="personSummary__name">Mark Little</div>
@@ -319,9 +319,9 @@
 
 
 <!-- Countdown -->
-<script src="/public/javascripts/libs/jquery.countdown.min.js"></script>
+<script src="/static/javascripts/libs/jquery.countdown.min.js"></script>
 <script type="module">
-    import initCountdown from "/public/javascripts/countdown.js";
+    import initCountdown from "/static/javascripts/countdown.js";
     initCountdown(
         {
             eventStartDate: "{eventStartDateStr}", 

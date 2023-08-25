@@ -39,7 +39,7 @@ $background-height: 192px;
     &__emailContainer {
         @media (min-width: $screen-md-min) {
             display: inline-block;
-            background-image: url(../images/icons/newsletter-paper-plane.svg);
+            background-image: url(/static/images/icons/newsletter-paper-plane.svg);
             background-repeat: no-repeat;
             background-position: bottom right;
             background-size: $background-width;

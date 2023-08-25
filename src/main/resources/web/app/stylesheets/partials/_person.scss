@@ -131,15 +131,15 @@ $avatar-size-sm: 150px;
     }
 
     &__twitter:before {
-        background-image: url(../images/icons/twitter-logo-button.svg);
+        background-image: url(/static/images/icons/twitter-logo-button.svg);
     }
 
     &__blog:before {
-        background-image: url(../images/icons/link.svg);
+        background-image: url(/static/images/icons/link.svg);
     }
 
     &__micro:before {
-        background-image: url(../images/icons/microphone.svg);
+        background-image: url(/static/images/icons/microphone.svg);
         vertical-align: text-bottom;
     }
 

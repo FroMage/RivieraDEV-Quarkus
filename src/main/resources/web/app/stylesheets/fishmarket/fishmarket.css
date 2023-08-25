@@ -5,7 +5,7 @@ section.has-dark-background, section.has-dark-background h1, section.has-dark-ba
  * GLOBAL STYLES
  *********************************************/
 body {
-  background-image: url('/public/images/backgrounds/fishmarket.svg');
+  background-image: url('/static/images/backgrounds/fishmarket.svg');
   background-size: cover;
   background-position: bottom;
 }
