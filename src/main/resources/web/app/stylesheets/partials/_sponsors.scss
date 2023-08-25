@@ -149,7 +149,7 @@ $sponsor-silver-height: 92px;
 
 @include responsiveBackgroundImage(
     '.partenaireDetails__headerPage',
-    '../images/illustrations/responsives/sponsor-mini'
+    '/static/images/illustrations/responsives/sponsor-mini'
 );
 
 .partenaireDetails {
@@ -221,15 +221,15 @@ $sponsor-silver-height: 92px;
     }
 
     &__website:before {
-        background-image: url(../images/icons/link.svg);
+        background-image: url(/static/images/icons/link.svg);
     }
 
     &__linkedin:before {
-        background-image: url(../images/icons/linkedin.svg);
+        background-image: url(/static/images/icons/linkedin.svg);
     }
 
     &__twitter:before {
-        background-image: url(../images/icons/twitter-logo-button.svg);
+        background-image: url(/static/images/icons/twitter-logo-button.svg);
     }
 
     &__logo {
@@ -343,41 +343,41 @@ $sponsor-silver-height: 92px;
         position: relative;
 
         &--gold {
-            background-image: url('../images/backgrounds/polygon-05.jpg');
+            background-image: url('/static/images/backgrounds/polygon-05.jpg');
             & .sponsorship-title:after {
-                //background-image: url('../images/icons/airplane.svg');
+                //background-image: url('/static/images/icons/airplane.svg');
             }
         }
 
         &--silver {
-            background-image: url('../images/backgrounds/polygon-02.jpg');
+            background-image: url('/static/images/backgrounds/polygon-02.jpg');
             & .sponsorship-title:after {
-                //background-image: url('../images/icons/paper-plane.svg');
+                //background-image: url('/static/images/icons/paper-plane.svg');
             }
         }
 
         &--platinum {
-            background-image: url('../images/backgrounds/polygon-04.jpg');
+            background-image: url('/static/images/backgrounds/polygon-04.jpg');
             & .sponsorship-title:after {
-                //background-image: url('../images/icons/rocket.svg');
+                //background-image: url('/static/images/icons/rocket.svg');
             }
         }
 
         &--small {
-            //background-image: url('../images/backgrounds/polygon-03.jpg');
+            //background-image: url('/static/images/backgrounds/polygon-03.jpg');
             background: $color-gray-light;
         }
 
         &--breakfasts .sponsorship-title:after {
-            background-image: url('../images/icons/croissant.svg');
+            background-image: url('/static/images/icons/croissant.svg');
         }
 
         &--lunches .sponsorship-title:after {
-            background-image: url('../images/icons/lunch.svg');
+            background-image: url('/static/images/icons/lunch.svg');
         }
 
         &--party .sponsorship-title:after {
-            background-image: url('../images/icons/beer.svg');
+            background-image: url('/static/images/icons/beer.svg');
         }
     }
 

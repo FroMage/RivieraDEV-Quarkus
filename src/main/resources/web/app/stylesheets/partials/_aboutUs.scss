@@ -1,7 +1,7 @@
 
 @include responsiveBackgroundImage(
     '.aboutUs__aboutUs',
-    '../images/illustrations/responsives/about_us_1-mini'
+    '/static/images/illustrations/responsives/about_us_1-mini'
 );
 
 .aboutUs {
@@ -79,10 +79,10 @@
 
     &__photo2 {
         grid-area: photo2;
-        background-image: url(../images/illustrations/about_us_2-mini.jpg);
+        background-image: url(/static/images/illustrations/about_us_2-mini.jpg);
     }
     &__photo3 {
         grid-area: photo3;
-        background-image: url(../images/illustrations/about_us_3-mini.jpg);
+        background-image: url(/static/images/illustrations/about_us_3-mini.jpg);
     }
 }

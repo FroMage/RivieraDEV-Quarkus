@@ -1,15 +1,15 @@
-@import './variables';
-@import './mixins';
+@import '../app/stylesheets/variables';
+@import '../app/stylesheets/mixins';
 
-@import './partials/common';
-@import './partials/countdown';
-@import './partials/person';
-@import './partials/schedule';
-@import './partials/talk';
+@import '../app/stylesheets/partials/common';
+@import '../app/stylesheets/partials/countdown';
+@import '../app/stylesheets/partials/person';
+@import '../app/stylesheets/partials/schedule';
+@import '../app/stylesheets/partials/talk';
 
 @include responsiveBackgroundImage(
     '.live__nothing--next',
-    '../images/illustrations/responsives/team-mini'
+    '/static/images/illustrations/responsives/team-mini'
 );
 
 .liveList {

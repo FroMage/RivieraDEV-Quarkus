@@ -22,8 +22,8 @@
         background-size: 6rem 6rem;
         opacity: 0.2;
 
-        &--goal { background-image: url(../images/icons/mountain.svg); }
-        &--dna { background-image: url(../images/icons/dna.svg); }
+        &--goal { background-image: url(/static/images/icons/mountain.svg); }
+        &--dna { background-image: url(/static/images/icons/dna.svg); }
     }
 
     &-title {

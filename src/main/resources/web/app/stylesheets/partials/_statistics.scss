@@ -31,13 +31,13 @@
         margin-bottom: $space-md;
 
         &--attendees {
-            background-image: url(../images/icons/attendees.svg);
+            background-image: url(/static/images/icons/attendees.svg);
         }
         &--conferences {
-            background-image: url(../images/icons/sessions.svg);
+            background-image: url(/static/images/icons/sessions.svg);
         }
         &--workshops {
-            background-image: url(../images/icons/workshops.svg);
+            background-image: url(/static/images/icons/workshops.svg);
         }
     }
 

@@ -94,13 +94,13 @@ $counter-item-size: 12rem;
         }
 
         &--what::before {
-            background-image: url(../images/icons/what.svg);
+            background-image: url(/static/images/icons/what.svg);
         }
         &--when::before {
-            background-image: url(../images/icons/when.svg);
+            background-image: url(/static/images/icons/when.svg);
         }
         &--where::before {
-            background-image: url(../images/icons/where.svg);
+            background-image: url(/static/images/icons/where.svg);
         }
     }
 
