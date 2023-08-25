@@ -393,7 +393,7 @@ public class Application extends ControllerWithUser<User> {
         PreviousSpeaker speaker = PreviousSpeaker.findById(id);
         notFoundIfNull(speaker);
         if (speaker.photo == null)
-            seeOther("/public/images/mascotte/Ray_Cool.jpg");
+            seeOther("/static/images/mascotte/Ray_Cool.jpg");
         return binary(speaker.photo);
     }
 
@@ -412,7 +412,7 @@ public class Application extends ControllerWithUser<User> {
         Speaker speaker = Speaker.findById(id);
         notFoundIfNull(speaker);
         if (speaker.photo == null)
-            seeOther("/public/images/mascotte/Ray_Cool.jpg");
+            seeOther("/static/images/mascotte/Ray_Cool.jpg");
         return binary(speaker.photo);
     }
 
@@ -428,7 +428,7 @@ public class Application extends ControllerWithUser<User> {
         Organiser organiser = Organiser.findById(id);
         notFoundIfNull(organiser);
         if (organiser.photo == null)
-            seeOther("/public/images/mascotte/Ray_Badass.jpg");
+            seeOther("/static/images/mascotte/Ray_Badass.jpg");
         return binary(organiser.photo);
     }
 
