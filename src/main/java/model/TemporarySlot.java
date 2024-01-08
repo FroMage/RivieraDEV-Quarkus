@@ -8,7 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotBlank;
-
+import jakarta.validation.constraints.NotNull;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 
 @SuppressWarnings("serial")
@@ -16,11 +16,11 @@ import io.quarkus.hibernate.orm.panache.PanacheEntity;
 public class TemporarySlot extends PanacheEntity {
 	
 	@Field("startDate")
-	@NotBlank
+	@NotNull
 	public Date startDate;
 	
 	@Field("endDate")
-	@NotBlank
+	@NotNull
 	public Date endDate;
 	
 	@Field("labelEN")

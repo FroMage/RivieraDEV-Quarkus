@@ -5,19 +5,19 @@ import java.util.Date;
 
 import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotBlank;
-
+import jakarta.validation.constraints.NotNull;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 
 @Entity
 public class PricePackDate extends PanacheEntity {
 
-	@NotBlank
+	@NotNull
     public Date blindBirdEndDate;
 
-	@NotBlank
+	@NotNull
     public Date earlyBirdEndDate;
 
-	@NotBlank
+	@NotNull
     public Date regularEndDate;
 
     @Override

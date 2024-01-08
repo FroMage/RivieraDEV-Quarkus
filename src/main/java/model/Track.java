@@ -14,7 +14,6 @@ public class Track extends PanacheEntity implements Comparable<Track>{
 	@NotBlank
 	public String title;
 	
-	@NotBlank
 	public int position;
 
 	public boolean isJUDCon;

@@ -4,7 +4,7 @@ import java.sql.Blob;
 
 import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotBlank;
-
+import jakarta.validation.constraints.NotNull;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 
 @Entity
@@ -22,7 +22,7 @@ public class PreviousSpeaker extends PanacheEntity implements Comparable<Previou
 	public Blob photo;
 	
 	/* La dernière année à laquelle l'orateur a participé au RivieraDEV */
-	@NotBlank
+	@NotNull
 	public Integer year;
 	
 	@Override

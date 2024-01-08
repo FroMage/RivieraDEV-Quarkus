@@ -12,7 +12,7 @@ import java.util.Map;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotBlank;
-
+import jakarta.validation.constraints.NotNull;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import io.quarkus.qute.TemplateData;
 
@@ -21,11 +21,11 @@ import io.quarkus.qute.TemplateData;
 public class Slot extends PanacheEntity {
 
     @Field("startDate")
-	@NotBlank
+	@NotNull
     public Date startDate;
 
     @Field("endDate")
-	@NotBlank
+	@NotNull
     public Date endDate;
 
     @OneToMany(mappedBy = "slot")

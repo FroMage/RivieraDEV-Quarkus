@@ -46,6 +46,11 @@
       <version>${renarde.version}</version>
     </dependency>
     <dependency>
+      <groupId>io.quarkiverse.renarde</groupId>
+      <artifactId>quarkus-renarde-transporter</artifactId>
+      <version>${renarde.version}</version>
+    </dependency>
+    <dependency>
       <groupId>io.quarkiverse.web-bundler</groupId>
       <artifactId>quarkus-web-bundler</artifactId>
       <version>${web-bundler.version}</version>
