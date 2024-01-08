@@ -41,7 +41,7 @@ public class Organiser extends PanacheEntity {
 	}
 
 	public static List<Organiser> organisers() {
-		return list("orga = true ORDER BY firstname, lastname");
+		return list("orga = true ORDER BY firstName, lastName");
 	}
 
 	public static List<Organiser> cfp() {
