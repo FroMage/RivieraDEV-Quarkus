@@ -1,0 +1,48 @@
+#!/bin/sh
+
+random () {
+ i=0
+ while [ $i -lt 64 ]
+ do
+     RAND=$(od -An -N1 -t u1 /dev/urandom)
+     val=$(( ($RAND % 62) + 1 ))
+     key=$(echo "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789" | cut -c $val)
+     echo -n $key
+     i=$(( i+1 ))
+ done
+ echo
+}
+
+APP=rivieradev-quarkus-2024
+QUARKUS_USER=quarkus
+CLUSTER=
+
+if test -n "$CLUSTER"
+then
+	APP_FOLDER=$APP/$CLUSTER
+	APP_NAME=$APP-$CLUSTER
+else
+	APP_FOLDER=$APP
+	APP_NAME=$APP
+fi
+
+set -e
+
+case "$1" in
+upgrade)
+	# Remove tmp contents before upgrading
+	rm -rf /tmp/$APP_FOLDER
+esac
+
+if test \! -d /etc/$APP_FOLDER
+then
+    mkdir -p /etc/$APP_FOLDER
+fi
+
+if test \! -f /etc/$APP_FOLDER/rsaPrivateKey.pem
+then
+    echo "Generating private/public keys for JWT"
+    openssl genrsa -out /etc/$APP_FOLDER/rsaPrivateKey.pem 2048
+    openssl rsa -pubout -in /etc/$APP_FOLDER/rsaPrivateKey.pem -out /etc/$APP_FOLDER/publicKey.pem
+    openssl pkcs8 -topk8 -nocrypt -inform pem -in /etc/$APP_FOLDER/rsaPrivateKey.pem -outform pem -out /etc/$APP_FOLDER/privateKey.pem
+fi

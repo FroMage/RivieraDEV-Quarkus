@@ -1,0 +1,30 @@
+#!/usr/bin/make -f
+#-*- makefile -*-
+# Made with the aid of dh_make, by Craig Small
+# Sample debian/rules that uses debhelper. GNU copyright 1997 by Joey Hess.
+# Some lines taken from debmake, by Christoph Lameter.
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+NAME=rivieradev-quarkus-2024
+
+DEB_PATH=debian/$(NAME)
+BIN_PATH=/usr/bin/
+INSTALL_PATH=/usr/share/$(NAME)
+ETC_PATH=/etc/$(NAME)
+LOG_PATH=/var/log/$(NAME)
+LIB_PATH=/var/lib/$(NAME)
+RUN_PATH=/var/run/$(NAME)
+TMP_PATH=/tmp/$(NAME)
+
+%:
+	dh  $@
+
+override_dh_auto_install: 
+	install -d $(DEB_PATH)$(INSTALL_PATH) $(DEB_PATH)$(ETC_PATH) $(DEB_PATH)$(LOG_PATH) $(DEB_PATH)$(LIB_PATH) $(DEB_PATH)$(RUN_PATH) $(DEB_PATH)$(BIN_PATH) $(DEB_PATH)$(TMP_PATH)
+	rsync --exclude .git -r target/website-1.0.0-SNAPSHOT-runner $(DEB_PATH)$(BIN_PATH)/$(NAME)
+	cp src/main/resources/application.properties $(DEB_PATH)$(ETC_PATH)
+	echo "# Prod overrides" >> $(DEB_PATH)$(ETC_PATH)/application.properties
+	cat debian/application.properties >> $(DEB_PATH)$(ETC_PATH)/application.properties
+	ln -s $(ETC_PATH) $(DEB_PATH)$(INSTALL_PATH)/config
