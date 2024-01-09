@@ -4,7 +4,7 @@
     <div class="partenaires__list">
         {#for sponsor in sponsorsPreviousYears}
             <a class="partenaire__logo" href="{sponsor.companyURL}" target="_blank" title="{sponsor.company}">
-                <img class="partenaire__logoImg" src="@{Application.sponsorLogo(sponsor.id)}" />
+                <img class="partenaire__logoImg" src="{uri:Application.sponsorLogo(sponsor.id)}" />
             </a>
         {/for}
     </div>

@@ -1,7 +1,7 @@
 <div class="persons__list">
     {#for speaker in speakers}
         <figure class="personSummary">
-            <div class="personSummary__photo" style="background-image: url('@{Application.previousSpeakerPhoto(speaker.id)}')">
+            <div class="personSummary__photo" style="background-image: url('{uri:Application.previousSpeakerPhoto(speaker.id)}')">
             </div>
             <figcaption class="personSummary__desc">
                 <div class="personSummary__name">{speaker}</div>

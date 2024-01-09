@@ -3,13 +3,13 @@
     <col class="tempSchedule__col--time">
     <col class="tempSchedule__col">
 
-    {#for slot in models.TemporarySlot.findPerDay(day)}
+    {#for slot in model_TemporarySlot:findPerDay(day)}
         <tr>
             <th class="tempSchedule__time" scope="row">
                 <span>{slot.startDate.format('HH:mm')}</span>
             </th>
 
-            {#if slot.isBreak != null && slot.isBreak != models.BreakType.NotABreak}
+            {#if slot.isBreak && slot.isBreak != BreakType:NotABreak}
                 <td class="tempSchedule__{slot.isBreak.code}">
                     <span class="tempSchedule__breakTitle">
                         {#if inject:i18n.get() == "en" && slot.labelEN}

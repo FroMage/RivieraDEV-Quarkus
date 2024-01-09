@@ -4,14 +4,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import io.quarkus.qute.TemplateData;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
 
-@SuppressWarnings("serial")
+@TemplateData
 @Entity
 public class TemporarySlot extends PanacheEntity {
 	
@@ -54,7 +54,7 @@ public class TemporarySlot extends PanacheEntity {
 		return strbuf.toString();
 	}
 	
-	public static List<Slot> findPerDay(Date day){
+	public static List<TemporarySlot> findPerDay(Date day){
 		return list("date_trunc('day', startDate) = ?1 ORDER BY startDate", day);
 	}
 	
