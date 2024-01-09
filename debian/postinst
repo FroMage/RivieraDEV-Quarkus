@@ -37,6 +37,6 @@ configure)
 	then
 		/etc/init.d/$APP_NAME restart
 	else
-		echo "Not starting $APP_NAME, configure /etc/$APP_FOLDER/application.conf and /etc/default/$APP_NAME, then run /etc/init.d/$APP_NAME start"
+		echo "Not starting $APP_NAME, configure /etc/$APP_FOLDER/application.properties and /etc/default/$APP_NAME, then run /etc/init.d/$APP_NAME start"
 	fi
 esac
