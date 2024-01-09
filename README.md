@@ -32,3 +32,10 @@ And deploy the resulting Debian package on the production server.
 - Renarde ([guide](https://quarkiverse.github.io/quarkiverse-docs/quarkus-renarde/dev/index.html)): Renarde is a server-side Web Framework based on Quarkus, Qute, Hibernate and RESTEasy Reactive.
 - Hibernate ORM with Panache ([guide](https://quarkus.io/guides/hibernate-orm-panache)): Simplify your persistence code for Hibernate ORM via the active record or the repository pattern
 
+## TODO
+
+- On prod, upgrade from postgres 9 to 14 (2024 is on 14, the rest is on 9)
+- On dev, use dev service for postgres
+- On dev, test and document db transporter for new users
+- Figure out how to write db migrations
+- Migrate some DB data from 2023 to 2024
