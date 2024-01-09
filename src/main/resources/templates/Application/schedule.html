@@ -15,9 +15,9 @@
     {#if !displayFullSchedule}
         <div class="schedule__intro">
             {#if displayNewSpeakers && displayTalks}
-                <p>{m:views.application.schedule.unavailable.speakers.available}</p>
+                <p>{m:views.application.schedule.unavailable.speakers.available.raw}</p>
             {#else}
-                <p>{m:views.application.schedule.unavailable}</p>
+                <p>{m:views.application.schedule.unavailable.raw}</p>
             {/if}
             
             {#if days != null && days.size() > 0}        
