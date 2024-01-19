@@ -300,6 +300,10 @@
             {m:views.application.index.sponsors}
         </h2>
 
+        <div class="partenaires__buttonContainer">
+            <a class="button" href="{sponsoringLeafletUrl}">{m:views.application.index.sponsors.join}</a>
+        </div>
+
         {#if sponsors != null && !sponsors.isEmpty()}
             <div class="partenaires__levels">
                 {#for sponsorShip in sponsors.keySet()}
