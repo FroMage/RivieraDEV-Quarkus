@@ -111,7 +111,7 @@
                     {/if}
                     {#if pricePack.maxPrice != null && pricePack.remainingDays != null}
                         <div class="pass__remainingDays">
-                            * &{'views.application.subscribe.pass.remainingDays', 'views.application.subscribe.pass.period.' + pricePack.currentPeriod.code, pricePack.remainingDays}
+                            * {m:'views.application.subscribe.pass.period.' + pricePack.currentPeriod.code}{m:views.application.subscribe.pass.remainingDays(pricePack.remainingDays).raw}
                         </div>
                     {/if}
                 </ul>
