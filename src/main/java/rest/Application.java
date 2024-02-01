@@ -152,12 +152,20 @@ public class Application extends ControllerWithUser<User> {
 
     public void fr(@RestQuery String url) {
         i18n.set("fr");
-        seeOther(url);
+        // some links call us withour a url, no idea why, but avoid an NPE
+        if(url != null && !url.isEmpty())
+        	seeOther(url);
+        else
+        	index();
     }
 
     public void en(@RestQuery String url) {
         i18n.set("en");
-        seeOther(url);
+        // some links call us withour a url, no idea why, but avoid an NPE
+        if(url != null && !url.isEmpty())
+        	seeOther(url);
+        else
+        	index();
     }
 
     @Path("/")
