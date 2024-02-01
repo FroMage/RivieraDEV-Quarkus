@@ -11,7 +11,8 @@ You can run your application in dev mode that enables live coding using:
 ./mvnw compile quarkus:dev
 ```
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at http://localhost:8080/q/dev/.
+This will start by creating a user with username: 'user', password: 'user' and fetch the
+production data and store it in a postgres dev service database started automatically.
 
 ## Packaging for production
 
@@ -35,7 +36,5 @@ And deploy the resulting Debian package on the production server.
 ## TODO
 
 - On prod, upgrade from postgres 9 to 14 (2024 is on 14, the rest is on 9)
-- On dev, use dev service for postgres
 - On dev, test and document db transporter for new users
 - Figure out how to write db migrations
-- Migrate some DB data from 2023 to 2024
