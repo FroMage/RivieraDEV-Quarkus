@@ -42,6 +42,7 @@ public class Startup {
 	@ConfigProperty(name = "dev-auto-setup.url") 
 	Optional<String> devAutoSetupUrl;
 
+    
 	/**
      * This method is executed at the start of your application
      */
@@ -99,6 +100,7 @@ public class Startup {
         			throw new UncheckedIOException(e);
         		}
         	}
+        	
         }
     }
 }

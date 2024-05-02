@@ -17,10 +17,15 @@ import org.jboss.resteasy.reactive.common.jaxrs.AbstractResponseBuilder;
 
 import io.quarkiverse.renarde.security.ControllerWithUser;
 import io.quarkiverse.renarde.util.FileUtils;
+import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import io.quarkus.qute.CheckedTemplate;
 import io.quarkus.qute.TemplateGlobal;
 import io.quarkus.qute.TemplateInstance;
 import io.smallrye.common.annotation.Blocking;
+import io.vertx.core.json.Json;
+import io.vertx.core.json.JsonArray;
+import io.vertx.core.json.JsonObject;
+import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
@@ -48,6 +53,7 @@ import model.TemporarySlot;
 import model.Track;
 import model.User;
 import util.DateUtils;
+import util.ScheduleAI;
 
 @Blocking
 public class Application extends ControllerWithUser<User> {
@@ -101,6 +107,8 @@ public class Application extends ControllerWithUser<User> {
 		public static native TemplateInstance liveTrack(List<Track> tracks, String track, List<Talk> keynotes);
 
 		public static native TemplateInstance schools(SponsorShip sponsorShip, List<Sponsor> sponsors);
+
+		public static native TemplateInstance ai(List<TalkSuggestion> suggestions);
 	}
 	
     @TemplateGlobal
@@ -500,5 +508,33 @@ public class Application extends ControllerWithUser<User> {
         List<Sponsor> sponsors = Sponsor.list("level", sponsorShip);
         return Templates.schools(sponsorShip, sponsors);
     }
+
+    @Inject
+    ScheduleAI ai;
     
+    @Path("/ai")
+    public TemplateInstance ai(@RestQuery String topics){
+    	List<TalkSuggestion> suggestions = new ArrayList<>();
+    	if(topics != null && !topics.isBlank()) {
+    		String results = ai.findTalks(topics).strip();
+    		// I can't get it to never add that
+    		if(results.startsWith("```json")) {
+    			results = results.substring(7);
+    		} else if(results.startsWith("```")) {
+    			results = results.substring(3);
+    		}
+    		if(results.endsWith("```")) {
+    			results = results.substring(0, results.length()-3);
+    		}
+    		JsonArray parsed = Json.decodeValue(results, JsonArray.class);
+    		for (Object _talk : parsed) {
+				JsonObject talk = (JsonObject) _talk;
+				Talk model = Talk.findById(talk.getLong("id"));
+				suggestions.add(new TalkSuggestion(model, talk.getString("reason")));
+			}
+    	}
+    	return Templates.ai(suggestions);
+    }
+    
+    public static record TalkSuggestion(Talk talk, String reason) {}
 }

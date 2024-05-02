@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,12 @@ import org.jboss.resteasy.reactive.RestForm;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import dev.langchain4j.data.document.Document;
+import dev.langchain4j.data.document.Metadata;
+import dev.langchain4j.data.document.splitter.DocumentSplitters;
+import dev.langchain4j.model.embedding.EmbeddingModel;
+import dev.langchain4j.store.embedding.EmbeddingStoreIngestor;
+import io.quarkiverse.langchain4j.pgvector.PgVectorEmbeddingStore;
 import io.quarkiverse.renarde.Controller;
 import io.quarkiverse.renarde.util.FileUtils;
 import io.quarkus.logging.Log;
@@ -28,6 +35,7 @@ import io.quarkus.qute.CheckedTemplate;
 import io.quarkus.qute.TemplateInstance;
 import io.quarkus.security.Authenticated;
 import io.smallrye.common.annotation.Blocking;
+import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.core.MediaType;
@@ -111,6 +119,8 @@ public class Admin extends Controller {
     @CheckedTemplate
     public static class Templates {
     	public static native TemplateInstance uploadProgramForm();
+
+    	public static native TemplateInstance reIndexForAI();
 
 		public static native TemplateInstance speakerEmails(List<Speaker> speakers);
 
@@ -299,6 +309,57 @@ public class Admin extends Controller {
     public TemplateInstance speakerEmailCompany() {
         List<Speaker> speakers = Speaker.list("ORDER BY firstName,lastName");
         return Templates.speakerEmailsCompany(speakers);
+    }
+
+    /**
+     * The embedding store (the database).
+     * The bean is provided by the quarkus-langchain4j-pgvector extension.
+     */
+    @Inject
+    PgVectorEmbeddingStore store;
+
+    /**
+     * The embedding model (how is computed the vector of a document).
+     * The bean is provided by the LLM (like openai) extension.
+     */
+    @Inject
+    EmbeddingModel embeddingModel;
+
+    public TemplateInstance reIndexForAIForm() {
+    	return Templates.reIndexForAI();
+    }
+    
+    @POST
+    public void reIndexForAI() {
+    	// DO LLM
+		Log.infof("Loading data from talks for LLM");
+		List<Talk> talks = Talk.listAll();
+		List<Document> documents = new ArrayList<>();
+		store.removeAll();
+		Log.infof("Documents: %d", talks.size());
+		for (Talk talk : talks) {
+            Map<String, String> metadata = new HashMap<>();
+			metadata.put("authors", talk.speakers.toString());
+			metadata.put("title", talk.getTitle());
+			metadata.put("id", talk.id.toString());
+			if(talk.isBreak == BreakType.NotABreak && !talk.getDescription().isBlank()) {
+				documents.add(new Document("Title: "+talk.getTitle()+"\nID: "+talk.id+"\nDescription: "+talk.getDescription(), Metadata.from(metadata)));
+			} else {
+				Log.infof("Skipping talk %s", talk.getTitle());
+			}
+		}
+		Log.infof("Injesting LLM");
+        EmbeddingStoreIngestor ingestor = EmbeddingStoreIngestor.builder()
+                .embeddingStore(store)
+                .embeddingModel(embeddingModel)
+                .documentSplitter(DocumentSplitters.recursive(2000, 0))
+                .build();
+        // Warning - this can take a long time...
+        ingestor.ingest(documents);
+		Log.infof("Injesting LLM done");
+
+        flash("message", "Reindexed AI stuff");
+        reIndexForAIForm();
     }
     
     public TemplateInstance index() {

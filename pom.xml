@@ -84,6 +84,16 @@
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-hibernate-orm</artifactId>
     </dependency>
+<dependency>
+    <groupId>io.quarkiverse.langchain4j</groupId>
+    <artifactId>quarkus-langchain4j-pgvector</artifactId>
+    <version>0.15.1</version>
+</dependency>
+    <dependency>
+      <groupId>io.quarkiverse.langchain4j</groupId>
+      <artifactId>quarkus-langchain4j-openai</artifactId>
+      <version>0.15.1</version>
+    </dependency>
     <dependency>
       <groupId>com.github.rjeschke</groupId>
       <artifactId>txtmark</artifactId>

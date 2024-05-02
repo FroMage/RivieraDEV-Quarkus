@@ -1,0 +1,16 @@
+{#include admin.html}
+{#title}Re-index talks for AI{/title}
+
+{#form uri:Admin.reIndexForAI()}
+
+<fieldset>
+    <legend>Re-index talks for AI</legend>
+    <div class="form-actions">
+        <a class="btn" href="{uri:Admin.index()}" title="Cancel and go back to the root">Cancel</a> ​
+        <input type="submit" class="btn btn-primary" value="Re-index talks for AI"
+            title="Re-index talks for AI"/>
+    </div>
+</fieldset>
+
+{/form}
+{/include}

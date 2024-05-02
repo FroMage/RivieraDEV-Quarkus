@@ -1,0 +1,23 @@
+{#include main.html}
+{#title}{m:views.application.access.title}{/title}
+
+<div class="page__header access__header">
+    <h1 class="page__mainTitle">Search for interesting talks</h1>
+</div>
+
+<div class="page__container notFullWidth">
+	Enter a list of topics that you are interested in:
+	{#form uri:Application.ai() method="GET"}
+		<textarea cols="70" rows="20" name="topics" placeholder="List of topics"></textarea>
+		<button type="submit">Find talks</button>
+	{/form}
+	{#if suggestions}
+		<h1>Results</h1>
+		<ul>
+			{#for suggestion in suggestions}
+				<li><a href="{uri:Application.talk(suggestion.talk.id)}">{suggestion.talk.title}</a>: {suggestion.reason}</li>
+			{/for}
+		</ul>
+	{/if}
+</div>
+{/include}
