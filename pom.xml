@@ -12,10 +12,10 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
     <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
-    <quarkus.platform.version>3.8.3</quarkus.platform.version>
+    <quarkus.platform.version>3.9.4</quarkus.platform.version>
     <skipITs>true</skipITs>
     <surefire-plugin.version>3.0.0-M7</surefire-plugin.version>
-    <renarde.version>3.0.11</renarde.version>
+    <renarde.version>3.0.12</renarde.version>
     <web-bundler.version>1.1.1</web-bundler.version>
   </properties>
   <dependencyManagement>
@@ -54,6 +54,11 @@
       <groupId>io.quarkiverse.web-bundler</groupId>
       <artifactId>quarkus-web-bundler</artifactId>
       <version>${web-bundler.version}</version>
+    </dependency>
+    <!-- For Java2D image processing -->
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-awt</artifactId>
     </dependency>
     <dependency>
       <groupId>io.quarkus</groupId>
