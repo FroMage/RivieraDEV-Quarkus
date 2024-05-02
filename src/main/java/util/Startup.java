@@ -73,10 +73,10 @@ public class Startup {
         				PreviousSpeaker.deleteAll();
         				PricePack.deleteAll();
         				PricePackDate.deleteAll();
-        				Slot.deleteAll();
         				Speaker.deleteAll(); 
         				Sponsor.deleteAll();
         				Talk.deleteAll();
+        				Slot.deleteAll();
         				TalkTheme.deleteAll();
         				TalkType.deleteAll();
         				TemporarySlot.deleteAll();

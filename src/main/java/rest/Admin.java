@@ -175,7 +175,7 @@ public class Admin extends Controller {
 
         		speaker = new Speaker();
         		speaker.biography = jsonSpeaker.bio;
-        		if(speaker.biography == null) {
+        		if(speaker.biography == null || speaker.biography.isBlank()) {
         			speaker.biography = "To be added";
         		}
         		speaker.company = jsonSpeaker.company;

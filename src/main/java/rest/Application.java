@@ -107,28 +107,8 @@ public class Application extends ControllerWithUser<User> {
 		public static native TemplateInstance schools(SponsorShip sponsorShip, List<Sponsor> sponsors);
 	}
 	
-	public static class RenardeRequest {
-		public static final RenardeRequest INSTANCE = new RenardeRequest();
-		
-		public String getUrl() {
-	        ResteasyReactiveRequestContext otherHttpContextObject = CurrentRequestManager.get();
-	        return otherHttpContextObject.getAbsoluteURI();
-		}
-		
-		public String getAction() {
-	        ResteasyReactiveRequestContext otherHttpContextObject = CurrentRequestManager.get();
-	        SimpleResourceInfo info = otherHttpContextObject.getTarget().getSimplifiedResourceInfo();
-			return info.getResourceClass().getSimpleName() + "." + info.getMethodName();
-		}
-	}
-	
     @TemplateGlobal
     public static class ApplicationGlobals {
-    	
-    	// FIXME: move to Renarde
-    	public static RenardeRequest request() {
-    		return RenardeRequest.INSTANCE;
-    	}
     	
     	public static String promotedPage() {
     		return Configuration.getPromotedPage();
