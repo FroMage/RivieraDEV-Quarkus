@@ -18,7 +18,7 @@
         <div class="talkDetails__header--schedule">
             <div>
             	{#if talk.slot}
-	                {talk.slot.startDate.format('HH:mm')} - {talk.slot.endDate.format('HH:mm')}
+	                {talk.slot.startDate.format('EEEE d MMMM')} {talk.slot.startDate.format('HH:mm')} - {talk.slot.endDate.format('HH:mm')}
 	            {/if}
             </div>
             <div class="talkDetails__track">
