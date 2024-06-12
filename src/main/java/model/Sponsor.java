@@ -6,7 +6,10 @@ import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -52,11 +55,13 @@ public class Sponsor extends PanacheEntity implements Comparable<Sponsor> {
 	
 	// set on save/create
 	public Integer width, height;
+	public Date lastUpdated;
 
 	@PreUpdate
 	@PrePersist
 	public void prePersist() {
 		updateImageSizes();
+		lastUpdated = Date.from(Instant.now());
 	}
 	
 	private void updateImageSizes() {

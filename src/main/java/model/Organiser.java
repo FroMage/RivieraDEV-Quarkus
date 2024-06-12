@@ -2,6 +2,8 @@ package model;
 
 import java.sql.Blob;
 import java.sql.Types;
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.annotations.JdbcTypeCode;
@@ -10,6 +12,8 @@ import org.hibernate.validator.constraints.URL;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.Entity;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 
@@ -34,7 +38,15 @@ public class Organiser extends PanacheEntity {
 
 	public boolean orga;
 	public boolean cfp;
-	
+
+	public Date lastUpdated;
+
+	@PreUpdate
+	@PrePersist
+	public void prePersist() {
+		lastUpdated = Date.from(Instant.now());
+	}
+
 	@Override
 	public String toString() {
 		return firstName+" "+lastName;

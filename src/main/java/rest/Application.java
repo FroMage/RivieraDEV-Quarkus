@@ -13,13 +13,10 @@ import java.util.Map;
 
 import org.jboss.resteasy.reactive.RestPath;
 import org.jboss.resteasy.reactive.RestQuery;
-import org.jboss.resteasy.reactive.server.SimpleResourceInfo;
-import org.jboss.resteasy.reactive.server.core.CurrentRequestManager;
-import org.jboss.resteasy.reactive.server.core.ResteasyReactiveRequestContext;
+import org.jboss.resteasy.reactive.common.jaxrs.AbstractResponseBuilder;
 
 import io.quarkiverse.renarde.security.ControllerWithUser;
 import io.quarkiverse.renarde.util.FileUtils;
-import io.quarkus.arc.Arc;
 import io.quarkus.qute.CheckedTemplate;
 import io.quarkus.qute.TemplateGlobal;
 import io.quarkus.qute.TemplateInstance;
@@ -27,11 +24,10 @@ import io.smallrye.common.annotation.Blocking;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
-import jakarta.ws.rs.container.ResourceInfo;
+import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.Request;
 import jakarta.ws.rs.core.Response;
-import jakarta.ws.rs.core.UriBuilder;
-import jakarta.ws.rs.core.UriInfo;
+import jakarta.ws.rs.core.Response.ResponseBuilder;
 import model.Configuration;
 import model.Language;
 import model.Level;
@@ -377,47 +373,58 @@ public class Application extends ControllerWithUser<User> {
     }
 
     @Transactional
-    public Response previousSpeakerPhoto(@RestPath Long id) {
+    public Response previousSpeakerPhoto(@RestPath Long id, Request request) {
         PreviousSpeaker speaker = PreviousSpeaker.findById(id);
         notFoundIfNull(speaker);
         if (speaker.photo == null)
             seeOther("/static/images/mascotte/Ray_Cool.jpg");
-        return binary(speaker.photo);
+        return binary(speaker.photo, speaker.lastUpdated, request);
     }
 
-    private Response binary(Blob photo) {
+    private Response binary(Blob photo, Date lastUpdated, Request request) {
+    	if(lastUpdated != null) {
+    		// Workaround for https://github.com/quarkusio/quarkus/issues/41110
+    		// truncate milliseconds for comparison
+    		Date forComparison = new Date((lastUpdated.getTime() / 1000) * 1000);
+    		ResponseBuilder cacheResponse = request.evaluatePreconditions(forComparison);
+    		if(cacheResponse != null) {
+    			return cacheResponse.build();
+    		}
+    	}
     	byte[] bytes;
 		try {
 			bytes = photo.getBytes(1, (int) photo.length());
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
-    	return Response.ok(bytes, FileUtils.getMimeType(null, bytes)).build();
+    	return Response.ok(bytes, FileUtils.getMimeType(null, bytes))
+        		// Workaround for https://github.com/quarkusio/quarkus/issues/41110
+    			.header(HttpHeaders.LAST_MODIFIED, AbstractResponseBuilder.getDateFormatRFC822().format(lastUpdated)).build();
 	}
 
     @Transactional
-	public Response speakerPhoto(@RestPath Long id) {
+	public Response speakerPhoto(@RestPath Long id, Request request) {
         Speaker speaker = Speaker.findById(id);
         notFoundIfNull(speaker);
         if (speaker.photo == null)
             seeOther("/static/images/mascotte/Ray_Cool.jpg");
-        return binary(speaker.photo);
+        return binary(speaker.photo, speaker.lastUpdated, request);
     }
 
     @Transactional
-    public Response sponsorLogo(@RestPath Long id) {
+    public Response sponsorLogo(@RestPath Long id, Request request) {
         Sponsor sponsor = Sponsor.findById(id);
         notFoundIfNull(sponsor);
-        return binary(sponsor.logo);
+        return binary(sponsor.logo, sponsor.lastUpdated, request);
     }
 
     @Transactional
-    public Response orgaPhoto(@RestPath Long id) {
+    public Response orgaPhoto(@RestPath Long id, Request request) {
         Organiser organiser = Organiser.findById(id);
         notFoundIfNull(organiser);
         if (organiser.photo == null)
             seeOther("/static/images/mascotte/Ray_Badass.jpg");
-        return binary(organiser.photo);
+        return binary(organiser.photo, organiser.lastUpdated, request);
     }
 
     @Path("/team")

@@ -2,7 +2,9 @@ package model;
 
 import java.sql.Blob;
 import java.sql.Types;
+import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.annotations.JdbcTypeCode;
@@ -12,6 +14,8 @@ import org.hibernate.validator.constraints.URL;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
@@ -45,7 +49,15 @@ public class Speaker extends PanacheEntity implements Comparable<Speaker> {
 	public List<Talk> talks = new ArrayList<Talk>();
     
 	public String phone;
-	
+
+	public Date lastUpdated;
+
+	@PreUpdate
+	@PrePersist
+	public void prePersist() {
+		lastUpdated = Date.from(Instant.now());
+	}
+
 	@Override
 	public String toString() {
 		return firstName+" "+lastName;
