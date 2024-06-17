@@ -513,6 +513,10 @@
         <script src="/static/javascripts/libs/modernizr/modernizr-custom-webp.js"></script>
 
         <!-- Custom JS -->
+        <script type="text/javascript">
+			window.quarkusCsrfHeader = "{inject:csrf.headerName}";
+			window.quarkusCsrfValue = "{inject:csrf.token}";
+		</script>
         <script src="/static/javascripts/navbar-animated.js"></script>
         <script src="/static/javascripts/map.js"></script>
         <script src="/static/javascripts/schedule-filter.js"></script>

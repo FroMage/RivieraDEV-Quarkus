@@ -39,10 +39,13 @@ $(function() {
         let likes = _getLikes();
         likes.push(id);
         _setLikes(likes);
+		var headers = {};
+		headers[window.quarkusCsrfHeader] = window.quarkusCsrfValue;
 
         $.ajax({
             url: '/like-talk/' + id,
             type: 'POST',
+            headers: headers,
             success: function(result) {
                 $('.js-talksFilter-like[data-talk=' + id + ']').html(result);
             },
@@ -61,10 +64,13 @@ $(function() {
             likes.splice(index, 1);
         }
         _setLikes(likes);
+		var headers = {};
+		headers[window.quarkusCsrfHeader] = window.quarkusCsrfValue;
 
         $.ajax({
             url: '/unlike-talk/' + id,
             type: 'POST',
+            headers: headers,
             success: function(result) {
                 $('.js-talksFilter-like[data-talk=' + id + ']').html(result);
             },
