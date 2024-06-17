@@ -62,41 +62,45 @@ public class Startup {
         		Log.infof("Test user already exists: not adding");
         	}
         	if(devAutoSetupUrl.isPresent()) {
-        		String dataSource = devAutoSetupUrl.get();
-        		Log.infof("Loading data from %s", dataSource);
-        		try {
-        			try(InputStream is = new URL(dataSource).openStream()){
-        				String json = new String(is.readAllBytes(), StandardCharsets.UTF_8);
-        				// FIXME: this is not nice
-        				Configuration.deleteAll();
-        				Organiser.deleteAll();
-        				PreviousSpeaker.deleteAll();
-        				PricePack.deleteAll();
-        				PricePackDate.deleteAll();
-        				Speaker.deleteAll(); 
-        				Sponsor.deleteAll();
-        				Talk.deleteAll();
-        				Slot.deleteAll();
-        				TalkTheme.deleteAll();
-        				TalkType.deleteAll();
-        				TemporarySlot.deleteAll();
-        				Track.deleteAll();
-        				Map<Class<?>,List<? extends PanacheEntityBase>> entities = DatabaseTransporter.importEntities(json);
-        				// Load the entities in the proper order: relation targets before relation owners
-        				for (Class<? extends PanacheEntityBase> entityType : DatabaseTransporter.sortedEntityTypes()) {
-        					List<? extends PanacheEntityBase> list = entities.get(entityType);
-        					if(list != null) {
-        						for (PanacheEntityBase entity : list) {
-        							// FIXME: this is not nice
-        							// remove the ID, to get a fresh entity
-        							((PanacheEntity)entity).id = null;
-        							entity.persist();
+        		if(Organiser.count() == 0) {
+        			String dataSource = devAutoSetupUrl.get();
+        			Log.infof("Loading data from %s", dataSource);
+        			try {
+        				try(InputStream is = new URL(dataSource).openStream()){
+        					String json = new String(is.readAllBytes(), StandardCharsets.UTF_8);
+        					// FIXME: this is not nice
+        					Configuration.deleteAll();
+        					Organiser.deleteAll();
+        					PreviousSpeaker.deleteAll();
+        					PricePack.deleteAll();
+        					PricePackDate.deleteAll();
+        					Speaker.deleteAll(); 
+        					Sponsor.deleteAll();
+        					Talk.deleteAll();
+        					Slot.deleteAll();
+        					TalkTheme.deleteAll();
+        					TalkType.deleteAll();
+        					TemporarySlot.deleteAll();
+        					Track.deleteAll();
+        					Map<Class<?>,List<? extends PanacheEntityBase>> entities = DatabaseTransporter.importEntities(json);
+        					// Load the entities in the proper order: relation targets before relation owners
+        					for (Class<? extends PanacheEntityBase> entityType : DatabaseTransporter.sortedEntityTypes()) {
+        						List<? extends PanacheEntityBase> list = entities.get(entityType);
+        						if(list != null) {
+        							for (PanacheEntityBase entity : list) {
+        								// FIXME: this is not nice
+        								// remove the ID, to get a fresh entity
+        								((PanacheEntity)entity).id = null;
+        								entity.persist();
+        							}
         						}
         					}
         				}
+        			} catch (IOException e) {
+        				throw new UncheckedIOException(e);
         			}
-        		} catch (IOException e) {
-        			throw new UncheckedIOException(e);
+        		} else {
+            		Log.infof("There is already some data (>0 organisers) so not loading prod data");
         		}
         	}
         }
