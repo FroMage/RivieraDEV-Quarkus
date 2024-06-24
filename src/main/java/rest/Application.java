@@ -85,8 +85,10 @@ public class Application extends ControllerWithUser<User> {
 				boolean displayPreviousSpeakers);
 
 		public static native TemplateInstance speaker(Speaker speaker);
+		public static native TemplateInstance speakerBanner(Speaker speaker);
 
 		public static native TemplateInstance sponsor(Sponsor sponsor);
+		public static native TemplateInstance sponsorBanner(Sponsor sponsor);
 
 		public static native TemplateInstance talk(Talk talk, boolean displayFullSchedule);
 
@@ -500,5 +502,20 @@ public class Application extends ControllerWithUser<User> {
         List<Sponsor> sponsors = Sponsor.list("level", sponsorShip);
         return Templates.schools(sponsorShip, sponsors);
     }
-    
+
+    @Path("/speaker-banner")
+    public TemplateInstance speakerBanner(@RestPath Long id) {
+        Speaker speaker = Speaker.findById(id);
+        notFoundIfNull(speaker);
+        return Templates.speakerBanner(speaker);
+    }
+
+
+    @Path("/sponsor-banner")
+    public TemplateInstance sponsorBanner(@RestPath Long id) {
+        Sponsor sponsor = Sponsor.findById(id);
+        notFoundIfNull(sponsor);
+        return Templates.sponsorBanner(sponsor);
+    }
+
 }

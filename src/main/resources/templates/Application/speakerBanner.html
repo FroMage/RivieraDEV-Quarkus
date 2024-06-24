@@ -1,0 +1,140 @@
+<html>
+    <head>
+        <style>
+    @font-face {
+    font-family: 'Interstate Regular';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Interstate Regular'), url('/static/fonts/InterstateRegular.woff') format('woff');
+    }
+    @font-face {
+    font-family: 'Interstate Light';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Interstate Light'), url('/static/fonts/InterstateLight.woff') format('woff');
+    }
+    @font-face {
+    font-family: 'Interstate Bold';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Interstate Bold'), url('/static/fonts/InterstateBold.woff') format('woff');
+    }
+
+#name, #compagny {
+    position: absolute;
+    z-index: 1;
+}
+#name {
+    color: #474743;
+    top: 322px;
+    left: 250px;
+    font-family: "Interstate Regular";
+    font-size: 21;
+    text-align: center;
+    width: 400px;
+}  
+#compagny {
+    color: #474743;
+    top: 345px;
+    left: 250px;
+    font-family: "Interstate bold";
+    text-align: center;
+    font-size: 16;
+    width: 400px;
+}
+#permanent_text_1 {
+    position: absolute;
+    z-index: 1;
+    color: white;
+    top: 123px;
+    left: 55px;
+    font-size: 23;
+    font-family: "Interstate light";
+    width: 400;
+    text-align: center;
+}
+#permanent_text_2 {
+    position: absolute;
+    z-index: 1;
+    color: white;
+    top: 183px;
+    left: 721px;
+    font-size: 20;
+    font-family: "Interstate bold";
+}
+#orange {
+    color: #fdc43f;
+}
+#location {
+    position: absolute;
+    z-index: 1;
+    color: white;
+    top: 229px;
+    left: 721px;
+    font-size: 21;
+    font-family: "Interstate light";
+}
+#site_name {
+    position: absolute;
+    z-index: 1;
+    color: white;
+    top: 322px;
+    left: 721px;
+    font-size: 23;
+    font-family: "Interstate bold";
+}
+.personSummary__photo {
+    width: 130;
+    height: 133;
+    border-radius: 150px;
+    background-size: cover;
+    position: absolute;
+    top: 179px;
+    left: 387px;
+}
+.talks_type {
+    z-index: 1;
+    font-family: 'Interstate bold';
+    color: #fdc43f;
+    text-align: center;
+    width: 400px;
+}
+#program {
+    position: absolute;
+    z-index: 1;
+    font-family: 'Interstate light';
+    color: #474743;
+    top: 366px;
+    left: 250;
+    text-align: center;
+    width: 400px;
+}
+#citation_1,#citation_2 {
+    color:#fdc43f;
+    z-index: 1;
+    font-family: 'Interstate bold';
+}
+</style>
+    </head>
+    <body>
+        <div
+        class="personSummary__photo personDetails__header--photo"
+        style="background-image: url('{uri:Application.speakerPhoto(speaker.id)}')"
+    ></div>
+
+        <div id="name">{speaker.firstName} {speaker.lastName}</div>
+        <div id="compagny"><strong>{speaker.company}</strong></div>
+        <div id="permanent_text_1">{m:views.application.banner.speaker.date.3.raw}</div>
+        <div id="permanent_text_2">{m:views.application.banner.speaker.date.1.raw}<br/>{m:views.application.banner.speaker.date.2.raw}</div>
+        <div id="location">Sophia Antipolis</div>
+        <div id="site_name">rivieradev.fr</div>
+        <div id="program">
+        {#for talk in speaker.talks}
+            <div class="talks_type">{talk.type}: </div>
+            <div><span id="citation_1">« </span> {talk.title} <span id="citation_2">»</span></div>
+        {/for}
+        </div>
+        <img src="/static/images/Speakers-banner-notext.png"/>
+
+    </body>
+</html>
