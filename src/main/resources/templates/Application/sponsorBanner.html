@@ -1,0 +1,102 @@
+<html>
+    <head>
+        <style>
+    @font-face {
+    font-family: 'Interstate Regular';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Interstate Regular'), url('/static/fonts/InterstateRegular.woff') format('woff');
+    }
+    @font-face {
+    font-family: 'Interstate Light';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Interstate Light'), url('/static/fonts/InterstateLight.woff') format('woff');
+    }
+    @font-face {
+    font-family: 'Interstate Bold';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Interstate Bold'), url('/static/fonts/InterstateBold.woff') format('woff');
+    }
+
+
+#permanent_text_1 {
+    position: absolute;
+    z-index: 1;
+    color: white;
+    top: 123px;
+    left: 55px;
+    font-size: 23;
+    font-family: "Interstate light";
+    width: 400;
+    text-align: center;
+}
+#permanent_text_2 {
+    position: absolute;
+    z-index: 1;
+    color: white;
+    top: 183px;
+    left: 721px;
+    font-size: 20;
+    font-family: "Interstate bold";
+}
+#location {
+    position: absolute;
+    z-index: 1;
+    color: white;
+    top: 229px;
+    left: 721px;
+    font-size: 21;
+    font-family: "Interstate light";
+}
+#site_name {
+    position: absolute;
+    z-index: 1;
+    color: white;
+    top: 322px;
+    left: 721px;
+    font-size: 23;
+    font-family: "Interstate bold";
+}
+#personSummary__photo {
+    max-width: 330px;
+    top: 225px;
+    left: 226px;
+    max-height: 100px;
+    margin: auto;
+}
+#image_box {
+    text-align: center;
+    width: 400px;
+    position: absolute;
+    height: 100px;
+    left: 184px;
+    top: 209px;
+}
+#sponsorRank {
+    position: absolute;
+    z-index: 1;
+    top: 339px;
+    left: 287px;
+}
+</style>
+    </head>
+    <body>
+        
+            
+            <div id="image_box"><img
+            id="personSummary__photo"
+            src="{uri:Application.sponsorLogo(sponsor.id)}"
+            /></div>
+        
+        
+        <div id="permanent_text_1">{m:views.application.banner.sponsor.date.1.raw}</div>
+        <div id="permanent_text_2">{m:views.application.banner.speaker.date.1.raw}<br/>{m:views.application.banner.speaker.date.2.raw}</div>
+        <div id="location">Sophia Antipolis</div>
+        <div id="site_name">rivieradev.fr</div>
+        <img src="/static/images/Sponsors-banner-notext.png"/>
+        <img src="/static/images/Sponsors-{sponsor.level}.png" id="sponsorRank"/>
+
+    </body>
+</html>
