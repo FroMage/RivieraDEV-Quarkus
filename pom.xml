@@ -18,6 +18,7 @@
     <renarde.version>3.0.17</renarde.version>
     <web-bundler.version>1.6.0</web-bundler.version>
     <ngrok.version>1.5.1</ngrok.version>
+    <quarkus.poi.version>2.0.6</quarkus.poi.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -65,6 +66,11 @@
       <groupId>io.quarkiverse.ngrok</groupId>
       <artifactId>quarkus-ngrok</artifactId>
       <version>${ngrok.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkiverse.poi</groupId>
+      <artifactId>quarkus-poi</artifactId>
+      <version>${quarkus.poi.version}</version>
     </dependency>
     <!-- For Java2D image processing -->
     <dependency>
