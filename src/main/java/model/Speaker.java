@@ -67,4 +67,11 @@ public class Speaker extends PanacheEntity implements Comparable<Speaker> {
 	public int compareTo(Speaker o) {
 		return toString().compareTo(o.toString());
 	}
+	public String getTalksForTwitter() {
+		StringBuilder talksTwitter= new StringBuilder();
+		for(Talk talk : talks){
+			talksTwitter.append("🎙️«").append(talk.getTitle()).append("»\n");
+		}
+		return talksTwitter.toString();
+	}
 }
