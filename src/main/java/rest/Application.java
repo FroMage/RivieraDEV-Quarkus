@@ -15,6 +15,7 @@ import org.jboss.resteasy.reactive.RestPath;
 import org.jboss.resteasy.reactive.RestQuery;
 import org.jboss.resteasy.reactive.common.jaxrs.AbstractResponseBuilder;
 
+import io.quarkiverse.renarde.pdf.Pdf;
 import io.quarkiverse.renarde.security.ControllerWithUser;
 import io.quarkiverse.renarde.util.FileUtils;
 import io.quarkus.qute.CheckedTemplate;
@@ -24,6 +25,7 @@ import io.smallrye.common.annotation.Blocking;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.Request;
 import jakarta.ws.rs.core.Response;
@@ -504,17 +506,36 @@ public class Application extends ControllerWithUser<User> {
     }
 
     @Path("/speaker-banner")
-    public TemplateInstance speakerBanner(@RestPath Long id) {
+    public TemplateInstance speakerBanner(@RestPath Long id, @RestPath String language) {
         Speaker speaker = Speaker.findById(id);
         notFoundIfNull(speaker);
+        i18n.setForCurrentRequest(language);
         return Templates.speakerBanner(speaker);
     }
 
+    @Produces(Pdf.IMAGE_PNG)
+    @Path("/speaker-banner/{id}/{language}.png")
+    public TemplateInstance speakerBannerImage(@RestPath Long id, @RestPath String language) {
+        Speaker speaker = Speaker.findById(id);
+        notFoundIfNull(speaker);
+        i18n.setForCurrentRequest(language);
+        return Templates.speakerBanner(speaker);
+    }
 
     @Path("/sponsor-banner")
-    public TemplateInstance sponsorBanner(@RestPath Long id) {
+    public TemplateInstance sponsorBanner(@RestPath Long id, @RestPath String language) {
         Sponsor sponsor = Sponsor.findById(id);
         notFoundIfNull(sponsor);
+        i18n.setForCurrentRequest(language);
+        return Templates.sponsorBanner(sponsor);
+    }
+    
+    @Produces(Pdf.IMAGE_PNG)
+    @Path("/sponsor-banner/{id}/{language}.png")
+    public TemplateInstance sponsorBannerImage(@RestPath Long id, @RestPath String language) {
+        Sponsor sponsor = Sponsor.findById(id);
+        notFoundIfNull(sponsor);
+        i18n.setForCurrentRequest(language);
         return Templates.sponsorBanner(sponsor);
     }
 
