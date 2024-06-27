@@ -24,6 +24,10 @@
             <div class="partenaireDetails__header">
                 <h2 class="partenaireDetails__name">{sponsor.company}</h2>
                 <div class="partenaireDetails__network">
+                    <div class="partenaireDetails_linkTweet"> 
+                        <a href="https://twitter.com/intent/tweet/?text={m:views.application.sponsors.tweet(sponsor.level,sponsor.twitterAccount,uriabs:Application.subscribe).urlEncode()}&url={uriabs:Application.sponsorBannerImage(sponsor.id,'en').toString().urlEncode()}"> {m:views.application.sponsors.linkTweetTitle}
+                    </a>
+                    </div>
                     {#if sponsor.companyURL}
                         <div class="partenaireDetails__website">
                             <a href="{sponsor.companyURL}" target="_blank">{sponsor.companyURL}</a>

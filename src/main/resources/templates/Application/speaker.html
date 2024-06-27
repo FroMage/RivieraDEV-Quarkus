@@ -30,6 +30,10 @@
                 <figcaption class="personDetails__desc">
                     <div class="personDetails__name">{speaker}</div>
                     <div class="personDetails__title">{speaker.company}</div>
+                    <div class="personDetails_link"> 
+                        <a href="https://twitter.com/intent/tweet/?text={m:views.application.speaker.tweet(speaker.firstName,speaker.lastName,speaker.talksForTwitter,speaker.twitterAccount).urlEncode()}&url={uriabs:Application.speakerBannerImage(speaker.id,'en').toString().urlEncode()}">{m:views.application.speaker.linkTitle}
+                    </a>
+                    </div>  
                     <div class="personDetails__network">
                         {#if speaker.twitterAccount}
                         <div class="personDetails__twitter">
