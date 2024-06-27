@@ -1,3 +1,5 @@
+<!DOCTYPE html PUBLIC
+"-//OPENHTMLTOPDF//DOC XHTML Character Entities Only 1.0//EN" "">
 <html>
     <head>
         <style>
@@ -5,19 +7,19 @@
     font-family: 'Interstate Regular';
     font-style: normal;
     font-weight: normal;
-    src: local('Interstate Regular'), url('/static/fonts/InterstateRegular.woff') format('woff');
+    src: local('Interstate Regular'), url('/static/fonts/InterstateRegular.ttf') format('truetype');
     }
     @font-face {
     font-family: 'Interstate Light';
     font-style: normal;
     font-weight: normal;
-    src: local('Interstate Light'), url('/static/fonts/InterstateLight.woff') format('woff');
+    src: local('Interstate Light'), url('/static/fonts/InterstateLight.ttf') format('truetype');
     }
     @font-face {
     font-family: 'Interstate Bold';
     font-style: normal;
     font-weight: normal;
-    src: local('Interstate Bold'), url('/static/fonts/InterstateBold.woff') format('woff');
+    src: local('Interstate Bold'), url('/static/fonts/InterstateBold.ttf') format('truetype');
     }
 
 #name, #compagny {
@@ -26,41 +28,41 @@
 }
 #name {
     color: #474743;
-    top: 322px;
-    left: 250px;
+    top: 316px;
+    left: 242px;
     font-family: "Interstate Regular";
-    font-size: 21;
+    font-size: 21px;
     text-align: center;
     width: 400px;
 }  
 #compagny {
     color: #474743;
-    top: 345px;
-    left: 250px;
-    font-family: "Interstate bold";
+    top: 337px;
+    left: 242px;
+    font-family: "Interstate Bold";
     text-align: center;
-    font-size: 16;
+    font-size: 16px;
     width: 400px;
 }
 #permanent_text_1 {
     position: absolute;
     z-index: 1;
     color: white;
-    top: 123px;
-    left: 55px;
-    font-size: 23;
-    font-family: "Interstate light";
-    width: 400;
+    top: 115px;
+    left: 47px;
+    font-size: 23px;
+    font-family: "Interstate Light";
+    width: 400px;
     text-align: center;
 }
 #permanent_text_2 {
     position: absolute;
     z-index: 1;
     color: white;
-    top: 183px;
-    left: 721px;
-    font-size: 20;
-    font-family: "Interstate bold";
+    top: 175px;
+    left: 713px;
+    font-size: 20px;
+    font-family: "Interstate Bold";
 }
 #orange {
     color: #fdc43f;
@@ -69,32 +71,32 @@
     position: absolute;
     z-index: 1;
     color: white;
-    top: 229px;
-    left: 721px;
-    font-size: 21;
-    font-family: "Interstate light";
+    top: 221px;
+    left: 713px;
+    font-size: 21px;
+    font-family: "Interstate Light";
 }
 #site_name {
     position: absolute;
     z-index: 1;
     color: white;
-    top: 322px;
-    left: 721px;
-    font-size: 23;
-    font-family: "Interstate bold";
+    top: 314px;
+    left: 705px;
+    font-size: 23px;
+    font-family: "Interstate Bold";
 }
 .personSummary__photo {
-    width: 130;
-    height: 133;
+    width: 130px;
+    height: 133px;
     border-radius: 150px;
     background-size: cover;
     position: absolute;
-    top: 179px;
-    left: 387px;
+    top: 171px;
+    left: 379px;
 }
 .talks_type {
     z-index: 1;
-    font-family: 'Interstate bold';
+    font-family: 'Interstate Bold';
     color: #fdc43f;
     text-align: center;
     width: 400px;
@@ -102,17 +104,25 @@
 #program {
     position: absolute;
     z-index: 1;
-    font-family: 'Interstate light';
+    font-family: 'Interstate Light';
     color: #474743;
-    top: 366px;
-    left: 250;
+    top: 358px;
+    left: 242px;
     text-align: center;
     width: 400px;
 }
 #citation_1,#citation_2 {
     color:#fdc43f;
     z-index: 1;
-    font-family: 'Interstate bold';
+    font-family: 'Interstate Bold';
+}
+@page {
+  size: 1032px 516px;
+  margin: 0px;
+  padding: 0px;
+}
+body {
+    margin: 0px;
 }
 </style>
     </head>
@@ -131,7 +141,7 @@
         <div id="program">
         {#for talk in speaker.talks}
             <div class="talks_type">{talk.type}: </div>
-            <div><span id="citation_1">« </span> {talk.title} <span id="citation_2">»</span></div>
+            <div><span id="citation_1">«</span>&nbsp;{talk.title}&nbsp;<span id="citation_2">»</span></div>
         {/for}
         </div>
         <img src="/static/images/Speakers-banner-notext.png"/>

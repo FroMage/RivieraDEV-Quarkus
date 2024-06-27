@@ -17,6 +17,7 @@
     <surefire-plugin.version>3.0.0-M7</surefire-plugin.version>
     <renarde.version>3.0.16</renarde.version>
     <web-bundler.version>1.6.0</web-bundler.version>
+    <ngrok.version>1.5.1</ngrok.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -47,6 +48,11 @@
     </dependency>
     <dependency>
       <groupId>io.quarkiverse.renarde</groupId>
+      <artifactId>quarkus-renarde-pdf</artifactId>
+      <version>${renarde.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkiverse.renarde</groupId>
       <artifactId>quarkus-renarde-transporter</artifactId>
       <version>${renarde.version}</version>
     </dependency>
@@ -54,6 +60,11 @@
       <groupId>io.quarkiverse.web-bundler</groupId>
       <artifactId>quarkus-web-bundler</artifactId>
       <version>${web-bundler.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkiverse.ngrok</groupId>
+      <artifactId>quarkus-ngrok</artifactId>
+      <version>${ngrok.version}</version>
     </dependency>
     <!-- For Java2D image processing -->
     <dependency>
