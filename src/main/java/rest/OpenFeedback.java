@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jboss.resteasy.reactive.RestResponse;
+
 import io.quarkiverse.renarde.Controller;
 import io.quarkiverse.renarde.router.Router;
 import jakarta.ws.rs.Path;
@@ -43,7 +45,7 @@ public class OpenFeedback extends Controller {
     }
 
     @Path("/openfeedback")
-    public Root openFeedback(){
+    public RestResponse<Root> openFeedback(){
         Root ret = new Root();
 
         List<Talk> talks = Talk.listAll();
@@ -95,6 +97,6 @@ public class OpenFeedback extends Controller {
             ret.speakers.put(speaker.id.toString(), ofspeaker);
         }
 
-        return ret;
+        return RestResponse.ResponseBuilder.ok(ret).header("Access-Control-Allow-Origin", "*").build();
     }
 }
