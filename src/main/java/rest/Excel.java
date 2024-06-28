@@ -98,7 +98,7 @@ public class Excel extends Controller {
 			}
 	        
 	        // schedule
-			XSSFSheet rolesSheet = wb.createSheet("Description des roles");
+			addRolesSheet(wb);
 	        
 	        Map<Date, List<Track>> tracksPerDays = new HashMap<Date, List<Track>>();
 	        for (Date day : days) {
@@ -107,12 +107,27 @@ public class Excel extends Controller {
 	            tracksPerDays.put(day, tracksPerDay);
 	            
 	            XSSFSheet daySheet = wb.createSheet(dayFormat.format(day));
-	            XSSFRow headerRow = daySheet.createRow(0);
-	            XSSFCell headerCell = headerRow.createCell(0);
-	            headerCell.setCellValue(dayFormat.format(day));
+				daySheet.addMergedRegion(new CellRangeAddress(0, 0, 0, tracksPerDay.size()+3));
 	            daySheet.setDefaultColumnWidth(20);
 	            daySheet.setColumnWidth(0, 3000);
 	            daySheet.setDefaultRowHeight((short) 1200);
+
+				XSSFCellStyle dateJournée = wb.createCellStyle();
+		{
+			XSSFFont font = wb.createFont();
+			font.setBold(true);
+			font.setFontHeightInPoints((short)20);
+			dateJournée.setFont(font);
+			dateJournée.setVerticalAlignment(VerticalAlignment.CENTER);
+			dateJournée.setAlignment(HorizontalAlignment.CENTER);
+		}
+	            
+				XSSFRow headerRow = daySheet.createRow(0);
+				   
+				XSSFCell headerCell = headerRow.createCell(0);
+	            headerCell.setCellValue(dayFormat.format(day));
+				headerCell.setCellStyle(dateJournée);
+				
 	            
 	            XSSFRow trackRow = daySheet.createRow(3);
 	            for (int i = 0; i < tracksPerDay.size(); i++) {
@@ -121,7 +136,33 @@ public class Excel extends Controller {
 					trackCell.setCellValue(track.title);
 					trackCell.setCellStyle(trackStyle);
 				}
-	            List<Slot> multiPerDay = Slot.findMultiPerDay(day);
+			XSSFCellStyle AcceuilCellStyle0 = wb.createCellStyle();
+		{
+			XSSFFont font = wb.createFont();
+			font.setBold(true);
+			font.setFontHeightInPoints((short)12);
+			AcceuilCellStyle0.setFont(font);
+			AcceuilCellStyle0.setVerticalAlignment(VerticalAlignment.CENTER);
+			AcceuilCellStyle0.setAlignment(HorizontalAlignment.CENTER);
+		}
+				XSSFCell trackAcceuil = trackRow.createCell(9);
+				trackAcceuil.setCellValue("Acceuil badges");
+				trackAcceuil.setCellStyle(AcceuilCellStyle0);
+
+				XSSFCell trackInter = trackRow.createCell(10);
+				trackInter.setCellValue("""
+				Groupe
+				d'intervention
+				""");
+				trackInter.setCellStyle(AcceuilCellStyle0);
+				
+				XSSFCell trackBackup = trackRow.createCell(11);
+				trackBackup.setCellValue("Backup");
+				trackBackup.setCellStyle(AcceuilCellStyle0);
+				
+				
+				
+				List<Slot> multiPerDay = Slot.findMultiPerDay(day);
 	            for (int j = 0; j < multiPerDay.size(); j++) {
 	            	XSSFRow slotRow = daySheet.createRow(4+j);
 					Slot slot = multiPerDay.get(j);
@@ -133,7 +174,7 @@ public class Excel extends Controller {
 					
 					if(allTracksEvent != null) {
 			            slotRow.setHeight((short) 600);
-	                    daySheet.addMergedRegion(new CellRangeAddress(4+j, 4+j, 1, tracksPerDay.size()));
+	                    daySheet.addMergedRegion(new CellRangeAddress(4+j, 4+j, 1, tracksPerDay.size()+3));
 						XSSFCell cell = slotRow.createCell(1);
 						cell.setCellValue(allTracksEvent.getTitle());
 						cell.setCellStyle(allTrackStyle);
@@ -157,7 +198,86 @@ public class Excel extends Controller {
 	        return os.toByteArray();
 		}
 	}
-	
+
+	private void addRolesSheet(XSSFWorkbook wb) {
+		XSSFSheet rolesSheet = wb.createSheet("Description des roles");
+		rolesSheet.setDefaultColumnWidth(20);
+	    rolesSheet.setColumnWidth(0, 6500);
+        rolesSheet.setDefaultRowHeight((short) 250);
+		rolesSheet.setColumnWidth(1, 14500);
+
+		XSSFRow roleRow0 = rolesSheet.createRow(0);
+		roleRow0.setHeight((short) 1500);
+		XSSFRow roleRow1 = rolesSheet.createRow(1);
+		roleRow1.setHeight((short) 1500);
+		XSSFRow roleRow2 = rolesSheet.createRow(2);
+		roleRow2.setHeight((short) 350);
+
+		XSSFCellStyle roleCellStyle0 = wb.createCellStyle();
+		{
+			XSSFFont font = wb.createFont();
+			font.setBold(true);
+			font.setFontHeightInPoints((short)9);
+			roleCellStyle0.setFont(font);
+			roleCellStyle0.setVerticalAlignment(VerticalAlignment.CENTER);
+			roleCellStyle0.setAlignment(HorizontalAlignment.RIGHT);
+			roleCellStyle0.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+			roleCellStyle0.setBorderBottom(BorderStyle.THIN);
+			roleCellStyle0.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+			roleCellStyle0.setBorderRight(BorderStyle.THIN);
+			roleCellStyle0.setRightBorderColor(IndexedColors.BLACK.getIndex());
+			roleCellStyle0.setBorderTop(BorderStyle.THIN);
+			roleCellStyle0.setTopBorderColor(IndexedColors.BLACK.getIndex());
+		}
+		
+		XSSFCellStyle roleCellStyle1 = wb.createCellStyle();
+		{
+			roleCellStyle1.setVerticalAlignment(VerticalAlignment.CENTER);
+			roleCellStyle1.setAlignment(HorizontalAlignment.LEFT);
+			roleCellStyle1.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+			roleCellStyle1.setBorderBottom(BorderStyle.THIN);
+			roleCellStyle1.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+			roleCellStyle1.setBorderRight(BorderStyle.THIN);
+			roleCellStyle1.setRightBorderColor(IndexedColors.BLACK.getIndex());
+			roleCellStyle1.setBorderTop(BorderStyle.THIN);
+			roleCellStyle1.setTopBorderColor(IndexedColors.BLACK.getIndex());
+		}
+
+		XSSFCell roleCell0 = roleRow0.createCell(0);
+		roleCell0.setCellValue("Responsables des salles");
+		roleCell0.setCellStyle(roleCellStyle0);
+		
+		XSSFCell roleCell1 = roleRow0.createCell(1);
+		roleCell1.setCellValue("""
+• S'assure que le speaker est bien installé.
+• Donne le go pour commencer quand c'est l'heure.
+• Envoie un tweet pendant le talk.
+• Signaler quand il reste 10 / 5 / 1 min (vous pouvez utiliser https://countdown.ted.com/).
+• Virer le speaker pour laisser le temps aux participant de changer de salle (modifié).""");
+		roleCell1.setCellStyle(roleCellStyle1);
+		
+		XSSFCell roleCell2 = roleRow1.createCell(0);
+		roleCell2.setCellValue("Groupe d'intervention");
+		roleCell2.setCellStyle(roleCellStyle0);
+		
+		XSSFCell roleCell3 = roleRow1.createCell(1);
+		roleCell3.setCellValue("""
+Reste joignable à l'accueil RDEV.
+Gérer tout pépin de dernière minutes.
+Peut être joint par le reste de l'équipe en cas de souci.
+Rotation eau/café.
+Gestion des poubelles.""");
+		roleCell3.setCellStyle(roleCellStyle1);
+		
+		XSSFCell roleCell4 = roleRow2.createCell(0);
+		roleCell4.setCellValue("Backup");
+		roleCell4.setCellStyle(roleCellStyle0);
+		
+		XSSFCell roleCell5 = roleRow2.createCell(1);
+		roleCell5.setCellValue("Libre, mais est contacté en priorité si le \"groupe d'intervention\" est débordé.");
+		roleCell5.setCellStyle(roleCellStyle1);
+	}
+
 	//
 	// Examples
 //	
