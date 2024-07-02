@@ -140,6 +140,14 @@ public class Configuration extends PanacheEntity implements Comparable<Configura
     }
 
     /**
+     * Retourne l'Url de la page de Openfeedback du talk.
+     */
+    public static String getFeedbackUrl(Long id) {
+        Configuration config = Configuration.find("key", ConfigurationKey.FEEDBACK_URL).firstResult();
+        return config != null ? config.value + "/" + id : null;
+    }
+
+    /**
      * Return true if Call For Paper is opened, false otherwise
      */
     public static boolean cfpIsOpened() {
