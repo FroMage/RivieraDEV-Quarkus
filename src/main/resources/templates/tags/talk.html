@@ -58,4 +58,16 @@
             </div>
         {/if}
     </div>
+    {#if feedbackUrl}
+        <div class="talkDetails__footer">
+            <div class="talkDetails__feedback">
+                <a class="button button--white"
+            href="{feedbackUrl}"
+            target="_blank"
+        >
+                {m:views.application.speakers.feedback-button}
+            </a>
+            </div>
+        </div>
+    {/if}
 </div>

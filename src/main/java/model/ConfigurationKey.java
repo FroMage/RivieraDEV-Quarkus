@@ -44,6 +44,8 @@ public enum ConfigurationKey {
     TICKETING_TRAINING_URL,
     /* [true, false] Si true, permet d'accéder à la page de l'organisme de formation */
     TICKETING_TRAINING_OPEN,
+    /* Feedback Url */
+    FEEDBACK_URL, 
     /* URL de la plaquette de sponsoring */
     SPONSORING_LEAFLET_URL,
     /* [true, false] true if the Call For Paper is opened, false otherwise */

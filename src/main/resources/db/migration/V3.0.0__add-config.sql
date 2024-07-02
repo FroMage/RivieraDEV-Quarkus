@@ -1,0 +1,2 @@
+alter table Configuration drop constraint if exists Configuration_key_check;
+alter table Configuration add constraint Configuration_key_check check (key in ('GOOGLE_MAP_API_KEY','EVENT_START_DATE','EVENT_END_DATE','DISPLAY_FULL_SCHEDULE','DISPLAY_NEW_SPEAKERS','DISPLAY_TALKS','PROMOTED_PAGE','PROMOTED_PAGE_2','TICKETING_URL','TICKETING_OPEN','TICKETING_TRAINING_URL','TICKETING_TRAINING_OPEN','SPONSORING_LEAFLET_URL','CFP_OPEN','CFP_URL','CANCELLED_URL', 'FEEDBACK_URL'));
