@@ -88,6 +88,10 @@ public class Startup {
         						List<? extends PanacheEntityBase> list = entities.get(entityType);
         						if(list != null) {
         							for (PanacheEntityBase entity : list) {
+        								if(entity instanceof Speaker sp) {
+        									// for testing stuff
+        									sp.email = "email@example.com";
+        								}
         								// FIXME: this is not nice
         								// remove the ID, to get a fresh entity
         								((PanacheEntity)entity).id = null;
