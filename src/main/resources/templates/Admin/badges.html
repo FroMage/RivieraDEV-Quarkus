@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+    @font-face {
+    font-family: 'Interstate Regular';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Interstate Regular'), url('/static/fonts/InterstateRegular.ttf') format('truetype');
+    }
+    @font-face {
+    font-family: 'Interstate Light';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Interstate Light'), url('/static/fonts/InterstateLight.ttf') format('truetype');
+    }
+    @font-face {
+    font-family: 'Interstate Bold';
+    font-style: normal;
+    font-weight: normal;
+    src: local('Interstate Bold'), url('/static/fonts/InterstateBold.ttf') format('truetype');
+    }
+@page {
+  size: 21cm 29.7cm;
+  margin: 1cm;
+  padding: 0px;
+}
+body {
+    margin: 0px;
+}
+.badge {
+	font-size: 30px;
+	font-family: "Interstate Light";
+	display: inline-block;
+	border: 1px red solid;
+	width: 9cm;
+	height: 5cm;
+	overflow: hidden;
+	position: relative;
+}
+.company {
+	margin-top: 0.5cm;
+}
+.first-name, .level {
+	font-weight: bold;
+}
+.last-name {
+	text-transform: uppercase;
+}
+.level {
+	position: absolute;
+	bottom: 0px;
+}
+.qrcode {
+	position: absolute;
+	right: 0px;
+	bottom: 0px;
+}
+		</style>
+	</head>
+	<body>
+		{#for badge in badges}
+			<div class="badge">
+				<div class="first-name">{badge.firstName}</div>
+				<div class="last-name">{badge.lastName}</div>
+				<div class="company">{badge.company}</div>
+				<div class="level">{badge.level}</div>
+				<div class="qrcode">
+					{#qrcode badge.vcard size=100/}
+				</div>
+			</div>
+		{/for}		
+	</body>
+</html>

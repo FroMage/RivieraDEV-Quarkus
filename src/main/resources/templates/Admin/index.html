@@ -6,5 +6,20 @@
  <li><a href="{uri:Admin.speakerEmails}">Speaker emails</a></li>
  <li><a href="{uri:Admin.uploadProgramForm}">Upload program from CFP</a></li>
  <li><a href="{uri:Admin.speakerEmailCompany}">All speakers (name, email, company)</a></li>
+ <li><a href="{uri:OpenFeedback.openFeedback}">OpenFeedback</a></li>
+ <li><a href="{uri:Application.live}">Live Program</a></li>
+ {#for day in days}
+ <li><a href="{uri:Application.fishMarket(day.format('yyyy-MM-dd'))}">Fish Market for {day.format('d MMMM yyyy')}</a></li>
+ {/for}
 </ul>
+
+Experimental (not used yet):
+
+<ul>
+ <li><a href="{uri:Admin.badgesForm}">Get badges PDF from CSV</a></li>
+ <li><a href="{uri:Admin.speakerBadges}">Speaker badges</a></li>
+ <li><a href="{uri:Admin.organiserBadges}">Organiser badges</a></li>
+ <li><a href="{uri:Admin.sponsorBadges}">Sponsor badges</a></li>
+</ul>
+
 {/include}

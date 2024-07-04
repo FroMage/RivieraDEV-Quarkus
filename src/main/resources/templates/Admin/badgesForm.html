@@ -1,0 +1,23 @@
+{#include admin.html}
+{#title}Get badges PDF from CSV{/title}
+
+{#form uri:Admin.badges() enctype='multipart/form-data'}
+
+<fieldset>
+    <legend>Upload a CSV list attendees (first name, last name, company, ticket type, email)</legend>
+    <div class="control-group ">
+        <label class="control-label" for="program">Attendees CSV</label>
+        <div class="controls">
+            <input name="csv" type="file" value="{flash:csv}" title="Choose file to upload"/>
+            <span class="help-inline">​{#error 'csv'/}</span>
+        </div>
+    </div>
+    <div class="form-actions">
+        <a class="btn" href="{uri:Admin.index()}" title="Cancel and go back to the root">Cancel</a> ​
+        <input type="submit" class="btn btn-primary" value="Upload CSV"
+            title="Get badges PDF"/>
+    </div>
+</fieldset>
+
+{/form}
+{/include}

@@ -2,11 +2,16 @@ package rest;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileReader;
+import java.io.Reader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,6 +20,8 @@ import java.util.zip.ZipOutputStream;
 
 import javax.imageio.ImageIO;
 
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVRecord;
 import org.hibernate.engine.jdbc.BlobProxy;
 import org.jboss.resteasy.reactive.PartType;
 import org.jboss.resteasy.reactive.RestForm;
@@ -22,24 +29,33 @@ import org.jboss.resteasy.reactive.RestForm;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import io.quarkiverse.renarde.Controller;
+import io.quarkiverse.renarde.pdf.Pdf;
 import io.quarkiverse.renarde.util.FileUtils;
 import io.quarkus.logging.Log;
+import io.quarkus.panache.common.Sort;
 import io.quarkus.qute.CheckedTemplate;
+import io.quarkus.qute.TemplateData;
 import io.quarkus.qute.TemplateInstance;
 import io.quarkus.security.Authenticated;
 import io.smallrye.common.annotation.Blocking;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.POST;
+import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import model.BreakType;
 import model.Language;
 import model.Level;
+import model.Organiser;
+import model.Slot;
 import model.Speaker;
+import model.Sponsor;
+import model.SponsorShip;
 import model.Talk;
 import model.TalkTheme;
 import model.TalkThemeColor;
 import model.TalkType;
+import model.TemporarySlot;
 import util.ImageUtil;
 import util.JavaExtensions;
 
@@ -114,9 +130,13 @@ public class Admin extends Controller {
 
 		public static native TemplateInstance speakerEmails(List<Speaker> speakers);
 
-		public static native TemplateInstance index();
+		public static native TemplateInstance index(List<Date> days);
 
 		public static native TemplateInstance speakerEmailsCompany(List<Speaker> speakers);
+
+		public static native TemplateInstance badges(List<Badge> badges);
+		
+    	public static native TemplateInstance badgesForm();
     }
     
     public TemplateInstance uploadProgramForm() {
@@ -300,8 +320,78 @@ public class Admin extends Controller {
         List<Speaker> speakers = Speaker.list("ORDER BY firstName,lastName");
         return Templates.speakerEmailsCompany(speakers);
     }
+
+    @TemplateData
+    public static record Badge(String firstName, String lastName, String company, String level, String email) {
+    	public String getVcard() {
+    		StringBuilder sb = new StringBuilder();
+    		sb.append("BEGIN:VCARD\n");
+    		sb.append("VERSION:3.0\n");
+    		sb.append("N:").append(lastName).append(";").append(firstName).append(";;;\n");
+    		sb.append("FN:").append(firstName).append(" ").append(lastName).append("\n");
+    		sb.append("ORG:").append(company).append(";\n");
+    		if(email != null) {
+    			sb.append("EMAIL;type=INTERNET:").append(email).append("\n");
+    		}
+    		sb.append("END:VCARD\n");
+    		return sb.toString();
+    	}
+    }
     
+    public TemplateInstance speakerBadges() {
+    	List<Speaker> speakers = Speaker.listAll(Sort.by("lastName").and("firstName"));
+    	List<Badge> badges = new ArrayList<Badge>();
+    	for (Speaker speaker : speakers) {
+			badges.add(new Badge(speaker.firstName, speaker.lastName, speaker.company, "SPEAKER", speaker.email));
+		}
+    	return Templates.badges(badges);
+    }
+
+    public TemplateInstance organiserBadges() {
+    	List<Organiser> organisers = Organiser.listAll(Sort.by("lastName").and("firstName"));
+    	List<Badge> badges = new ArrayList<Badge>();
+    	for (Organiser organiser : organisers) {
+			badges.add(new Badge(organiser.firstName, organiser.lastName, organiser.company, "STAFF", null));
+		}
+    	return Templates.badges(badges);
+    }
+
+    public TemplateInstance sponsorBadges() {
+    	List<Sponsor> sponsors = Sponsor.listAll(Sort.by("company"));
+    	List<Badge> badges = new ArrayList<Badge>();
+    	for (Sponsor sponsor : sponsors) {
+    		if(sponsor.level != SponsorShip.PreviousYears) {
+    			badges.add(new Badge(sponsor.company, "", sponsor.company, "SPONSOR", null));
+    		}
+		}
+    	return Templates.badges(badges);
+    }
+
+    @POST
+    public TemplateInstance badges(@RestForm File csv) throws IOException {
+    	CSVFormat csvFormat = CSVFormat.DEFAULT.builder()
+                .setSkipHeaderRecord(true)
+                .build();
+    	List<Badge> badges = new ArrayList<Badge>();
+        try (Reader reader = new FileReader(csv)) {
+            // Generate one document per row, using the specified syntax.
+            Iterable<CSVRecord> records = csvFormat.parse(reader);
+            int i = 1;
+            for (CSVRecord record : records) {
+            	badges.add(new Badge(record.get(0), record.get(1), record.get(2), record.get(3), record.get(4)));
+            }
+        }
+        return Templates.badges(badges);
+    }
+
+    public TemplateInstance badgesForm() {
+    	return Templates.badgesForm();
+    }
+
     public TemplateInstance index() {
-        return Templates.index();
+        List<Date> days = (List)Slot.list(
+                    "select distinct date_trunc('day', startDate) from Slot ORDER BY date_trunc('day', startDate)");
+
+        return Templates.index(days);
     }
 }
