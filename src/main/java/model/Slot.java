@@ -18,7 +18,7 @@ import io.quarkus.qute.TemplateData;
 
 @TemplateData
 @Entity
-public class Slot extends PanacheEntity {
+public class Slot extends PanacheEntity implements Comparable<Slot> {
 
     @Field("startDate")
 	@NotNull
@@ -83,16 +83,7 @@ public class Slot extends PanacheEntity {
         List<Slot> result = new ArrayList(multiSlots.values());
 
         // Sorting
-        Collections.sort(result, new Comparator<Slot>() {
-            @Override
-            public int compare(Slot slotA, Slot slotB) {
-                int compare = slotA.startDate.compareTo(slotB.startDate);
-                if (compare == 0) {
-                    return slotA.endDate.compareTo(slotB.endDate);
-                }
-                return compare;
-            }
-        });
+        Collections.sort(result);
 
         return result;
     }
@@ -126,6 +117,8 @@ public class Slot extends PanacheEntity {
                 }
             }
         }
+        // sort them in slot order
+        talks.sort((t1, t2) -> t1.slot.compareTo(t2.slot));
         return talks;
     }
 
@@ -148,4 +141,13 @@ public class Slot extends PanacheEntity {
         }
         return null;
     }
+
+	@Override
+	public int compareTo(Slot o) {
+		int ret = startDate.compareTo(o.startDate);
+		if(ret == 0) {
+			ret = endDate.compareTo(o.endDate);
+		}
+		return ret;
+	}
 }
