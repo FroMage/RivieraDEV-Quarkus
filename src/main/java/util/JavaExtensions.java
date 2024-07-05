@@ -18,6 +18,10 @@ import io.quarkus.qute.TemplateExtension;
 @TemplateExtension
 public class JavaExtensions {
 
+	public static RawString nobreak(String string) {
+		return new RawString(string.replace(" ", "&nbsp;"));
+	}
+	
     public static String slugify(String string) {
         return slugify(string, Boolean.TRUE);
     }

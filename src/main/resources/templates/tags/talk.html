@@ -32,9 +32,9 @@
         {talk.getDescription().md()}
         <div class="talkDetails__metadata">
             {#if talk.theme}
-            <span class="talkDetails__metadata--item">{talk.theme}</span>
+            <span class="talkDetails__metadata--item">{talk.theme.toString().nobreak}</span>
             {/if} {#if talk.type}
-            <span class="talkDetails__metadata--item">{talk.type}</span>
+            <span class="talkDetails__metadata--item">{talk.type.toString().nobreak}</span>
             {/if} {#if talk.level}
             <span class="talkDetails__metadata--item"
                 >{m:'views.application.schedule.level.' + talk.level.code}</span
