@@ -1,8 +1,8 @@
 <div class="talkDetails">
-    <div class="talkDetails__header">
+    <div class="talkDetails__header talkDetails__header--{talk.theme ? talk.theme.color.code : 'none'}">
         <div class="talkDetails__header--title">
             <div class="talkDetails__micro">
-                <div class="talkDetails__title"><a href="@{uri:Application.talk(talk.id)}">&laquo; {talk.title} &raquo;</a></div>
+                <div class="talkDetails__title"><a href="{uri:Application.talk(talk.id)}">&laquo; {talk.title} &raquo;</a></div>
             </div>
             {#if talk.speakers}
             <div class="talkDetails__speakers">
@@ -59,7 +59,7 @@
         {/if}
     </div>
     {#if talk.feedbackUrl}
-        <div class="talkDetails__footer">
+        <div class="talkDetails__footer talkDetails__footer--{talk.theme ? talk.theme.color.code : 'none'}"">
             <div class="talkDetails__feedback">
                 <a class="button button--white"
             href="{talk.feedbackUrl}"

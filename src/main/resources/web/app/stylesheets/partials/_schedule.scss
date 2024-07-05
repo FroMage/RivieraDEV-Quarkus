@@ -341,6 +341,7 @@ $avatar-size: 30px;
             border-style: solid;
             border-top: none;
 
+			/* Same colors as in _talk.scss */
             &--blue {
                 background-color: $color-theme-blue;
                 border-color: $color-theme-blue;

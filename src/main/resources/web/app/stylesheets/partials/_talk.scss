@@ -155,6 +155,54 @@
         text-align: center;
         background-color: $color-yellow;
 
+		a {
+			color: $color-white;
+			text-decoration: none;
+		}
+
+		/* Same colors as in _schedule.scss */
+        &--blue {
+            background-color: $color-theme-blue;
+            border-color: $color-theme-blue;
+        }
+        &--yellow {
+            background-color: $color-theme-yellow;
+            border-color: $color-theme-yellow;
+        }
+        &--purple {
+            background-color: $color-theme-purple;
+            border-color: $color-theme-purple;
+        }
+        &--green {
+            background-color: $color-theme-green;
+            border-color: $color-theme-green;
+        }
+        &--orange {
+            background-color: $color-theme-orange;
+            border-color: $color-theme-orange;
+        }
+        &--red {
+            background-color: $color-theme-red;
+            border-color: $color-theme-red;
+        }
+        &--pink {
+            background-color: $color-theme-pink;
+            border-color: $color-theme-pink;
+        }
+        &--turquoise {
+            background-color: $color-theme-turquoise;
+            border-color: $color-theme-turquoise;
+        }
+        &--brown {
+            background-color: $color-theme-brown;
+            border-color: $color-theme-brown;
+        }
+        &--grey,
+        &--none {
+            background-color: $color-theme-grey;
+            border-color: $color-theme-grey;
+        }
+
         &--title,
         &--schedule {
             display: flex;
