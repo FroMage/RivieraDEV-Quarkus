@@ -92,7 +92,7 @@ public class Application extends ControllerWithUser<User> {
 		public static native TemplateInstance sponsor(Sponsor sponsor);
 		public static native TemplateInstance sponsorBanner(Sponsor sponsor);
 
-		public static native TemplateInstance talk(Talk talk, boolean displayFullSchedule, String feedbackUrl);
+		public static native TemplateInstance talk(Talk talk, boolean displayFullSchedule);
 
 		public static native TemplateInstance organisers(List<Organiser> orgas);
 
@@ -346,11 +346,10 @@ public class Application extends ControllerWithUser<User> {
 
     @Path("/session")
     public TemplateInstance talk(@RestPath Long id) {
-        String feedbackUrl = Configuration.getFeedbackUrl(id);
         Talk talk = Talk.findById(id);
         notFoundIfNull(talk);
         boolean displayFullSchedule = Configuration.displayFullSchedule();
-        return Templates.talk(talk, displayFullSchedule, feedbackUrl);
+        return Templates.talk(talk, displayFullSchedule);
     }
 
     @Path("/sponsors")

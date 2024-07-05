@@ -58,11 +58,11 @@
             </div>
         {/if}
     </div>
-    {#if feedbackUrl}
+    {#if talk.feedbackUrl}
         <div class="talkDetails__footer">
             <div class="talkDetails__feedback">
                 <a class="button button--white"
-            href="{feedbackUrl}"
+            href="{talk.feedbackUrl}"
             target="_blank"
         >
                 {m:views.application.speakers.feedback-button}

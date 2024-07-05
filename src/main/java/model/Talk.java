@@ -79,6 +79,9 @@ public class Talk extends PanacheEntity implements Comparable<Talk> {
 	@ManyToMany
 	public List<Speaker> speakers = new ArrayList<Speaker>();
 	
+    public String getFeedbackUrl() {
+    	return Configuration.getFeedbackUrl(id);
+    }
 
 	public String getTitle() {
 		String displayedTitle = "";
