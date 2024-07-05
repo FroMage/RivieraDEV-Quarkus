@@ -15,7 +15,7 @@
     <quarkus.platform.version>3.12.0.CR1</quarkus.platform.version>
     <skipITs>true</skipITs>
     <surefire-plugin.version>3.0.0-M7</surefire-plugin.version>
-    <renarde.version>3.0.17</renarde.version>
+    <renarde.version>3.0.18</renarde.version>
     <web-bundler.version>1.6.0</web-bundler.version>
     <ngrok.version>1.5.1</ngrok.version>
     <quarkus.poi.version>2.0.6</quarkus.poi.version>
