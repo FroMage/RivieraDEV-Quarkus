@@ -140,7 +140,8 @@
     position: relative;
     $borderRadius: 0.5rem;
 
-    margin: 0 auto;
+	/* Stef: added margin for the /talk page where they are one after the other */
+    margin: 1em auto;
 
     @media (min-width: $screen-sm-min) {
         width: 70%;
@@ -148,7 +149,6 @@
 
     &__footer,
     &__header {
-        border-radius: $borderRadius $borderRadius 0 0;
         color: $color-white;
         margin: 0 auto;
         padding: 5%;
@@ -166,6 +166,14 @@
             margin-top: $space-sm;
         }
     }
+
+    &__header {
+        border-radius: $borderRadius $borderRadius 0 0;
+	}
+
+    &__footer {
+        border-radius: 0 0 $borderRadius $borderRadius;
+	}
 
     &__micro {
         display: flex;
