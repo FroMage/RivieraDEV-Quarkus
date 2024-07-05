@@ -2,7 +2,7 @@
     <div class="talkDetails__header">
         <div class="talkDetails__header--title">
             <div class="talkDetails__micro">
-                <div class="talkDetails__title">&laquo; {talk.title} &raquo;</div>
+                <div class="talkDetails__title"><a href="@{uri:Application.talk(talk.id)}">&laquo; {talk.title} &raquo;</a></div>
             </div>
             {#if talk.speakers}
             <div class="talkDetails__speakers">
