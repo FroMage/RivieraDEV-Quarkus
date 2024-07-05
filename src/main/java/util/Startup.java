@@ -5,6 +5,9 @@ import java.io.InputStream;
 import java.io.UncheckedIOException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -91,6 +94,10 @@ public class Startup {
         								if(entity instanceof Speaker sp) {
         									// for testing stuff
         									sp.email = "email@example.com";
+        								} else if(entity instanceof Slot slot) {
+        									// FIXME: we have a bug where dates are shifted +2h from prod to dev for some reason
+        									slot.startDate = Date.from(slot.startDate.toInstant().minus(2l, ChronoUnit.HOURS));
+        									slot.endDate = Date.from(slot.endDate.toInstant().minus(2l, ChronoUnit.HOURS));
         								}
         								// FIXME: this is not nice
         								// remove the ID, to get a fresh entity
