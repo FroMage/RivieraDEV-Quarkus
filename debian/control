@@ -1,11 +1,11 @@
-Source: rivieradev-quarkus-2024
+Source: rivieradev-quarkus-2025
 Section: unknown
 Priority: extra
 Maintainer: Stephane Epardaud <stef@epardaud.fr>
 Build-Depends: debhelper (>= 9), maven
 Standards-Version: 3.9.5
 
-Package: rivieradev-quarkus-2024
+Package: rivieradev-quarkus-2025
 Architecture: all
 Depends: ${misc:Depends}
-Description: rivieradev-quarkus-2024 application
+Description: rivieradev-quarkus-2025 application

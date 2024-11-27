@@ -13,7 +13,7 @@ random () {
  echo
 }
 
-APP=rivieradev-quarkus-2024
+APP=rivieradev-quarkus-2025
 QUARKUS_USER=quarkus
 CLUSTER=
 

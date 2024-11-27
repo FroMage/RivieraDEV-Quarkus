@@ -7,7 +7,7 @@
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
 
-NAME=rivieradev-quarkus-2024
+NAME=rivieradev-quarkus-2025
 
 DEB_PATH=debian/$(NAME)
 BIN_PATH=/usr/bin/
