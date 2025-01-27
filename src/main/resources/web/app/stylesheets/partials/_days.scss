@@ -102,6 +102,7 @@ $days-illustration-size-sm: 10rem;
     &__title {
         display: inline;
         margin-top: 0;
+        font-family: $font-title;
         font-weight: bold;
         font-size: $font-md;
 
@@ -172,6 +173,7 @@ $days-illustration-size-sm: 10rem;
     }
 
     &__subtitle {
+        font-family: $font-title;
         font-weight: bold;
 
         &:first-child {

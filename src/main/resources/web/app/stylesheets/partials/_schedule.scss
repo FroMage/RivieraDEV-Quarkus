@@ -83,6 +83,7 @@ $avatar-size: 30px;
         cursor: pointer;
         color: inherit;
         transition: color 0.2s;
+        font-family: $font-title;
 
         &--selected {
             color: $color-yellow;
@@ -262,6 +263,11 @@ $avatar-size: 30px;
         &--7tracks {
             width: 12.8%;
         }
+    }
+
+    &__breakTitle {
+        font-family: $font-title;
+        font-size: $font-xxl;
     }
 
     &__track {
