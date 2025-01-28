@@ -24,6 +24,7 @@ $background-height: 192px;
     &__title {
         margin: 0 $content-space-xs $space-md $content-space-xs;
         text-align: left;
+        font-family: $font-title;
 
         @media (min-width: $screen-sm-min) {
             text-align: center;

@@ -73,6 +73,7 @@ $counter-item-size: 12rem;
     &__title {
         grid-area: title;
         align-self: center;
+        font-family: $font-title;
         font-size: $font-lg;
         font-weight: $bold;
         margin-bottom: $space-sm;

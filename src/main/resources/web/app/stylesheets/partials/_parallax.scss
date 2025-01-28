@@ -59,7 +59,7 @@
     }
 
     &__logo--rdev {
-        width: 45vw;
+        width: 65vw;
         margin-bottom: $space-sm;
 
         @media (min-width: $screen-sm-min) {
@@ -76,6 +76,7 @@
 
     &__info {
         color: white;
+        font-family: 'Tomorrow';
         font-size: $font-lg;
         font-weight: $light;
         margin-bottom: 3rem;
