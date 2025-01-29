@@ -58,7 +58,7 @@ And deploy the resulting Debian package on the production server.
 
 ## Configuration
 
-In the admin part (https://\<url\>/_renarde/backoffice/index) there is a special table `Configurations`. All the keys are in defined in [`ConfigurationKey.java`](./src/main/java/model/ConfigurationKey.java).
+In the admin part (`https://\<url\>/_renarde/backoffice/index`) there is a special table `Configurations`. All the keys are in defined in [`ConfigurationKey.java`](./src/main/java/model/ConfigurationKey.java).
 
 Here is how to configure it.
 
