@@ -68,7 +68,7 @@ When we set up the website for the new edition.
 
 -   `GOOGLE_MAP_API_KEY`: Reuse the same key as for the previous edition
 -   `EVENT_START_DATE`: Start date of the conference in ISO format. E.g. `2019-05-15T08:20:00`
--   `EVENT_START_DATE`: End date of the conference in ISO format: E.g. `2019-05-17T18:00:00`
+-   `EVENT_END_DATE`: End date of the conference in ISO format: E.g. `2019-05-17T18:00:00`
 -   `DISPLAY_FULL_SCHEDULE = false`: We don't want to display the schedule because we don't know it yet.
 -   `DISPLAY_NEW_SPEAKERS = false`: Same as above.
 -   `DISPLAY_TALKS = false`: Same as above.
@@ -81,6 +81,8 @@ When we set up the website for the new edition.
 -   `SPONSORING_LEAFLET_URL`: URL to the sponsoring leaflet.
 -   `CFP_URL`: At this time the CFP is not opened yet, but if we know the URL, we can fill it.
 -   `CFP_OPEN = false`
+
+⚠️ `PROMOTED_PAGE` and `PROMOTED_PAGE_2` won't display anything if `EVENT_START_DATE` and `EVENT_END_DATE` are in the past.
 
 ## When the sponsoring leaflet is ready
 
