@@ -209,6 +209,7 @@ body.burgerMenu--open .burgerMenu:before {
 
         padding: $space-sm 2%;
         z-index: 10;
+        font-family: $font-subtitle;
         font-size: $font-xs;
         position: fixed;
         right: 0;
@@ -233,8 +234,6 @@ body.burgerMenu--open .burgerMenu:before {
             text-decoration: none;
             cursor: pointer;
             text-transform: uppercase;
-            font-size: $font-xs;
-            font-weight: $bold;
 
             &:hover {
                 color: $color-blue;
