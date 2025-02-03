@@ -14,9 +14,13 @@ $soldout-hoverlay: rgba(256, 256, 256, 0.5);
 }
 
 .passes {
+    @media (min-width: $screen-lg-min) {
+        max-width: 80%;
+    }
     @media (min-width: $screen-md-min) {
+        margin: 0 auto;
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: 1fr 1fr;
         grid-template-areas:
             'deepdiveMain conferenceMain combiMain'
             'deepdiveDesc conferenceDesc combiDesc';
