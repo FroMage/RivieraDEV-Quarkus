@@ -64,7 +64,7 @@ html {
 }
 
 body {
-    font-family: 'Neulis', sans-serif;
+    font-family: $font-text;
     font-size: $font-sm;
     position: relative;
     min-height: 100vh;
