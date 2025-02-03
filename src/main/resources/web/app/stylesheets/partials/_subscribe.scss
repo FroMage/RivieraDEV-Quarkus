@@ -109,6 +109,8 @@ $bullet-size: 0.6rem; // 6px
     }
 
     &__pass {
+        display: block;
+        
         &--deepdive {
             color: $color-deepDive-label;
         }

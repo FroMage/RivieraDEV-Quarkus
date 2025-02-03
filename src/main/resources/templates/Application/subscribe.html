@@ -34,7 +34,8 @@
                 <div class="pass__main">
                     <h3 class="pass__name">
                         <span class="pass__pass pass__pass--{pricePack.type.code}">
-                            {m:views.application.subscribe.pass.pass}
+                            {m:'views.application.subscribe.pass.' + pricePack.type.code +
+                            '.title'}
                         </span>
                         {m:'views.application.subscribe.pass.' + pricePack.type.code +
                         '.name'}
@@ -87,10 +88,10 @@
                     {/if}
                     {#if pricePack.type.code == 'conference' || pricePack.type.code == 'combi'}
                         <li class="pass__descriptionItem">
-                            {m:views.application.subscribe.pass.include.conference.conferences}
+                            {m:views.application.subscribe.pass.include.conference.keynotes}
                         </li>
                         <li class="pass__descriptionItem">
-                            {m:views.application.subscribe.pass.include.conference.snorkeling}
+                            {m:views.application.subscribe.pass.include.conference.conferences}
                         </li>
                         <li class="pass__descriptionItem">
                             {m:views.application.subscribe.pass.include.conference.notjustcoders}
