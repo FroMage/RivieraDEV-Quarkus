@@ -1,3 +1,5 @@
+@import '../mixins';
+
 /* Humant font for titles */
 
 @font-face {
@@ -96,9 +98,7 @@ body {
 }
 
 .title {
-    text-align: center;
-    color: $color-blue;
-    font-weight: 300;
+    @include title;
 }
 
 .notFullWidth {
@@ -260,6 +260,8 @@ a {
     }
 
     &__mainTitle {
+        @include title;
+
         font-family: $font-title;
         font-size: $font-xl;
         font-weight: bold;
