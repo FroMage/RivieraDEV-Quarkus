@@ -38,7 +38,7 @@
     }
 }
 
-@mixin title {
+@mixin curly-braces {
     &::before {
         content: '{ ';
     }
