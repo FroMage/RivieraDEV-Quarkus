@@ -51,8 +51,9 @@
     }
 
     &__number {
+        font-family: $font-secondary;
         font-size: $font-xxl;
-        font-weight: bold;
+        font-weight: $bold;
         display: block;
         color: $color-yellow;
         line-height: 1;
