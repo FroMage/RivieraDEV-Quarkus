@@ -71,7 +71,8 @@ body {
     position: relative;
     min-height: 100vh;
     margin: 0;
-    color: $color-black-light;
+    background-color: $color-beige;
+    color: $color-bleu-anthracite;
 
     @media (min-width: $screen-sm-min) {
         font-size: $font-md;
@@ -246,7 +247,6 @@ a {
 
 .page {
     &__header {
-        color: $color-white;
         padding: $space-xxl;
         background-attachment: fixed;
         background-repeat: no-repeat;
@@ -307,3 +307,4 @@ a {
     max-width: 700px;
     margin: 0 auto;
 }
+
