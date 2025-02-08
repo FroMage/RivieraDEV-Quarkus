@@ -1,13 +1,4 @@
-@include responsiveBackgroundImage(
-    '.orgas__header',
-    '/static/images/illustrations/responsives/team-mini'
-);
-
 .orgas {
-    &__header {
-        background-position: center;
-    }
-
     &__mainSubtitle {
         p {
             margin: 0;

@@ -248,10 +248,6 @@ a {
 .page {
     &__header {
         padding: $space-xxl;
-        background-attachment: fixed;
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: center;
 
         @media (min-width: $screen-sm-min) {
             padding: $space-xxxl;
@@ -262,12 +258,14 @@ a {
         @include curly-braces;
 
         font-family: $font-title;
-        font-size: $font-xl;
-        font-weight: bold;
+        font-size: $font-xxl;
+        font-weight: $bold;
+        color: $color-rouge-tomate;
+        letter-spacing: -0.03em;
         margin: $space-xs 0;
 
         @media (min-width: $screen-sm-min) {
-            font-size: $font-xxxl;
+            font-size: $font-huge;
             margin: $space-md 0;
         }
     }
