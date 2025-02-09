@@ -205,25 +205,20 @@ body.burgerMenu--open .burgerMenu:before {
     }
 
     .menu {
-        display: block;
-
-        padding: $space-sm 2%;
+        display: flex;
+        justify-content: space-between;
+        position: fixed;
         z-index: 10;
+        width: 100%;
+        // height: $navbar-small-height;
+        padding: $space-sm;
         font-family: $font-secondary;
         font-size: $font-xs;
-        position: fixed;
-        right: 0;
-        left: 0;
         text-align: right;
-        height: 3rem;
-        color: white;
+        background-color: $color-bleu-ciel;
 
         &__logo {
-            float: left;
-        }
-
-        &__items {
-            padding-top: 0.5rem;
+            height: 4rem;
         }
 
         &__item {
@@ -266,91 +261,6 @@ body.burgerMenu--open .burgerMenu:before {
         &__langueSeparator {
             display: inline;
             color: inherit;
-        }
-    }
-
-    .navbar-animated {
-        transition: all 0.5s;
-
-        &-small {
-            background-color: white;
-            color: black;
-            height: $navbar-small-height;
-            box-shadow: 0 3px 6px $color-black-transparent3;
-
-            .navbar-animated-brand {
-                opacity: 1;
-            }
-
-            .navbar-rivieradev {
-                height: $navbar-small-height;
-                line-height: $navbar-small-height;
-            }
-        }
-
-        &-logos {
-            margin-left: 0.5em;
-        }
-
-        &-brand {
-            opacity: 0;
-            padding: 0;
-            height: auto;
-            display: flex;
-            flex-direction: row;
-            justify-content: flex-start;
-            flex-wrap: wrap;
-        }
-
-        &-logo {
-            transition: all 0.3s;
-            padding: 0;
-            margin: 0;
-
-            img {
-                height: 80%;
-            }
-        }
-    }
-
-    .navbar {
-        $navbar-height: 0rem;
-
-        &-brand,
-        &-brand:hover,
-        &-brand:visited {
-            color: $color-gray-dark;
-            text-decoration: none;
-        }
-
-        &-rivieradev {
-            margin-right: 0.3em;
-            height: $navbar-height;
-            line-height: $navbar-height;
-        }
-        &-RedHat {
-            font-size: 0.65em;
-            display: none;
-
-            @media (min-width: $screen-lg-min) {
-                display: flex;
-            }
-
-            & img.navbar-RedHat--logo {
-                display: inline-block;
-                align-self: flex-end;
-                height: 4em;
-                margin-right: 0.5em;
-                margin-bottom: 0.25em;
-            }
-            &--featuring {
-                display: inline-block;
-                height: 1em;
-                line-height: 1em;
-                align-self: flex-end;
-                margin-bottom: 0.45em;
-                text-decoration: none;
-            }
         }
     }
 }
