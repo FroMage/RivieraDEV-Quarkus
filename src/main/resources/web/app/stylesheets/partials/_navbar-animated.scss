@@ -210,35 +210,57 @@ body.burgerMenu--open .burgerMenu:before {
         position: fixed;
         z-index: 10;
         width: 100%;
-        // height: $navbar-small-height;
-        padding: $space-sm;
+        height: $navbar-small-height;
         font-family: $font-secondary;
         font-size: $font-xs;
         text-align: right;
         background-color: $color-bleu-ciel;
 
+        &__home {
+            padding: $space-sm;
+        }
+
         &__logo {
             height: 4rem;
         }
 
+        &__items {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+        }
+
         &__item {
+            transition-duration: 200ms;
             display: inline-block;
-            padding: $space-sm;
-            margin-left: $space-sm;
-            color: inherit;
             text-decoration: none;
             cursor: pointer;
             text-transform: uppercase;
+            padding: $space-sm;
+            margin: 0 $space-xs $space-xs 0;
+            border-radius: 0 0 $border-radius-xs $border-radius-xs;
+
+            &:nth-child(1n) {
+                background-color: $color-jaune-poussin;
+                color: $color-bleu-ciel;
+            }
+
+            &:nth-child(2n) {
+                background-color: $color-turquoise;
+                color: $color-beige;
+            }
+
+            &:nth-child(3n) {
+                background-color: $color-rouge-tomate;
+                color: $color-jaune-poussin;
+            }
 
             &:hover {
-                color: $color-blue;
-                text-decoration: none;
-                border-bottom: $border-md solid $color-blue;
+                padding-top: $space-lg;
             }
 
             &--current {
-                color: $color-yellow;
-                border-bottom: $border-md solid $color-yellow;
+                padding-top: $space-lg;
             }
         }
 
