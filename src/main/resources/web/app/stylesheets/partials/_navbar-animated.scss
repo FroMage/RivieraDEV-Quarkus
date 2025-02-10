@@ -230,44 +230,55 @@ body.burgerMenu--open .burgerMenu:before {
             align-items: start;
         }
 
+        a {
+            cursor: pointer;
+        }
+
         &__item {
             transition-duration: 200ms;
             display: inline-block;
             text-decoration: none;
-            cursor: pointer;
             text-transform: uppercase;
             padding: $space-sm;
             margin: 0 $space-xs $space-xs 0;
             border-radius: 0 0 $border-radius-xs $border-radius-xs;
-
-            background-color: $color-turquoise;
-            color: $color-white;
+            
+            background-color: $color-jaune-poussin;
+            color: $color-bleu-ciel;
 
             &:hover {
                 padding-top: $space-lg;
-                color: $color-white;
+                color: $color-bleu-ciel;
+            }
+
+            &--langue {
+                background-color: $color-turquoise;
+                color: $color-bleu-ciel;
+
+                &:hover {
+                    padding-top: $space-sm;
+                }
             }
 
             &--current {
                 padding-top: $space-lg;
-                background-color: $color-jaune-poussin;
-                color: $color-bleu-ciel;
+                
+                background-color: $color-rouge-tomate;
+                color: $color-jaune-poussin;
+
+                &:hover {
+                    color: $color-jaune-poussin;
+                }
             }
         }
 
         &__langue {
             color: inherit;
             text-decoration: none;
-            padding-left: 0;
-            padding-right: 0;
-
-            &:last-child {
-                margin-left: 0;
-            }
 
             &--selected,
             &--selected:hover {
-                color: $color-yellow;
+                color: $color-beige;
             }
         }
 

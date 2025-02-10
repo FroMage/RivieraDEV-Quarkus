@@ -297,18 +297,23 @@
                     {m:views.main.access}
                 </a> -->
 
-                <a
-                    href="{uri:Application.en(request.url)}"
-                    class="menu__item menu__langue {#if inject:i18n.get() == 'en'}menu__langue--selected{/if}"
-                >
-                    {m:views.main.language.en}
-                </a>
-                <a
-                    href="{uri:Application.fr(request.url)}"
-                    class="menu__item menu__langue {#if inject:i18n.get() == 'fr'}menu__langue--selected{/if}"
-                >
-                    {m:views.main.language.fr}
-                </a>
+                <div class="menu__item menu__item--langue">
+                    {#if inject:i18n.get() == 'en'}
+                        <span class="menu__langue menu__langue--selected">{m:views.main.language.en}</span>
+                    {#else}
+                        <a href="{uri:Application.en(request.url)}" class="menu__langue">
+                            {m:views.main.language.en}
+                        </a>
+                    {/if}
+                    <span class="burgerMenu__langueSeparator">/</span>
+                    {#if inject:i18n.get() == 'fr'}
+                        <span class="menu__langue menu__langue--selected">{m:views.main.language.fr}</span>
+                    {#else}
+                        <a href="{uri:Application.fr(request.url)}" class="menu__langue">
+                            {m:views.main.language.fr}
+                        </a>
+                    {/if}
+                </div>
             </div>
         </nav>
 
