@@ -37,3 +37,12 @@
         }
     }
 }
+
+@mixin title {
+    &::before {
+        content: '{ ';
+    }
+    &:after {
+        content: ' }';
+    }
+}

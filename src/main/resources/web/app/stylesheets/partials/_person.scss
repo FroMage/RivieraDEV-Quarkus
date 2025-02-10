@@ -44,7 +44,6 @@ $avatar-size-sm: 150px;
     }
 
     &__name {
-        text-transform: uppercase;
         font-weight: $bold;
     }
 
@@ -92,6 +91,7 @@ $avatar-size-sm: 150px;
     &__name {
         line-height: 1.5em;
         font-size: $font-xl;
+        font-weight: $semi-bold;
     }
 
     &__title {
