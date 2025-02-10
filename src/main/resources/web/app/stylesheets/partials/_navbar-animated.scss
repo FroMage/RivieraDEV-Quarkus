@@ -240,27 +240,18 @@ body.burgerMenu--open .burgerMenu:before {
             margin: 0 $space-xs $space-xs 0;
             border-radius: 0 0 $border-radius-xs $border-radius-xs;
 
-            &:nth-child(1n) {
-                background-color: $color-jaune-poussin;
-                color: $color-bleu-ciel;
-            }
-
-            &:nth-child(2n) {
-                background-color: $color-turquoise;
-                color: $color-beige;
-            }
-
-            &:nth-child(3n) {
-                background-color: $color-rouge-tomate;
-                color: $color-jaune-poussin;
-            }
+            background-color: $color-turquoise;
+            color: $color-white;
 
             &:hover {
                 padding-top: $space-lg;
+                color: $color-white;
             }
 
             &--current {
                 padding-top: $space-lg;
+                background-color: $color-jaune-poussin;
+                color: $color-bleu-ciel;
             }
         }
 
