@@ -241,7 +241,7 @@ body.burgerMenu--open .burgerMenu:before {
             text-transform: uppercase;
             padding: $space-sm;
             margin: 0 $space-xs $space-xs 0;
-            border-radius: 0 0 $border-radius-xs $border-radius-xs;
+            border-radius: 0 0 $border-radius-md $border-radius-md;
             
             background-color: $color-jaune-poussin;
             color: $color-bleu-ciel;
