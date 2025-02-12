@@ -102,108 +102,109 @@
                 <div class="burgerMenu__content">
                     <div class="burgerMenu__welcome">
                         <img
-                            class="burgerMenu__welcome--logo"
-                            src="/static/images/logos/Riviera_Dev_Logo_Secondaire_Blanc.svg"
+                            class="burgerMenu__logo"
+                            src="/static/images/logos/Riviera_Dev_Logo_Secondaire_Jaune_Poussin.svg"
                             alt="RivieraDEV"
                         />
-                        <div class="burgerMenu__welcome--info">
-                            <p>{m:views.application.index.date}</p>
-                            <p>{m:views.application.index.place}</p>
-                        </div>
                     </div>
 
-                    <a
-                        href="{uri:Application.index}"
-                        class="burgerMenu__item {#if request.action == 'Application.index'}burgerMenu__item--current{/if}"
-                    >
-                        {m:views.main.home}
-                    </a>
+                    <div class="burgerMenu__items">
 
-                    {#if ticketingIsOpen}
-                    <a
-                        href="{uri:Application.subscribe}"
-                        class="burgerMenu__item {#if request.action == 'Application.subscribe'}burgerMenu__item--current{/if}"
-                    >
-                        {m:views.main.tickets}
-                    </a>
-                    {/if}
-
-                    <a
-                        href="{uri:Application.schedule}"
-                        class="burgerMenu__item {#if request.action == 'Application.schedule'}menu__item--current{/if}"
-                    >
-                        {m:views.main.schedule}
-                    </a>
-
-                    {#if displayNewSpeakers}
-                    <a
-                        href="{uri:Application.speakers}"
-                        class="burgerMenu__item {#if request.action == 'Application.speakers'}menu__item--current{/if}"
-                    >
-                        {m:views.main.speakers}
-                    </a>
-                    {/if}
-
-                    {#if cfpIsOpened}
-                    <a
-                        href="{cfpUrl}"
-                        class="burgerMenu__item"
-                        target="_blank"
-                    >
-                        {m:views.main.cfp}
-                    </a>
-                    {/if}
-
-                    <a
-                        href="{uri:Application.photos}"
-                        class="burgerMenu__item {#if request.action == 'Application.photos'}menu__item--current{/if}"
-                    >
-                        {m:views.main.photos}
-                    </a>
-
-                    <a
-                        href="{uri:Application.schools}"
-                        class="burgerMenu__item {#if request.action == 'Application.schools'}menu__item--current{/if}"
-                    >
-                        {m:views.main.schools}
-                    </a>
-
-                    <a
-                        href="{uri:Application.index}#sponsors"
-                        class="burgerMenu__item"
-                        onclick="forceToggleBurgerMenu()"
-                    >
-                        {m:views.main.sponsors}
-                    </a>
-
-                    <a
-                        href="{uri:Application.organisers}"
-                        class="burgerMenu__item {#if request.action == 'Application.organisers' || request.action == 'Application.organiser'}burgerMenu__item--current{/if}"
-                    >
-                        {m:views.main.team}
-                    </a>
-
-                    <!-- <a
-                        href="{uri:Application.access}"
-                        class="burgerMenu__item {#if request.action == 'Application.access'}burgerMenu__item--current{/if}"
-                    >
-                        {m:views.main.access}
-                    </a> -->
-
-                    <div class="burgerMenu__item">
                         <a
-                            href="{uri:Application.en(request.url)}"
-                            class="burgerMenu__langue {#if inject:i18n.get() == 'en'}burgerMenu__langue--selected{/if}"
+                            href="{uri:Application.index}"
+                            class="burgerMenu__item {#if request.action == 'Application.index'}burgerMenu__item--current{/if}"
                         >
-                            {m:views.main.language.en}
+                            {m:views.main.home}
                         </a>
-                        <span class="burgerMenu__langueSeparator">/</span>
+
+                        {#if ticketingIsOpen}
                         <a
-                            href="{uri:Application.fr(request.url)}"
-                            class="burgerMenu__langue {#if inject:i18n.get() == 'fr'}burgerMenu__langue--selected{/if}"
+                            href="{uri:Application.subscribe}"
+                            class="burgerMenu__item {#if request.action == 'Application.subscribe'}burgerMenu__item--current{/if}"
                         >
-                            {m:views.main.language.fr}
+                            {m:views.main.tickets}
                         </a>
+                        {/if}
+
+                        <a
+                            href="{uri:Application.schedule}"
+                            class="burgerMenu__item {#if request.action == 'Application.schedule'}burgerMenu__item--current{/if}"
+                        >
+                            {m:views.main.schedule}
+                        </a>
+
+                        {#if displayNewSpeakers}
+                        <a
+                            href="{uri:Application.speakers}"
+                            class="burgerMenu__item {#if request.action == 'Application.speakers'}burgerMenu__item--current{/if}"
+                        >
+                            {m:views.main.speakers}
+                        </a>
+                        {/if}
+
+                        {#if cfpIsOpened}
+                        <a
+                            href="{cfpUrl}"
+                            class="burgerMenu__item"
+                            target="_blank"
+                        >
+                            {m:views.main.cfp}
+                        </a>
+                        {/if}
+
+                        <a
+                            href="{uri:Application.photos}"
+                            class="burgerMenu__item {#if request.action == 'Application.photos'}burgerMenu__item--current{/if}"
+                        >
+                            {m:views.main.photos}
+                        </a>
+
+                        <a
+                            href="{uri:Application.schools}"
+                            class="burgerMenu__item {#if request.action == 'Application.schools'}burgerMenu__item--current{/if}"
+                        >
+                            {m:views.main.schools}
+                        </a>
+
+                        <a
+                            href="{uri:Application.index}#sponsors"
+                            class="burgerMenu__item"
+                            onclick="forceToggleBurgerMenu()"
+                        >
+                            {m:views.main.sponsors}
+                        </a>
+
+                        <a
+                            href="{uri:Application.organisers}"
+                            class="burgerMenu__item {#if request.action == 'Application.organisers' || request.action == 'Application.organiser'}burgerMenu__item--current{/if}"
+                        >
+                            {m:views.main.team}
+                        </a>
+
+                        <!-- <a
+                            href="{uri:Application.access}"
+                            class="burgerMenu__item {#if request.action == 'Application.access'}burgerMenu__item--current{/if}"
+                        >
+                            {m:views.main.access}
+                        </a> -->
+
+                        <div class="burgerMenu__item">
+                            {#if inject:i18n.get() == 'en'}
+                                <span class="burgerMenu__langue burgerMenu__langue--selected">{m:views.main.language.en}</span>
+                            {#else}
+                                <a href="{uri:Application.en(request.url)}" class="burgerMenu__langue">
+                                    {m:views.main.language.en}
+                                </a>
+                            {/if}
+                            <span class="burgerMenu__langueSeparator">/</span>
+                            {#if inject:i18n.get() == 'fr'}
+                                <span class="burgerMenu__langue burgerMenu__langue--selected">{m:views.main.language.fr}</span>
+                            {#else}
+                                <a href="{uri:Application.fr(request.url)}" class="burgerMenu__langue">
+                                    {m:views.main.language.fr}
+                                </a>
+                            {/if}
+                        </div>
                     </div>
                 </div>
             </div>
