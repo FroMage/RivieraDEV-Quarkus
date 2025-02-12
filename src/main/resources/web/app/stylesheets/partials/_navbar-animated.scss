@@ -1,3 +1,5 @@
+$breakpoint-menu: 1040px;
+
 body .burgerMenu:before {
     content: '';
     display: block;
@@ -199,7 +201,7 @@ body.burgerMenu--open .burgerMenu:before {
     display: none;
 }
 
-@media (min-width: $screen-md-min) {
+@media (min-width: $breakpoint-menu) {
     .burgerMenu {
         display: none;
     }
@@ -252,6 +254,7 @@ body.burgerMenu--open .burgerMenu:before {
             }
 
             &--langue {
+                display: flex;
                 background-color: $color-turquoise;
                 color: $color-bleu-ciel;
 
