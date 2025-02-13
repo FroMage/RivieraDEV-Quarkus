@@ -1,6 +1,6 @@
 $breakpoint-menu: 1040px;
 
-$logo-height--burger: 3.5rem;
+$logo-height--burger: 10rem;
 $logo-height--desktop: 4rem;
 
 body .burgerMenu:before {
@@ -141,7 +141,7 @@ body.burgerMenu--open .burgerMenu:before {
 
     &__welcome {
         background-color: $color-bleu-ciel;
-        padding: 5rem 0 $space-md 0;
+        padding: $space-lg 0 $space-md 0;
         text-align: center;
     }
 
@@ -154,22 +154,23 @@ body.burgerMenu--open .burgerMenu:before {
         display: flex;
         flex-direction: column;
         align-items: start;
-        margin: $space-md;
+        margin: $space-md $space-lg $space-md 0;
     }
 
     &__item {
         display: block;
-        padding: 1.5rem $space-xxxl 1.5rem 1.5rem;
+        padding: 1.5rem;
         font-family: $font-secondary;
         font-size: $font-sm;
         text-transform: uppercase;
         text-decoration: none;
         color: $color-bleu-anthracite;
+        border-radius: 0 2em 2em 0;
+        width: 100%;
 
         &--current {
-            background-color: $color-bleu-ciel;
-            color: $color-jaune-poussin;
-            border-radius: $border-radius-md;
+            background-color: $color-mandarine;
+            color: $color-beige;
         }
     }
 
