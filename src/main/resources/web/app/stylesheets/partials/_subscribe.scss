@@ -1,10 +1,5 @@
 $soldout-hoverlay: rgba(256, 256, 256, 0.5);
 
-@include responsiveBackgroundImage(
-    '.subscribe__header',
-    '/static/images/illustrations/responsives/tickets-mini'
-);
-
 .subscribe {
     &__header {
         @media (min-width: $screen-md-min) {

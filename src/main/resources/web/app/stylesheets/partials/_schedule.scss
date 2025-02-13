@@ -1,11 +1,6 @@
 $avatar-size: 30px;
 
 @include responsiveBackgroundImage(
-    '.schedule__header',
-    '/static/images/illustrations/responsives/program-mini'
-);
-
-@include responsiveBackgroundImage(
     '.fullSchedule__breakfast, .tempSchedule__breakfast',
     '/static/images/illustrations/responsives/croissants-mini'
 );

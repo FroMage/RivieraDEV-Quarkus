@@ -63,6 +63,11 @@
 html {
     height: 100%;
     font-size: 10px;
+    box-sizing: border-box;
+}
+
+*, *:before, *:after {
+    box-sizing: inherit;
 }
 
 body {
@@ -71,7 +76,8 @@ body {
     position: relative;
     min-height: 100vh;
     margin: 0;
-    color: $color-black-light;
+    background-color: $color-beige;
+    color: $color-bleu-anthracite;
 
     @media (min-width: $screen-sm-min) {
         font-size: $font-md;
@@ -98,7 +104,7 @@ body {
 }
 
 .title {
-    @include title;
+    @include curly-braces;
 }
 
 .notFullWidth {
@@ -246,12 +252,7 @@ a {
 
 .page {
     &__header {
-        color: $color-white;
         padding: $space-xxl;
-        background-attachment: fixed;
-        background-repeat: no-repeat;
-        background-size: cover;
-        background-position: center;
 
         @media (min-width: $screen-sm-min) {
             padding: $space-xxxl;
@@ -259,15 +260,17 @@ a {
     }
 
     &__mainTitle {
-        @include title;
+        @include curly-braces;
 
         font-family: $font-title;
-        font-size: $font-xl;
-        font-weight: bold;
+        font-size: $font-xxl;
+        font-weight: $bold;
+        color: $color-rouge-tomate;
+        letter-spacing: -0.03em;
         margin: $space-xs 0;
 
         @media (min-width: $screen-sm-min) {
-            font-size: $font-xxxl;
+            font-size: $font-huge;
             margin: $space-md 0;
         }
     }
@@ -307,3 +310,4 @@ a {
     max-width: 700px;
     margin: 0 auto;
 }
+

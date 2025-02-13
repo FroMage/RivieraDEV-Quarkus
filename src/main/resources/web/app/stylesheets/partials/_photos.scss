@@ -9,11 +9,6 @@ $photos-gradient: linear-gradient(
 );
 
 @include responsiveBackgroundImage(
-    '.photos__header',
-    '/static/images/illustrations/responsives/speakers-mini' // TODO change
-);
-
-@include responsiveBackgroundImage(
     '.photos__link--2024',
     '/static/images/illustrations/responsives/2024-mini',
     $photos-gradient

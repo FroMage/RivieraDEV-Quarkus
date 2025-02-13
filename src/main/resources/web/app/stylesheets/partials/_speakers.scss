@@ -1,9 +1,3 @@
-
-@include responsiveBackgroundImage(
-    '.speakers__header',
-    '/static/images/illustrations/responsives/speakers-mini'
-);
-
 .speakers {
     margin: 0 $space-md;
 
@@ -12,7 +6,6 @@
     }
 
     &__header {
-        background-position: top;
     }
 
     &__mainSubtitle {
