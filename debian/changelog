@@ -1,3 +1,9 @@
+rivieradev-quarkus-rebranding (1) UNRELEASED; urgency=medium
+
+  * Initial import of rivieradev-quarkus-rebranding
+
+ -- Stephane Epardaud <stef@epardaud.fr>  Mon, 17 Jan 2025 10:11:31 +0200
+
 rivieradev-quarkus-2025 (1) UNRELEASED; urgency=medium
 
   * Initial import of rivieradev-quarkus-2025
