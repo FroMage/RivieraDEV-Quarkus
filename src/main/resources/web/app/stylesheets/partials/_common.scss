@@ -108,18 +108,8 @@ body {
 }
 
 .notFullWidth {
-    width: 100%;
+    width: min(90vw, 1600px);
     margin: 0 auto;
-
-    @media (min-width: $screen-sm-min) {
-        width: $not-full-width-sm;
-    }
-    @media (min-width: $screen-md-min) {
-        width: $not-full-width-md;
-    }
-    @media (min-width: $screen-lg-min) {
-        width: $not-full-width-lg;
-    }
 }
 
 .grey {

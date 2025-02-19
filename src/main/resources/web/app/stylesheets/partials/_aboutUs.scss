@@ -31,23 +31,6 @@
             padding-top: $space-xxxl;
             padding-right: $space-xxl;
             padding-bottom: $space-xxxl;
-
-            // Technic to have the same left alignement even in full width
-            padding-left: calc(
-                ((100% * 1.5 - #{$not-full-width-sm}) / 2) + #{$content-space-sm}
-            );
-        }
-
-        @media (min-width: $screen-md-min) {
-            padding-left: calc(
-                ((100% * 1.5 - #{$not-full-width-md}) / 2) + #{$content-space-sm}
-            );
-        }
-
-        @media (min-width: $screen-lg-min) {
-            padding-left: calc(
-                ((100% * 1.5 - #{$not-full-width-lg}) / 2) + #{$content-space-sm}
-            );
         }
     }
 
