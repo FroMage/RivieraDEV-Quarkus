@@ -96,8 +96,11 @@ $personSummary__desc-marginLeft: calc(($photo-size / 2) * -1);
 }
 
 .personDetails {
-    $desc-marginLeft: calc($photo-size / 2 * -1);
-    $desc-paddingLeft: calc(($photo-size / 2) + $space-md);
+    $desc-marginTop--xs: calc($photo-size / 2 * -1);
+    $desc-paddingTop--xs: calc(($photo-size / 2));
+
+    $desc-marginLeft--sm: calc($photo-size / 2 * -1);
+    $desc-paddingLeft--sm: calc(($photo-size / 2) + $space-md);
 
     $body-marginTop: calc($photo-size / 2 * -1);
     $body-visiblePaddingTop: 0px;
@@ -110,7 +113,12 @@ $personSummary__desc-marginLeft: calc(($photo-size / 2) * -1);
         width: 80%;
         margin: 0 auto;
         display: flex;
+        flex-direction: column;
         align-items: center;
+
+        @media (min-width: $screen-sm-min) {
+            flex-direction: row;
+        }
     }
 
     &__photo {
@@ -129,9 +137,17 @@ $personSummary__desc-marginLeft: calc(($photo-size / 2) * -1);
         background-color: $color-mandarine;
         color: $color-beige;
         border-radius: $border-radius-lg;
-        padding: $space-md $space-md $space-md $desc-paddingLeft;
-        margin-left: $desc-marginLeft;
+        margin-top: $desc-marginTop--xs;
+        padding: $desc-paddingTop--xs $space-sm $space-sm $space-sm;
+        text-align: center;
         z-index: 1; // on top of body
+
+        @media (min-width: $screen-sm-min) {
+            margin-top: 0;
+            padding: $space-md $space-md $space-md $desc-paddingLeft--sm;
+            margin-left: $desc-marginLeft--sm;
+            text-align: left;
+        }
     }
 
     &__name {
@@ -159,11 +175,15 @@ $personSummary__desc-marginLeft: calc(($photo-size / 2) * -1);
 
     &__body {
         margin-top: $body-marginTop;
-        padding: $body-realPaddingTop $space-lg $space-lg $space-lg;
+        padding: $body-realPaddingTop $space-md $space-md $space-md;
         border-radius: $border-radius-lg;
         background-color: $color-white;
         font-size: $font-sm;
         line-height: 1.4em;
+
+        @media (min-width: $screen-sm-min) {
+            padding: $body-realPaddingTop $space-lg $space-lg $space-lg;
+        }
     }
 
     &__twitter:before,
