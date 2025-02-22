@@ -1,6 +1,6 @@
 <div class="people">
     {#for speaker in speakers}
-        <a class="people__person personSummary__link cardLink" href="{uri:Application.speaker(speaker.id)}" title="{speaker.firstName} {speaker.lastName}">
+        <a class="people__person personSummary__link" href="{uri:Application.speaker(speaker.id)}" title="{speaker.firstName} {speaker.lastName}">
             <figure class="personSummary">
                 <div class="personSummary__photo" style="background-image: url('{uri:Application.speakerPhoto(speaker.id)}')">
                 </div>

@@ -28,6 +28,7 @@ $personSummary__desc-marginLeft: calc(($avatar-size / 2) * -1);
     text-decoration: none;
 
     &__link {
+        text-decoration: none;
     }
 
     &__photo {
@@ -46,9 +47,41 @@ $personSummary__desc-marginLeft: calc(($avatar-size / 2) * -1);
         margin-left: $personSummary__desc-marginLeft;
         padding: $space-sm $space-md $space-sm $personSummary__desc-realPaddingLeft;
         border-radius: 0 2em 2em 0;
-        background-color: $color-rouge-tomate;
+        background-color: $color-bleu-ciel;
         color: $color-beige;
+
+        // [Start] Sweep to right on hover -----
+        position: relative;
+
+        &::before {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            border-radius: 0 2em 2em 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            transform: scaleX(0);
+            transform-origin: 0 50%;
+            transition-property: transform;
+            transition-duration: 0.3s;
+            transition-timing-function: ease-out;
+            background-color: $color-rouge-tomate;
+        }
     }
+
+    &__link {
+        &:hover,
+        &:focus,
+        &:active {
+    
+            .personSummary__desc::before {
+                transform: scaleX(1);
+            }
+        }
+    }
+    // [End] Sweep to right on hover -----
 
     &__name {
         font-weight: $bold;
