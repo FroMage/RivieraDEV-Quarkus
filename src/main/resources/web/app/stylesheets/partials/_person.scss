@@ -1,46 +1,53 @@
-$avatar-size-xs: 100px;
-$avatar-size-sm: 150px;
+$avatar-size: 150px;
 
-.persons {
-    &__list {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-gap: $space-md;
-        justify-items: center;
+$personSummary__desc-width: 18ch;
+$personSummary__desc-visiblePaddingLeft: $space-sm;
+$personSummary__desc-realPaddingLeft: calc(($avatar-size / 2) + $personSummary__desc-visiblePaddingLeft);
+$personSummary__desc-marginLeft: calc(($avatar-size / 2) * -1);
 
-        @media (min-width: $screen-sm-min) {
-            grid-template-columns: 1fr 1fr 1fr;
-        }
+.people {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(
+            #{calc($avatar-size + $personSummary__desc-visiblePaddingLeft + $personSummary__desc-width)}, 
+            1fr
+        )
+    );
+    gap: $space-md;
+
+    &__person {
+        width: 100%;
     }
 }
 
 .personSummary {
-    display: inline-block;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    margin: 0;
     text-decoration: none;
-    margin: $space-lg;
 
     &__link {
     }
 
     &__photo {
         display: inline-block;
-        width: $avatar-size-xs;
-        min-width: $avatar-size-xs;
-        height: $avatar-size-xs;
-        height: $avatar-size-xs;
-        border-radius: $avatar-size-xs;
+        width: $avatar-size;
+        height: $avatar-size;
+        border-radius: $avatar-size;
         background-size: cover;
-
-        @media (min-width: $screen-sm-min) {
-            width: $avatar-size-sm;
-            height: $avatar-size-sm;
-            border-radius: $avatar-size-sm;
-        }
     }
 
     &__desc {
-        margin-top: $space-sm;
+        z-index: -1; // to be under the avatar
+        display: flex;
+        flex-direction: column;
+        max-width: #{calc($personSummary__desc-realPaddingLeft + $personSummary__desc-width)};
+        margin-left: $personSummary__desc-marginLeft;
+        padding: $space-sm $space-md $space-sm $personSummary__desc-realPaddingLeft;
+        border-radius: 0 2em 2em 0;
+        background-color: $color-rouge-tomate;
+        color: $color-beige;
     }
 
     &__name {
