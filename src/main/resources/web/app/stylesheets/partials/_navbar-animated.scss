@@ -62,7 +62,7 @@ body.burgerMenu--open .burgerMenu:before {
         margin-bottom: 0.45rem;
         position: relative;
 
-        background: $color-white;
+        background: $color-bleu-ciel;
         border-radius: 3px;
 
         z-index: 101;
@@ -88,7 +88,7 @@ body.burgerMenu--open .burgerMenu:before {
     & input:checked ~ .burgerMenu__slice {
         opacity: 1;
         transform: rotate(45deg);
-        background: $color-white;
+        background: $color-beige;
     }
 
     /*
