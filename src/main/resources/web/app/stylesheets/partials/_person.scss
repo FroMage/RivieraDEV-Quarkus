@@ -1,16 +1,16 @@
-$avatar-size: 150px;
+$photo-size: 150px;
 
 $personSummary__desc-width: 18ch;
 $personSummary__desc-visiblePaddingLeft: $space-sm;
-$personSummary__desc-realPaddingLeft: calc(($avatar-size / 2) + $personSummary__desc-visiblePaddingLeft);
-$personSummary__desc-marginLeft: calc(($avatar-size / 2) * -1);
+$personSummary__desc-realPaddingLeft: calc(($photo-size / 2) + $personSummary__desc-visiblePaddingLeft);
+$personSummary__desc-marginLeft: calc(($photo-size / 2) * -1);
 
 .people {
     display: grid;
     grid-template-columns: repeat(
         auto-fit,
         minmax(
-            #{calc($avatar-size + $personSummary__desc-visiblePaddingLeft + $personSummary__desc-width)}, 
+            #{calc($photo-size + $personSummary__desc-visiblePaddingLeft + $personSummary__desc-width)}, 
             1fr
         )
     );
@@ -32,15 +32,17 @@ $personSummary__desc-marginLeft: calc(($avatar-size / 2) * -1);
     }
 
     &__photo {
-        display: inline-block;
-        width: $avatar-size;
-        height: $avatar-size;
-        border-radius: $avatar-size;
+        width: $photo-size;
+        min-width: $photo-size;
+        height: $photo-size;
+        min-height: $photo-size;
+        border-radius: $photo-size;
         background-size: cover;
+        background-position: center;
+        z-index: 1; // to be on top of desc
     }
 
     &__desc {
-        z-index: -1; // to be under the avatar
         display: flex;
         flex-direction: column;
         max-width: #{calc($personSummary__desc-realPaddingLeft + $personSummary__desc-width)};
@@ -94,38 +96,42 @@ $personSummary__desc-marginLeft: calc(($avatar-size / 2) * -1);
 }
 
 .personDetails {
-    position: relative;
-    $borderRadius: 0.5rem;
+    $desc-marginLeft: calc($photo-size / 2 * -1);
+    $desc-paddingLeft: calc(($photo-size / 2) + $space-md);
 
+    $body-marginTop: calc($photo-size / 2 * -1);
+    $body-visiblePaddingTop: 0px;
+    $body-realPaddingTop: calc(($photo-size / 2) + $body-visiblePaddingTop);
+
+    width: min(100%, 80ch);
     margin: 0 auto;
 
-    @media (min-width: $screen-sm-min) {
-        width: 70%;
+    &__header {
+        width: 80%;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
     }
 
-    &__header {
-        margin: 0 auto;
-        padding: 2rem 0;
-        border-radius: $borderRadius $borderRadius 0 0;
-        color: $color-white;
-        width: 100%;
-        text-align: center;
-        background-color: $color-yellow;
-
-        &--content {
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        &--photo {
-            margin: 6rem 4rem 4rem;
-        }
+    &__photo {
+        width: $photo-size;
+        min-width: $photo-size;
+        height: $photo-size;
+        min-height: $photo-size;
+        background-size: cover;
+        background-position: center;
+        border-radius: $photo-size;
+        z-index: 2; // on top of desc
     }
 
     &__desc {
-        text-align: left;
+        width: 100%;
+        background-color: $color-mandarine;
+        color: $color-beige;
+        border-radius: $border-radius-lg;
+        padding: $space-md $space-md $space-md $desc-paddingLeft;
+        margin-left: $desc-marginLeft;
+        z-index: 1; // on top of body
     }
 
     &__name {
@@ -147,15 +153,15 @@ $personSummary__desc-marginLeft: calc(($avatar-size / 2) * -1);
         font-weight: $semi-bold;
 
         & a {
-            color: $color-white;
             text-decoration: none;
         }
     }
 
     &__body {
-        padding: 2% 10%;
-        border-radius: 0 0 $borderRadius $borderRadius;
-        background-color: $color-gray-ultralight;
+        margin-top: $body-marginTop;
+        padding: $body-realPaddingTop $space-lg $space-lg $space-lg;
+        border-radius: $border-radius-lg;
+        background-color: $color-white;
         font-size: $font-sm;
         line-height: 1.4em;
     }
