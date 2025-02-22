@@ -103,6 +103,12 @@ body {
     background: url(/static/images/Preloader_2.gif) center no-repeat #fff;
 }
 
+.page {
+    @media (min-width: $breakpoint-menu) {
+        padding-top: $navbar-small-height;
+    }
+}
+
 .title {
     @include curly-braces;
 }
@@ -245,7 +251,7 @@ a {
         padding: $space-xxl;
 
         @media (min-width: $screen-sm-min) {
-            padding: $space-xxxl;
+            padding: $space-xxl $space-xxxl;
         }
     }
 
@@ -272,7 +278,6 @@ a {
     }
 
     &__container {
-        margin-top: $space-xl;
         margin-bottom: $space-xl;
     }
 
