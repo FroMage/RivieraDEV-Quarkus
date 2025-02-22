@@ -136,7 +136,7 @@
                         {#if displayNewSpeakers}
                         <a
                             href="{uri:Application.speakers}"
-                            class="burgerMenu__item {#if request.action == 'Application.speakers'}burgerMenu__item--current{/if}"
+                            class="burgerMenu__item {#if request.action == 'Application.speakers' || request.action == 'Application.speaker'}burgerMenu__item--current{/if}"
                         >
                             {m:views.main.speakers}
                         </a>
@@ -246,7 +246,7 @@
                 {#if displayNewSpeakers}
                 <a
                     href="{uri:Application.speakers}"
-                    class="menu__item {#if request.action == 'Application.speakers'}menu__item--current{/if}"
+                    class="menu__item {#if request.action == 'Application.speakers' || request.action == 'Application.speaker'}menu__item--current{/if}"
                 >
                     {m:views.main.speakers}
                 </a>
