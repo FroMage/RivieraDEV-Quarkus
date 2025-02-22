@@ -251,7 +251,7 @@ a {
         padding: $space-xxl;
 
         @media (min-width: $screen-sm-min) {
-            padding: $space-xxl $space-xxxl;
+            padding: $space-xxl 0;
         }
     }
 
