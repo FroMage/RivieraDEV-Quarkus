@@ -22,35 +22,37 @@
 <div class="page__container notFullWidth">
     <div class="personDetails">
         
-        <figure class="personDetails__header">
-            <div
-                class="personDetails__photo"
-                style="background-image: url('{uri:Application.speakerPhoto(speaker.id)}')"
-            ></div>
-            <figcaption class="personDetails__desc">
-                <div class="personDetails__name">{speaker}</div>
-                <div class="personDetails__title">{speaker.company}</div>
-            </figcaption>
-        </figure>
-        
-        <div class="personDetails__body">
+        <div class="personDetails__headerAndNetwork">
+            <figure class="personDetails__header">
+                <div
+                    class="personDetails__photo"
+                    style="background-image: url('{uri:Application.speakerPhoto(speaker.id)}')">
+                </div>
+                <figcaption class="personDetails__desc">
+                    <div class="personDetails__name">{speaker}</div>
+                    <div class="personDetails__title">{speaker.company}</div>
+                </figcaption>
+            </figure>
             <div class="personDetails__network">
                 {#if speaker.twitterAccount}
-                <div class="personDetails__twitter">
-                    <a
+                    <a class="personDetails__networkLink"
                         href="https://twitter.com/{speaker.twitterAccount}"
-                        target="_blank"
-                        >@{speaker.twitterAccount}</a
-                    >
-                </div>
-                {/if} {#if speaker.blogURL}
-                <div class="personDetails__blog">
-                    <a href="{speaker.blogURL}" target="_blank"
-                        >{speaker.blogURL}</a
-                    >
-                </div>
+                        target="_blank">
+                        <img src="/static/images/icons/social/twitter-x-white.svg"
+                            alt="{m:views.application.speaker.x}" />
+                    </a>
+                {/if}
+                {#if speaker.blogURL}
+                    <a class="personDetails__networkLink" 
+                        href="{speaker.blogURL}" target="_blank">
+                        <img src="/static/images/icons/social/blog-white.svg" 
+                            alt="{m:views.application.speaker.blog}"/>
+                    </a>
                 {/if}
             </div>
+        </div>
+        
+        <div class="personDetails__body">
             {speaker.biography.md()}
             <div class="personDetails__talks">
                 {#for talk in speaker.talks}

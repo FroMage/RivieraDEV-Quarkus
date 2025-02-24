@@ -109,9 +109,14 @@ $personSummary__desc-marginLeft: calc(($photo-size / 2) * -1);
     width: min(100%, 80ch);
     margin: 0 auto;
 
-    &__header {
+    &__headerAndNetwork {
         width: 80%;
         margin: 0 auto;
+        position: relative;
+    }
+
+    &__header {
+        margin: 0;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -162,14 +167,32 @@ $personSummary__desc-marginLeft: calc(($photo-size / 2) * -1);
     }
 
     &__network {
-        font-size: $font-xs;
-        line-height: 2em;
-        font-weight: $light;
-        margin-top: $space-sm;
-        font-weight: $semi-bold;
+        margin: $space-sm auto 0 auto;
+        width: fit-content;
+        padding: $space-sm $space-md;
+        display: flex;
+        justify-content: center;
+        gap: $space-lg;
+        background-color: $color-turquoise;
+        border-radius: $border-radius-lg;
 
-        & a {
-            text-decoration: none;
+        @media (min-width: $screen-sm-min) {
+            position: absolute;
+            right: -#{$space-md};
+            bottom: $space-sm;
+            z-index: 2; // on top of desc
+        }
+    }
+
+    &__networkLink {
+        display: block;
+        width: $icon-size-md;
+        height: $icon-size-md;
+        text-decoration: none;
+
+        img {
+            width: 100%;
+            height: 100%;
         }
     }
 
@@ -186,25 +209,12 @@ $personSummary__desc-marginLeft: calc(($photo-size / 2) * -1);
         }
     }
 
-    &__twitter:before,
-    &__blog:before,
     &__micro:before {
-        content: '';
         display: inline-block;
         width: $icon-size-lg;
         height: $icon-size-lg;
         vertical-align: middle;
-    }
-
-    &__twitter:before {
-        background-image: url(/static/images/icons/twitter-logo-button.svg);
-    }
-
-    &__blog:before {
-        background-image: url(/static/images/icons/link.svg);
-    }
-
-    &__micro:before {
+        background-size: contain;
         background-image: url(/static/images/icons/microphone.svg);
         vertical-align: text-bottom;
     }
