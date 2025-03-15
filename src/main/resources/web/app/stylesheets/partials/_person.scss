@@ -22,6 +22,12 @@ $personSummary__desc-marginLeft: calc(($photo-size / 2) * -1);
 }
 
 .personSummary {
+
+    $z-index-desc: 0;
+    $z-index-desc-hover: 1;
+    $z-index-desc-text: 2;
+    $z-index-photo: 3;
+
     display: flex;
     align-items: center;
     margin: 0;
@@ -39,7 +45,7 @@ $personSummary__desc-marginLeft: calc(($photo-size / 2) * -1);
         border-radius: $photo-size;
         background-size: cover;
         background-position: center;
-        z-index: 1; // to be on top of desc
+        z-index: $z-index-photo;
     }
 
     &__desc {
@@ -51,6 +57,7 @@ $personSummary__desc-marginLeft: calc(($photo-size / 2) * -1);
         border-radius: 0 2em 2em 0;
         background-color: $color-bleu-ciel;
         color: $color-beige;
+        z-index: $z-index-desc;
 
         // [Start] Sweep to right on hover -----
         position: relative;
@@ -58,7 +65,7 @@ $personSummary__desc-marginLeft: calc(($photo-size / 2) * -1);
         &::before {
             content: "";
             position: absolute;
-            z-index: -1;
+            z-index: $z-index-desc-hover;
             border-radius: 0 2em 2em 0;
             top: 0;
             left: 0;
@@ -87,11 +94,13 @@ $personSummary__desc-marginLeft: calc(($photo-size / 2) * -1);
 
     &__name {
         font-weight: $bold;
+        z-index: $z-index-desc-text;
     }
 
     &__title,
     &__year {
         font-size: $font-sm;
+        z-index: $z-index-desc-text;
     }
 }
 
