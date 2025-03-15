@@ -33,23 +33,25 @@
                     <div class="personDetails__title">{speaker.company}</div>
                 </figcaption>
             </figure>
-            <div class="personDetails__network">
-                {#if speaker.twitterAccount}
-                    <a class="personDetails__networkLink"
-                        href="https://twitter.com/{speaker.twitterAccount}"
-                        target="_blank">
-                        <img src="/static/images/icons/social/twitter-x-white.svg"
-                            alt="{m:views.application.speaker.x}" />
-                    </a>
-                {/if}
-                {#if speaker.blogURL}
-                    <a class="personDetails__networkLink" 
-                        href="{speaker.blogURL}" target="_blank">
-                        <img src="/static/images/icons/social/blog-white.svg" 
-                            alt="{m:views.application.speaker.blog}"/>
-                    </a>
-                {/if}
-            </div>
+            {#if speaker.twitterAccount || speaker.blogURL}
+                <div class="personDetails__network">
+                    {#if speaker.twitterAccount}
+                        <a class="personDetails__networkLink"
+                            href="https://twitter.com/{speaker.twitterAccount}"
+                            target="_blank">
+                            <img src="/static/images/icons/social/twitter-x-white.svg"
+                                alt="{m:views.application.speaker.x}" />
+                        </a>
+                    {/if}
+                    {#if speaker.blogURL}
+                        <a class="personDetails__networkLink" 
+                            href="{speaker.blogURL}" target="_blank">
+                            <img src="/static/images/icons/social/blog-white.svg" 
+                                alt="{m:views.application.speaker.blog}"/>
+                        </a>
+                    {/if}
+                </div>
+            {/if}
         </div>
         
         <div class="personDetails__body">

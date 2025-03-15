@@ -1,38 +1,45 @@
 {#include main.html}
 {#title}{orga} - {m:views.application.orga.title}{/title}
 
-<div class="page__header orgas__header">
+<div class="page__header notFullWidth orgas__header">
     <h1 class="page__mainTitle">{m:views.application.orga.title}</h1>
 </div>
 
 <div class="page__container notFullWidth">
     <div class="personDetails">
-        <div class="personDetails__header">
-            <figure class="personSummary personDetails__header--content">
+
+        <div class="personDetails__headerAndNetwork">
+            <figure class="personDetails__header">
                 <div
-                    class="personSummary__photo personDetails__header--photo"
+                    class="personSummary__photo"
                     style="background-image: url('{uri:Application.orgaPhoto(orga.id)}')"
                 ></div>
                 <figcaption class="personDetails__desc">
                     <div class="personDetails__name">{orga}</div>
                     <div class="personDetails__title">{orga.company}</div>
-                    <div class="personDetails__network">
-                        {#if orga.twitterAccount}
-                        <div class="personDetails__twitter">
-                            <a
-                                href="https://twitter.com/{orga.twitterAccount}"
-                                target="_blank">@{orga.twitterAccount}</a>
-                        </div>
-                        {/if}
-                        {#if orga.blogURL}
-                        <div class="personDetails__blog">
-                            <a href="{orga.blogURL}" target="_blank">{orga.blogURL}</a>
-                        </div>
-                        {/if}
-                    </div>
                 </figcaption>
             </figure>
+            {#if orga.twitterAccount || orga.blogURL}
+                <div class="personDetails__network">
+                    {#if orga.twitterAccount}
+                        <a class="personDetails__networkLink"
+                            href="https://twitter.com/{orga.twitterAccount}"
+                            target="_blank">
+                            <img src="/static/images/icons/social/twitter-x-white.svg"
+                                alt="{m:views.application.orga.x}" />
+                        </a>
+                    {/if}
+                    {#if orga.blogURL}
+                        <a class="personDetails__networkLink" 
+                            href="{orga.blogURL}" target="_blank">
+                            <img src="/static/images/icons/social/blog-white.svg" 
+                                alt="{m:views.application.orga.blog}"/>
+                        </a>
+                    {/if}
+                </div>
+            {/if}
         </div>
+
         <div class="personDetails__body">
             {orga.biography.md()}
         </div>
