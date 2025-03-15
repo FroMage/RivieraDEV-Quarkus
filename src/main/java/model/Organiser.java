@@ -33,6 +33,8 @@ public class Organiser extends PanacheEntity {
 	@URL
 	public String blogURL;
 	public String twitterAccount;
+	public String linkedInAccount;
+	public String githubAccount;
 	
 	public Blob photo;
 
