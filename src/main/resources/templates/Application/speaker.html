@@ -33,21 +33,35 @@
                     <div class="personDetails__title">{speaker.company}</div>
                 </figcaption>
             </figure>
-            {#if speaker.twitterAccount || speaker.blogURL}
+            {#if speaker.linkedInAccount || speaker.twitterAccount || speaker.githubAccount || speaker.blogURL}
                 <div class="personDetails__network">
+                    {#if speaker.linkedInAccount}
+                        <a class="personDetails__networkLink"
+                            href="https://www.linkedin.com/in/{speaker.linkedInAccount}"
+                            target="_blank">
+                            <i class="fab fa-linkedin-in" alt="LinkedIn"></i>
+                        </a>
+                    {/if}
                     {#if speaker.twitterAccount}
                         <a class="personDetails__networkLink"
                             href="https://twitter.com/{speaker.twitterAccount}"
                             target="_blank">
+                            <!-- TODO: find X icon in fontawesome -->
                             <img src="/static/images/icons/social/twitter-x-white.svg"
-                                alt="{m:views.application.speaker.x}" />
+                                alt="X (ex Twitter)" />
+                        </a>
+                    {/if}
+                    {#if speaker.githubAccount}
+                        <a class="personDetails__networkLink"
+                            href="https://github.com/{speaker.githubAccount}"
+                            target="_blank">
+                            <i class="fab fa-github" alt="GitHub"></i>
                         </a>
                     {/if}
                     {#if speaker.blogURL}
                         <a class="personDetails__networkLink" 
                             href="{speaker.blogURL}" target="_blank">
-                            <img src="/static/images/icons/social/blog-white.svg" 
-                                alt="{m:views.application.speaker.blog}"/>
+                            <i class="fas fa-link" alt="Blog"></i>
                         </a>
                     {/if}
                 </div>

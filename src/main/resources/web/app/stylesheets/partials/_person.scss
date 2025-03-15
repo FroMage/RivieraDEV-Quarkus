@@ -198,6 +198,12 @@ $personSummary__desc-marginLeft: calc(($photo-size / 2) * -1);
         width: $icon-size-md;
         height: $icon-size-md;
         text-decoration: none;
+        color: white;
+
+        &:hover,
+        &:focus {
+            color: $color-bleu-ciel;
+        }
 
         img {
             width: 100%;
