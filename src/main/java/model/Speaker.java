@@ -34,6 +34,8 @@ public class Speaker extends PanacheEntity implements Comparable<Speaker> {
 	@URL
 	public String blogURL;
 	public String twitterAccount;
+	public String linkedInAccount;
+	public String githubAccount;
 
 	public String email;
 
