@@ -71,12 +71,21 @@
         <div class="personDetails__body">
             {speaker.biography.md()}
             <div class="personDetails__talks">
-                {#for talk in speaker.talks}
-                <div class="personDetails__micro">
-                    <a  class="personDetails__talk"
-                        href="{uri:Application.talk(talk.id)}"><span class="personDetails__talk--quote">&laquo;</span>{talk.title}<span class="personDetails__talk--quote">&raquo;</span></a>
+                <div class="personDetails__talksTitle">
+                    {#if speaker.talks.size() == 1}
+                        {m:views.application.speaker.talk}
+                    {#else}
+                        {m:views.application.speaker.talks}
+                    {/if}
                 </div>
-                {/for}
+                <ul class="personDetails__talksList">
+                    {#for talk in speaker.talks}
+                        <li class="personDetails__talk">
+                            <a class="personDetails__talkLink"
+                                href="{uri:Application.talk(talk.id)}">{talk.title}</a>
+                        </li>
+                    {/for}
+                </ul>
             </div>
         </div>
 

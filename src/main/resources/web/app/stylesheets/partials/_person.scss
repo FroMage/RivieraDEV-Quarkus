@@ -234,21 +234,46 @@ $personSummary__desc-marginLeft: calc(($photo-size / 2) * -1);
         vertical-align: text-bottom;
     }
 
+    &__talksTitle {
+        margin: $space-lg 0 $space-xs 0;
+        font-size: $font-lg;
+        font-weight: $semi-bold;
+        color: $color-bleu-anthracite;
+    }
+
+    &__talksList {
+        list-style-type: none;
+        padding-left: 0;
+    }
+
     &__talk {
-        line-height: 2em;
+        margin-bottom: $space-xs;
+    }
+
+    &__talkLink {
         text-decoration: none;
         font-size: $font-md;
         font-weight: $semi-bold;
         color: inherit;
         transition: color 0.2s;
 
-        &:hover {
-            color: $color-yellow;
+        &::before {
+            content: '«';
+            margin-right: $space-xxs;
         }
 
-        &--quote {
-            color: $color-yellow;
-            margin: 0 0.2em;
+        &::after {
+            content: '»';
+            margin-left: $space-xxs;
+        }
+
+        &::before,
+        &::after {
+            color: $color-mandarine;
+        }
+
+        &:hover {
+            color: $color-mandarine;
         }
     }
 
