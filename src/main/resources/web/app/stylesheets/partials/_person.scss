@@ -258,4 +258,9 @@ $personSummary__desc-marginLeft: calc(($photo-size / 2) * -1);
         bottom: $space-sm;
         right: $space-sm;
     }
+
+    &__link {
+        text-align: center;
+        margin-top: $space-md;
+    }
 }
