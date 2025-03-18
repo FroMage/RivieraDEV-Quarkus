@@ -1,13 +1,15 @@
-<div class="persons__list">
+<div class="people">
     {#for speaker in speakers}
-        <figure class="personSummary">
-            <div class="personSummary__photo" style="background-image: url('{uri:Application.previousSpeakerPhoto(speaker.id)}')">
-            </div>
-            <figcaption class="personSummary__desc">
-                <div class="personSummary__name">{speaker}</div>
-                <div class="personSummary__title">{speaker.company}</div>
-                <div class="personSummary__year">{speaker.year}</div>
-            </figcaption>
-        </figure>
+        <div class="people__person">
+            <figure class="personSummary">
+                <div class="personSummary__photo" style="background-image: url('{uri:Application.previousSpeakerPhoto(speaker.id)}')">
+                </div>
+                <figcaption class="personSummary__desc">
+                    <div class="personSummary__name">{speaker}</div>
+                    <div class="personSummary__title">{speaker.company}</div>
+                    <div class="personSummary__year">{speaker.year}</div>
+                </figcaption>
+            </figure>
+        </div>
     {/for}
 </div>

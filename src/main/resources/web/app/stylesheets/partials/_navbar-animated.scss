@@ -1,5 +1,3 @@
-$breakpoint-menu: 1040px;
-
 $logo-height--burger: 10rem;
 $logo-height--desktop: 4rem;
 
@@ -28,7 +26,7 @@ body.burgerMenu--open .burgerMenu:before {
     top: 0;
     left: 0;
 
-    z-index: 1;
+    z-index: 101;
 
     -webkit-user-select: none;
     user-select: none;
@@ -49,7 +47,7 @@ body.burgerMenu--open .burgerMenu:before {
         cursor: pointer;
 
         opacity: 0; /* hide this */
-        z-index: 2; /* and place it over the hamburger */
+        z-index: 102; /* and place it over the hamburger */
 
         -webkit-touch-callout: none;
     }
@@ -64,10 +62,10 @@ body.burgerMenu--open .burgerMenu:before {
         margin-bottom: 0.45rem;
         position: relative;
 
-        background: $color-white;
+        background: $color-bleu-ciel;
         border-radius: 3px;
 
-        z-index: 1;
+        z-index: 101;
 
         transform-origin: 0.4rem 0;
 
@@ -90,7 +88,7 @@ body.burgerMenu--open .burgerMenu:before {
     & input:checked ~ .burgerMenu__slice {
         opacity: 1;
         transform: rotate(45deg);
-        background: $color-white;
+        background: $color-beige;
     }
 
     /*

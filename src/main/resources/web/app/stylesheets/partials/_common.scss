@@ -103,23 +103,19 @@ body {
     background: url(/static/images/Preloader_2.gif) center no-repeat #fff;
 }
 
+.page {
+    @media (min-width: $breakpoint-menu) {
+        padding-top: $navbar-small-height;
+    }
+}
+
 .title {
     @include curly-braces;
 }
 
 .notFullWidth {
-    width: 100%;
+    width: min(90vw, 1600px);
     margin: 0 auto;
-
-    @media (min-width: $screen-sm-min) {
-        width: $not-full-width-sm;
-    }
-    @media (min-width: $screen-md-min) {
-        width: $not-full-width-md;
-    }
-    @media (min-width: $screen-lg-min) {
-        width: $not-full-width-lg;
-    }
 }
 
 .grey {
@@ -206,7 +202,7 @@ body {
 }
 
 a {
-    color: $color-blue;
+    color: $color-bleu-ciel;
     text-decoration: underline;
     &:hover,
     &:active,
@@ -255,7 +251,7 @@ a {
         padding: $space-xxl;
 
         @media (min-width: $screen-sm-min) {
-            padding: $space-xxxl;
+            padding: $space-xxl 0;
         }
     }
 
@@ -282,7 +278,6 @@ a {
     }
 
     &__container {
-        margin-top: $space-xl;
         margin-bottom: $space-xl;
     }
 

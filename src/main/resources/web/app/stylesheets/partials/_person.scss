@@ -1,91 +1,167 @@
-$avatar-size-xs: 100px;
-$avatar-size-sm: 150px;
+$photo-size: 150px;
 
-.persons {
-    &__list {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-gap: $space-md;
-        justify-items: center;
+$personSummary__desc-width: 18ch;
+$personSummary__desc-visiblePaddingLeft: $space-sm;
+$personSummary__desc-realPaddingLeft: calc(($photo-size / 2) + $personSummary__desc-visiblePaddingLeft);
+$personSummary__desc-marginLeft: calc(($photo-size / 2) * -1);
 
-        @media (min-width: $screen-sm-min) {
-            grid-template-columns: 1fr 1fr 1fr;
-        }
+.people {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(
+            #{calc($photo-size + $personSummary__desc-visiblePaddingLeft + $personSummary__desc-width)}, 
+            1fr
+        )
+    );
+    gap: $space-md;
+
+    &__person {
+        width: 100%;
     }
 }
 
 .personSummary {
-    display: inline-block;
-    text-align: center;
+
+    $z-index-desc: 0;
+    $z-index-desc-hover: 1;
+    $z-index-desc-text: 2;
+    $z-index-photo: 3;
+
+    display: flex;
+    align-items: center;
+    margin: 0;
     text-decoration: none;
-    margin: $space-lg;
 
     &__link {
+        text-decoration: none;
     }
 
     &__photo {
-        display: inline-block;
-        width: $avatar-size-xs;
-        min-width: $avatar-size-xs;
-        height: $avatar-size-xs;
-        height: $avatar-size-xs;
-        border-radius: $avatar-size-xs;
+        width: $photo-size;
+        min-width: $photo-size;
+        height: $photo-size;
+        min-height: $photo-size;
+        border-radius: $photo-size;
         background-size: cover;
-
-        @media (min-width: $screen-sm-min) {
-            width: $avatar-size-sm;
-            height: $avatar-size-sm;
-            border-radius: $avatar-size-sm;
-        }
+        background-position: center;
+        z-index: $z-index-photo;
     }
 
     &__desc {
-        margin-top: $space-sm;
+        display: flex;
+        flex-direction: column;
+        max-width: #{calc($personSummary__desc-realPaddingLeft + $personSummary__desc-width)};
+        margin-left: $personSummary__desc-marginLeft;
+        padding: $space-sm $space-md $space-sm $personSummary__desc-realPaddingLeft;
+        border-radius: 0 2em 2em 0;
+        background-color: $color-bleu-ciel;
+        color: $color-beige;
+        z-index: $z-index-desc;
+
+        // [Start] Sweep to right on hover -----
+        position: relative;
+
+        &::before {
+            content: "";
+            position: absolute;
+            z-index: $z-index-desc-hover;
+            border-radius: 0 2em 2em 0;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            transform: scaleX(0);
+            transform-origin: 0 50%;
+            transition-property: transform;
+            transition-duration: 0.3s;
+            transition-timing-function: ease-out;
+            background-color: $color-rouge-tomate;
+        }
     }
+
+    &__link {
+        &:hover,
+        &:focus,
+        &:active {
+    
+            .personSummary__desc::before {
+                transform: scaleX(1);
+            }
+        }
+    }
+    // [End] Sweep to right on hover -----
 
     &__name {
         font-weight: $bold;
+        z-index: $z-index-desc-text;
     }
 
     &__title,
     &__year {
         font-size: $font-sm;
+        z-index: $z-index-desc-text;
     }
 }
 
 .personDetails {
-    position: relative;
-    $borderRadius: 0.5rem;
+    $desc-marginTop--xs: calc($photo-size / 2 * -1);
+    $desc-paddingTop--xs: calc(($photo-size / 2));
 
+    $desc-marginLeft--sm: calc($photo-size / 2 * -1);
+    $desc-paddingLeft--sm: calc(($photo-size / 2) + $space-md);
+
+    $body-marginTop: calc($photo-size / 2 * -1);
+    $body-visiblePaddingTop: 0px;
+    $body-realPaddingTop: calc(($photo-size / 2) + $body-visiblePaddingTop);
+
+    width: min(100%, 80ch);
     margin: 0 auto;
 
-    @media (min-width: $screen-sm-min) {
-        width: 70%;
+    &__headerAndNetwork {
+        width: 80%;
+        margin: 0 auto;
+        position: relative;
     }
 
     &__header {
-        margin: 0 auto;
-        padding: 2rem 0;
-        border-radius: $borderRadius $borderRadius 0 0;
-        color: $color-white;
-        width: 100%;
-        text-align: center;
-        background-color: $color-yellow;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
 
-        &--content {
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        &--photo {
-            margin: 6rem 4rem 4rem;
+        @media (min-width: $screen-sm-min) {
+            flex-direction: row;
         }
     }
 
+    &__photo {
+        width: $photo-size;
+        min-width: $photo-size;
+        height: $photo-size;
+        min-height: $photo-size;
+        background-size: cover;
+        background-position: center;
+        border-radius: $photo-size;
+        z-index: 2; // on top of desc
+    }
+
     &__desc {
-        text-align: left;
+        width: 100%;
+        background-color: $color-mandarine;
+        color: $color-beige;
+        border-radius: $border-radius-lg;
+        margin-top: $desc-marginTop--xs;
+        padding: $desc-paddingTop--xs $space-sm $space-sm $space-sm;
+        text-align: center;
+        z-index: 1; // on top of body
+
+        @media (min-width: $screen-sm-min) {
+            margin-top: 0;
+            padding: $space-md $space-md $space-md $desc-paddingLeft--sm;
+            margin-left: $desc-marginLeft--sm;
+            text-align: left;
+        }
     }
 
     &__name {
@@ -100,64 +176,104 @@ $avatar-size-sm: 150px;
     }
 
     &__network {
-        font-size: $font-xs;
-        line-height: 2em;
-        font-weight: $light;
-        margin-top: $space-sm;
-        font-weight: $semi-bold;
+        margin: $space-sm auto 0 auto;
+        width: fit-content;
+        padding: $space-sm $space-md;
+        display: flex;
+        justify-content: center;
+        gap: $space-lg;
+        background-color: $color-turquoise;
+        border-radius: $border-radius-lg;
 
-        & a {
-            color: $color-white;
-            text-decoration: none;
+        @media (min-width: $screen-sm-min) {
+            position: absolute;
+            right: -#{$space-md};
+            bottom: $space-sm;
+            z-index: 2; // on top of desc
+        }
+    }
+
+    &__networkLink {
+        display: block;
+        width: $icon-size-md;
+        height: $icon-size-md;
+        text-decoration: none;
+        color: white;
+
+        &:hover,
+        &:focus {
+            color: $color-bleu-ciel;
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
         }
     }
 
     &__body {
-        padding: 2% 10%;
-        border-radius: 0 0 $borderRadius $borderRadius;
-        background-color: $color-gray-ultralight;
+        margin-top: $body-marginTop;
+        padding: $body-realPaddingTop $space-md $space-md $space-md;
+        border-radius: $border-radius-lg;
+        background-color: $color-white;
         font-size: $font-sm;
         line-height: 1.4em;
+
+        @media (min-width: $screen-sm-min) {
+            padding: $body-realPaddingTop $space-lg $space-lg $space-lg;
+        }
     }
 
-    &__twitter:before,
-    &__blog:before,
     &__micro:before {
-        content: '';
         display: inline-block;
         width: $icon-size-lg;
         height: $icon-size-lg;
         vertical-align: middle;
-    }
-
-    &__twitter:before {
-        background-image: url(/static/images/icons/twitter-logo-button.svg);
-    }
-
-    &__blog:before {
-        background-image: url(/static/images/icons/link.svg);
-    }
-
-    &__micro:before {
+        background-size: contain;
         background-image: url(/static/images/icons/microphone.svg);
         vertical-align: text-bottom;
     }
 
+    &__talksTitle {
+        margin: $space-lg 0 $space-xs 0;
+        font-size: $font-lg;
+        font-weight: $semi-bold;
+        color: $color-bleu-anthracite;
+    }
+
+    &__talksList {
+        list-style-type: none;
+        padding-left: 0;
+    }
+
     &__talk {
-        line-height: 2em;
+        margin-bottom: $space-xs;
+    }
+
+    &__talkLink {
         text-decoration: none;
         font-size: $font-md;
         font-weight: $semi-bold;
         color: inherit;
         transition: color 0.2s;
 
-        &:hover {
-            color: $color-yellow;
+        &::before {
+            content: '«';
+            margin-right: $space-xxs;
         }
 
-        &--quote {
-            color: $color-yellow;
-            margin: 0 0.2em;
+        &::after {
+            content: '»';
+            margin-left: $space-xxs;
+        }
+
+        &::before,
+        &::after {
+            color: $color-mandarine;
+        }
+
+        &:hover {
+            color: $color-mandarine;
         }
     }
 
@@ -166,5 +282,10 @@ $avatar-size-sm: 150px;
         position: absolute;
         bottom: $space-sm;
         right: $space-sm;
+    }
+
+    &__link {
+        text-align: center;
+        margin-top: $space-md;
     }
 }

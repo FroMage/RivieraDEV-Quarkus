@@ -15,55 +15,84 @@
 <meta name="twitter:image:alt" content="Riviera DEV" />
 {/twitterCard}
 
-<div class="page__header speakers__header">
+<div class="page__header notFullWidth speakers__header">
     <h1 class="page__mainTitle">{m:views.application.speaker.title}</h1>
 </div>
 
 <div class="page__container notFullWidth">
     <div class="personDetails">
-        <div class="personDetails__header">
-            <figure class="personSummary personDetails__header--content">
+        
+        <div class="personDetails__headerAndNetwork">
+            <figure class="personDetails__header">
                 <div
-                    class="personSummary__photo personDetails__header--photo"
-                    style="background-image: url('{uri:Application.speakerPhoto(speaker.id)}')"
-                ></div>
+                    class="personDetails__photo"
+                    style="background-image: url('{uri:Application.speakerPhoto(speaker.id)}')">
+                </div>
                 <figcaption class="personDetails__desc">
                     <div class="personDetails__name">{speaker}</div>
                     <div class="personDetails__title">{speaker.company}</div>
-                    <div class="personDetails_link"> 
-                        <a href="https://twitter.com/intent/tweet/?text={m:views.application.speaker.tweet(speaker.firstName,speaker.lastName,speaker.talksForTwitter,speaker.twitterAccount).urlEncode()}&url={uriabs:Application.speakerBannerImage(speaker.id,'en').toString().urlEncode()}">{m:views.application.speaker.linkTitle}
-                    </a>
-                    </div>  
-                    <div class="personDetails__network">
-                        {#if speaker.twitterAccount}
-                        <div class="personDetails__twitter">
-                            <a
-                                href="https://twitter.com/{speaker.twitterAccount}"
-                                target="_blank"
-                                >@{speaker.twitterAccount}</a
-                            >
-                        </div>
-                        {/if} {#if speaker.blogURL}
-                        <div class="personDetails__blog">
-                            <a href="{speaker.blogURL}" target="_blank"
-                                >{speaker.blogURL}</a
-                            >
-                        </div>
-                        {/if}
-                    </div>
                 </figcaption>
             </figure>
+            {#if speaker.linkedInAccount || speaker.twitterAccount || speaker.githubAccount || speaker.blogURL}
+                <div class="personDetails__network">
+                    {#if speaker.linkedInAccount}
+                        <a class="personDetails__networkLink"
+                            href="https://www.linkedin.com/in/{speaker.linkedInAccount}"
+                            target="_blank">
+                            <i class="fab fa-linkedin-in" alt="LinkedIn"></i>
+                        </a>
+                    {/if}
+                    {#if speaker.twitterAccount}
+                        <a class="personDetails__networkLink"
+                            href="https://twitter.com/{speaker.twitterAccount}"
+                            target="_blank">
+                            <!-- TODO: find X icon in fontawesome -->
+                            <img src="/static/images/icons/social/twitter-x-white.svg"
+                                alt="X (ex Twitter)" />
+                        </a>
+                    {/if}
+                    {#if speaker.githubAccount}
+                        <a class="personDetails__networkLink"
+                            href="https://github.com/{speaker.githubAccount}"
+                            target="_blank">
+                            <i class="fab fa-github" alt="GitHub"></i>
+                        </a>
+                    {/if}
+                    {#if speaker.blogURL}
+                        <a class="personDetails__networkLink" 
+                            href="{speaker.blogURL}" target="_blank">
+                            <i class="fas fa-link" alt="Blog"></i>
+                        </a>
+                    {/if}
+                </div>
+            {/if}
         </div>
+        
         <div class="personDetails__body">
             {speaker.biography.md()}
             <div class="personDetails__talks">
-                {#for talk in speaker.talks}
-                <div class="personDetails__micro">
-                    <a  class="personDetails__talk"
-                        href="{uri:Application.talk(talk.id)}"><span class="personDetails__talk--quote">&laquo;</span>{talk.title}<span class="personDetails__talk--quote">&raquo;</span></a>
+                <div class="personDetails__talksTitle">
+                    {#if speaker.talks.size() == 1}
+                        {m:views.application.speaker.talk}
+                    {#else}
+                        {m:views.application.speaker.talks}
+                    {/if}
                 </div>
-                {/for}
+                <ul class="personDetails__talksList">
+                    {#for talk in speaker.talks}
+                        <li class="personDetails__talk">
+                            <a class="personDetails__talkLink"
+                                href="{uri:Application.talk(talk.id)}">{talk.title}</a>
+                        </li>
+                    {/for}
+                </ul>
             </div>
+        </div>
+
+        <div class="personDetails__link"> 
+            <a href="https://twitter.com/intent/tweet/?text={m:views.application.speaker.tweet(speaker.firstName,speaker.lastName,speaker.talksForTwitter,speaker.twitterAccount).urlEncode()}&url={uriabs:Application.speakerBannerImage(speaker.id,'en').toString().urlEncode()}">
+                {m:views.application.speaker.linkTitle}
+            </a>
         </div>
     </div>
 </div>

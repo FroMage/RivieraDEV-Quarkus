@@ -56,6 +56,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Tomorrow:wght@300;400;600;700&display=swap" rel="stylesheet">
 
         <!-- Font awesome -->
+        <!-- TODO: update fontawesome -->
         <script
             defer
             src="https://use.fontawesome.com/releases/v5.8.1/js/all.js"
@@ -136,7 +137,7 @@
                         {#if displayNewSpeakers}
                         <a
                             href="{uri:Application.speakers}"
-                            class="burgerMenu__item {#if request.action == 'Application.speakers'}burgerMenu__item--current{/if}"
+                            class="burgerMenu__item {#if request.action == 'Application.speakers' || request.action == 'Application.speaker'}burgerMenu__item--current{/if}"
                         >
                             {m:views.main.speakers}
                         </a>
@@ -246,7 +247,7 @@
                 {#if displayNewSpeakers}
                 <a
                     href="{uri:Application.speakers}"
-                    class="menu__item {#if request.action == 'Application.speakers'}menu__item--current{/if}"
+                    class="menu__item {#if request.action == 'Application.speakers' || request.action == 'Application.speaker'}menu__item--current{/if}"
                 >
                     {m:views.main.speakers}
                 </a>
@@ -328,9 +329,9 @@
         </div>
         {/if}
 
-        <!-- <div class="container"> -->
-        {#insert /}
-        <!-- </div> -->
+        <div class="page">
+            {#insert /}
+        </div>
 
         <footer class="footer">
             <div class="footer__logo">

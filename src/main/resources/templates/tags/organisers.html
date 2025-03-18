@@ -1,8 +1,8 @@
 {#if orgas && orgas.size() > 0}
-<div class="persons__list">
+<div class="people">
     {#for orga in orgas}
     <a
-        class="personSummary__link cardLink"
+        class="people__person personSummary__link"
         href="{uri:Application.organiser(orga.id)}"
         title="{orga.firstName} {orga.lastName}"
     >
@@ -13,7 +13,7 @@
             ></div>
             <figcaption class="personSummary__desc">
                 <div class="personSummary__name">{orga}</div>
-                <div class="personSummary__title">{orga.title}</div>
+                <div class="personSummary__title">{orga.company}</div>
             </figcaption>
         </figure>
     </a>
