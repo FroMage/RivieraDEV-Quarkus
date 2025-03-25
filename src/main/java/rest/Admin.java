@@ -57,7 +57,7 @@ import util.JavaExtensions;
 @Blocking
 @Authenticated
 public class Admin extends Controller {
-
+    
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class JsonTalk {
         public String id;
@@ -91,6 +91,18 @@ public class Admin extends Controller {
         }
     }
 
+//    public static class StringOrListDeserializer implements JsonDeserializer<String[]> {
+//
+//        @Override
+//        public String[] deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+//            if (json instanceof JsonArray) {
+//                return new Gson().fromJson(json, String[].class);
+//            }
+//            String child = context.deserialize(json, String.class);
+//            return new String[] { child };
+//        }
+//    }
+
     @CheckedTemplate
     public static class Templates {
         public static native TemplateInstance uploadProgramForm();
@@ -102,14 +114,14 @@ public class Admin extends Controller {
         public static native TemplateInstance speakerEmailsCompany(List<Speaker> speakers);
 
         public static native TemplateInstance badges(List<Badge> badges);
-
+        
         public static native TemplateInstance badgesForm();
     }
-
+    
     public TemplateInstance uploadProgramForm() {
         return Templates.uploadProgramForm();
     }
-
+    
     @POST
     public void uploadProgram(
             @RestForm("program") @PartType(MediaType.APPLICATION_OCTET_STREAM) InputStream programInputStream
@@ -258,42 +270,41 @@ public class Admin extends Controller {
             }
 
         }
-
-
+        
         uploadProgramForm();
     }
-
+    
     @Transactional
     public Response speakerPhotosZip() throws IOException, SQLException {
         List<Speaker> speakers = Speaker.listAll();
         ByteArrayOutputStream baos = new ByteArrayOutputStream(4096);
-        Map<String, Integer> dupeCount = new HashMap<>();
-        try (ZipOutputStream zos = new ZipOutputStream(baos)) {
+        Map<String,Integer> dupeCount = new HashMap<>();
+        try(ZipOutputStream zos = new ZipOutputStream(baos)){
             for (Speaker speaker : speakers) {
-                if (speaker.photo == null)
+                if(speaker.photo == null)
                     continue;
                 byte[] photo = speaker.photo.getBytes(1, (int) speaker.photo.length());
                 String type = FileUtils.getMimeType(null, photo);
                 int slash = type.lastIndexOf('/');
-                String ext = slash != -1 ? type.substring(slash + 1) : type;
-                String name = speaker.firstName + "-" + speaker.lastName;
+                String ext = slash != -1 ? type.substring(slash+1) : type;
+                String name = speaker.firstName+"-"+speaker.lastName;
                 name = JavaExtensions.removeAccents(name);
                 Integer count = dupeCount.get(name);
-                if (count != null) {
+                if(count != null) {
                     count++;
-                    name += "-" + count;
+                    name += "-"+count;
                     dupeCount.put(name, count);
                 } else {
                     dupeCount.put(name, 1);
                 }
-                zos.putNextEntry(new ZipEntry(name + "." + ext));
+                zos.putNextEntry(new ZipEntry(name+"."+ext));
                 zos.write(photo);
             }
         }
         byte[] bytes = baos.toByteArray();
         return Response.ok(bytes, "application/zip").header("Content-Disposition", "attachment; filename=\"speaker-photos.zip\"").build();
     }
-
+    
     public TemplateInstance speakerEmails() {
         List<Speaker> speakers = Speaker.list("ORDER BY firstName,lastName");
         return Templates.speakerEmails(speakers);
@@ -313,14 +324,14 @@ public class Admin extends Controller {
             sb.append("N:").append(lastName).append(";").append(firstName).append(";;;\n");
             sb.append("FN:").append(firstName).append(" ").append(lastName).append("\n");
             sb.append("ORG:").append(company).append(";\n");
-            if (email != null) {
+            if(email != null) {
                 sb.append("EMAIL;type=INTERNET:").append(email).append("\n");
             }
             sb.append("END:VCARD\n");
             return sb.toString();
         }
     }
-
+    
     public TemplateInstance speakerBadges() {
         List<Speaker> speakers = Speaker.listAll(Sort.by("lastName").and("firstName"));
         List<Badge> badges = new ArrayList<Badge>();
@@ -343,7 +354,7 @@ public class Admin extends Controller {
         List<Sponsor> sponsors = Sponsor.listAll(Sort.by("company"));
         List<Badge> badges = new ArrayList<Badge>();
         for (Sponsor sponsor : sponsors) {
-            if (sponsor.level != SponsorShip.PreviousYears) {
+            if(sponsor.level != SponsorShip.PreviousYears) {
                 badges.add(new Badge(sponsor.company, "", sponsor.company, "SPONSOR", null));
             }
         }
@@ -372,17 +383,9 @@ public class Admin extends Controller {
     }
 
     public TemplateInstance index() {
-        List<Date> days = (List) Slot.list(
-                "select distinct date_trunc('day', startDate) from Slot ORDER BY date_trunc('day', startDate)");
+        List<Date> days = (List)Slot.list(
+                    "select distinct date_trunc('day', startDate) from Slot ORDER BY date_trunc('day', startDate)");
 
         return Templates.index(days);
-    }
-
-    public static class JsonCategory {
-        public String id;
-        public String name;
-        public String description;
-
-        // Getters and setters
     }
 }
