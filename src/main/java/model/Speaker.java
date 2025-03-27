@@ -42,6 +42,7 @@ public class Speaker extends PanacheEntity implements Comparable<Speaker> {
 	public Blob photo;
 	
 	// the cfp app id, if imported
+	// no longer used
     public String importId;
 
 	/** Est-ce que ce speaker mérite d'être sur la page d'accueil ? */
