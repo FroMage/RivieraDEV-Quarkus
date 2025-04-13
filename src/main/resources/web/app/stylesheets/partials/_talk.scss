@@ -217,6 +217,7 @@
 
     &__header {
         border-radius: $borderRadius $borderRadius 0 0;
+        position: relative;
 	}
 
     &__footer {
@@ -311,5 +312,13 @@
         position: absolute;
         bottom: $space-sm;
         right: $space-sm;
+    }
+
+    &__bannerLink {
+        margin-top: 2rem;
+        text-decoration: underline;
+        position: absolute;
+        right: 1rem;
+        bottom: 1rem;
     }
 }
