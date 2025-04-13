@@ -132,6 +132,14 @@ Before changing the configuration, we need to add some talks and speakers.
 -   `PROMOTED_PAGE = SPONSORS`
 
 
+## Banner generation for Social Networks
+
+### Talks
+```
+https://rivieradev.fr/talk-banner/<id>/<lang>.png
+https://rivieradev.fr/talk-banner/30/fr.png
+```
+
 ## TODO
 
 - On prod, upgrade from postgres 9 to 14 (2024 is on 14, the rest is on 9)
