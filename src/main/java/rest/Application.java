@@ -133,7 +133,8 @@ public class Application extends ControllerWithUser<User> {
     public void fr(@RestQuery String url) {
         i18n.set("fr");
         // some links call us withour a url, no idea why, but avoid an NPE
-        if(url != null && !url.isEmpty())
+        // make sure we never redirect to foreign sites: this is used by malwares to hide themselves
+        if(url != null && !url.isEmpty() && url.startsWith(uriInfo.getBaseUri().toString()))
         	seeOther(url);
         else
         	index();
@@ -142,7 +143,8 @@ public class Application extends ControllerWithUser<User> {
     public void en(@RestQuery String url) {
         i18n.set("en");
         // some links call us withour a url, no idea why, but avoid an NPE
-        if(url != null && !url.isEmpty())
+        // make sure we never redirect to foreign sites: this is used by malwares to hide themselves
+        if(url != null && !url.isEmpty() && url.startsWith(uriInfo.getBaseUri().toString()))
         	seeOther(url);
         else
         	index();
