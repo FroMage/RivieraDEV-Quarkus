@@ -23,7 +23,8 @@ TMP_PATH=/tmp/$(NAME)
 
 override_dh_auto_install: 
 	install -d $(DEB_PATH)$(INSTALL_PATH) $(DEB_PATH)$(ETC_PATH) $(DEB_PATH)$(LOG_PATH) $(DEB_PATH)$(LIB_PATH) $(DEB_PATH)$(RUN_PATH) $(DEB_PATH)$(BIN_PATH) $(DEB_PATH)$(TMP_PATH)
-	rsync --exclude .git -r target/website-1.0.0-SNAPSHOT-runner $(DEB_PATH)$(BIN_PATH)/$(NAME)
+	cp target/website-1.0.0-SNAPSHOT-runner $(DEB_PATH)$(INSTALL_PATH)/$(NAME)
+	cp target/lib*.so $(DEB_PATH)$(INSTALL_PATH)/
 	cp src/main/resources/application.properties $(DEB_PATH)$(ETC_PATH)
 	echo "# Prod overrides" >> $(DEB_PATH)$(ETC_PATH)/application.properties
 	cat debian/application.properties >> $(DEB_PATH)$(ETC_PATH)/application.properties
