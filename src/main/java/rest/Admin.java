@@ -19,6 +19,7 @@ import javax.imageio.ImageIO;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.quarkus.runtime.annotations.RegisterForReflection;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.hibernate.engine.jdbc.BlobProxy;
@@ -61,19 +62,22 @@ import util.JavaExtensions;
 @Blocking
 @Authenticated
 public class Admin extends Controller {
-    
+
+    @RegisterForReflection
     public static class JsonCategory {
         public String id;
         public String name;
         public String description;
     }
 
+    @RegisterForReflection
     public static class JsonFormat {
         public String id;
         public String name;
         public String description;
     }
 
+    @RegisterForReflection
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class JsonTalk {
         public String id;
@@ -87,6 +91,7 @@ public class Admin extends Controller {
         public List<JsonSpeaker> speakers;
     }
 
+    @RegisterForReflection
     public static class JsonSpeaker {
         public String name;
         public String bio;
