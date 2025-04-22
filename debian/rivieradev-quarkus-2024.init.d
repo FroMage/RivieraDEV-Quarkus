@@ -81,7 +81,7 @@ case "$1" in
     start)
         log_daemon_msg "Starting $DESC" $APP
 
-		if start-stop-daemon --start --background --make-pidfile --chdir $APP_PATH --pidfile $QUARKUS_PID_PATH --user $USER --chuid $USER:$USER --quiet --exec /usr/bin/$APP -- $QUARKUS_ARGS > /dev/null
+		if start-stop-daemon --start --background --make-pidfile --chdir $APP_PATH --pidfile $QUARKUS_PID_PATH --user $USER --chuid $USER:$USER --quiet --exec $APP_PATH/$APP -- $QUARKUS_ARGS > /dev/null
 		then
 			log_end_msg 0
 		else
