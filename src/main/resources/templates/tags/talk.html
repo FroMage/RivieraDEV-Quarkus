@@ -27,6 +27,11 @@
 	            {/if}
             </div>
         </div>
+        {#if inject:user}
+        <div class="talkDetails__bannerLink">
+            <a target="_blank" href="/talk-banner/{talk.id}/{inject:i18n.get()}.png">Image pour les réseaux sociaux</a>
+        </div>
+        {/if}
     </div>
     <div class="talkDetails__body">
         {talk.getDescription().md()}

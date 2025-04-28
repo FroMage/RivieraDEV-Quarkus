@@ -93,6 +93,7 @@ public class Application extends ControllerWithUser<User> {
 		public static native TemplateInstance sponsorBanner(Sponsor sponsor);
 
 		public static native TemplateInstance talk(Talk talk, boolean displayFullSchedule);
+        public static native TemplateInstance talkBanner(Talk talk);
 
 		public static native TemplateInstance organisers(List<Organiser> orgas);
 
@@ -539,6 +540,23 @@ public class Application extends ControllerWithUser<User> {
         notFoundIfNull(sponsor);
         i18n.setForCurrentRequest(language);
         return Templates.sponsorBanner(sponsor);
+    }
+
+    @Path("/talk-banner")
+    public TemplateInstance talkBanner(@RestPath Long id, @RestPath String language) {
+        Talk talk = Talk.findById(id);
+        notFoundIfNull(talk);
+        i18n.setForCurrentRequest(language);
+        return Templates.talkBanner(talk);
+    }
+
+    @Produces(Pdf.IMAGE_PNG)
+    @Path("/talk-banner/{id}/{language}.png")
+    public TemplateInstance talkBannerImage(@RestPath Long id, @RestPath String language) {
+        Talk talk = Talk.findById(id);
+        notFoundIfNull(talk);
+        i18n.setForCurrentRequest(language);
+        return Templates.talkBanner(talk);
     }
 
 }

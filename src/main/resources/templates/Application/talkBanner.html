@@ -1,0 +1,215 @@
+<!DOCTYPE html PUBLIC
+"-//OPENHTMLTOPDF//DOC XHTML Character Entities Only 1.0//EN" "">
+<html>
+<head>
+    <!-- 
+    Note: the image generation doesn't support:
+     - modern CSS (flex, grid, ...)
+     - SVG (limited support)
+     - fonts other than TTF
+    And there are some differences (positioning) between the HTML page and the generated image
+    -->
+    <style>
+        @page {
+            size: 1115px 627px;
+            margin: 0;
+            padding: 0;
+        }
+
+        @font-face {
+            font-family: 'Humant';
+            src: url('/static/fonts/Humant/Humant-ExtraBlack.ttf') format('truetype');
+            font-weight: 900;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Neulis';
+            src: url('/static/fonts/Neulis/NeulisAlt-MediumItalic.ttf') format('truetype');
+            font-weight: 600;
+            font-style: italic;
+        }
+
+        @font-face {
+            font-family: 'Neulis';
+            src: url('/static/fonts/Neulis/NeulisAlt-Medium.ttf') format('truetype');
+            font-weight: 600;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Neulis';
+            src: url('/static/fonts/Neulis/NeulisAlt-Light.ttf') format('truetype');
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            color: #203041;
+        }
+
+        .container {
+            position: relative;
+            width: 1115px;
+            height: 627px;
+            background-image: url('/static/images/Talk-banner-notext.png');
+            background-position: center;
+            background-size: contain;
+            background-repeat: no-repeat;
+            padding: 60px;
+        }
+
+        .talk__title {
+            font-family: 'Humant', sans-serif;
+            text-transform: uppercase;
+            font-size: 50px;
+            margin: 0;
+        }
+
+        .talk__info {
+            font-family: 'Neulis', sans-serif;
+            font-style: italic;
+            font-size: 20px;
+            margin-top: 20px;
+        }
+
+        .conf {
+            font-family: 'Neulis', sans-serif;
+            font-size: 26px;
+            margin-top: 80px;
+        }
+
+        .conf__when,
+        .conf__where,
+        .conf__website {
+            margin-bottom: 18px;
+        }
+
+        .icon {
+            width: 32px;
+            vertical-align: top;
+            margin-right: 8px;
+        }
+
+        .speakers {
+            position: absolute;
+            color: #f5ede7;
+            text-align: center;
+        }
+
+        .speakers--1 {
+            top: 180px;
+            right: 50px;
+        }
+
+        .speakers--2 {
+            top: 230px;
+            right: 20px;
+        }
+
+        .speaker {
+            display: inline-block;
+        }
+
+        .speaker--1 {
+            width: 400px;
+        }
+
+        .speaker--2 {
+            width: 330px;
+        }
+
+        .speaker__photoContainer {
+            background-color: #011f47;
+            padding: 15px;
+            border-radius: 50%;
+        }
+
+        .speaker__photoContainer--1 {
+            width: 396px;
+            height: 396px;
+        }
+
+        .speaker__photoContainer--2 {
+            width: 326px;
+            height: 326px;
+        }
+
+        .speaker__photo {
+            border-radius: 50%;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+        .speaker__photo--1 {
+            width: 366px;
+            height: 366px;
+        }
+
+        .speaker__photo--2 {
+            width: 296px;
+            height: 296px;
+        }
+
+        .speaker__info {
+            position: relative;
+            width: 90%;
+            margin: -70px 5% 0 5%;
+            padding: 10px;
+            border-radius: 8px;
+            background-color: #011f47;
+        }
+
+        .speaker__name {
+            font-family: 'Humant', sans-serif;
+            text-transform: uppercase;
+            font-size: 25px;
+        }
+
+        .speaker__company {
+            font-family: 'Neulis', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="talk__title">{talk.title}</h1>
+        <div class="talk__info">{talk.type} - {talk.theme}</div>
+
+        <div class="conf">
+            <div class="conf__when">
+                <img class="icon" src="/static/images/icons/calendar_bleu_anthracite.png"/>
+                {m:views.application.index.date}
+            </div>
+            <div class="conf__where">
+                <img class="icon" src="/static/images/icons/speaker_bleu_anthracite.png"/>
+                {m:views.application.index.place}
+            </div>
+            <div class="conf__website">
+                <img class="icon" src="/static/images/icons/code_bleu_anthracite.png"/>
+                https://rivieradev.fr
+            </div>
+        </div>
+
+        <div class="speakers speakers--{talk.speakers.size()}">
+            {#for speaker in talk.speakers}
+                <div class="speaker speaker--{talk.speakers.size()}">
+                    <div class="speaker__photoContainer speaker__photoContainer--{talk.speakers.size()}">
+                        <div class="speaker__photo speaker__photo--{talk.speakers.size()}" 
+                            style="background-image: url('{uri:Application.speakerPhoto(speaker.id)}')"></div>
+                    </div>
+                    <div class="speaker__info">
+                        <div class="speaker__name">{speaker.firstName} {speaker.lastName}</div>
+                        <div class="speaker__company">{speaker.company}</div>
+                    </div>
+                </div>
+            {/for}
+        </div>
+    </div>
+</body>
+</html>
