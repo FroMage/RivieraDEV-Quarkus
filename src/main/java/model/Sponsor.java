@@ -16,6 +16,7 @@ import java.util.TreeMap;
 
 import javax.imageio.ImageIO;
 
+import jakarta.validation.constraints.NotNull;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.URL;
@@ -48,6 +49,7 @@ public class Sponsor extends PanacheEntity implements Comparable<Sponsor> {
 	public String twitterAccount;
 	public String linkedInAccount;
 
+	@NotNull
 	@Enumerated(EnumType.STRING)
 	public SponsorShip level;
 	
