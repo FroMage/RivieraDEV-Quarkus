@@ -1,11 +1,11 @@
-@import '../app/stylesheets/variables';
-@import '../app/stylesheets/mixins';
+@import '../common/stylesheets/variables';
+@import '../common/stylesheets/mixins';
 
-@import '../app/stylesheets/partials/common';
-@import '../app/stylesheets/partials/countdown';
-@import '../app/stylesheets/partials/person';
-@import '../app/stylesheets/partials/schedule';
-@import '../app/stylesheets/partials/talk';
+@import '../common/stylesheets/partials/common';
+@import '../common/stylesheets/partials/countdown';
+@import '../common/stylesheets/partials/person';
+@import '../common/stylesheets/partials/schedule';
+@import '../common/stylesheets/partials/talk';
 
 @include responsiveBackgroundImage(
     '.live__nothing--next',

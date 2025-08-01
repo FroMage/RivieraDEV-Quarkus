@@ -89,4 +89,4 @@ const initCountdown = (
     }
 };
 
-export default initCountdown;
+window.initCountdown = initCountdown;

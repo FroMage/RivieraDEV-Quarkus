@@ -1,3 +1,5 @@
+import $clamp from "clamp-js"
+
 let now = new Date();
 
 function showTalks(tracks, showTrack) {
@@ -264,7 +266,7 @@ function talkToString(talk, showTrack, smaller) {
     return markup;
 }
 
-const initLiveSchedule = (tracks, showTrack, globals) => {
+window.initLiveSchedule = (tracks, showTrack, globals) => {
     now = new Date().getTime() + globals.nowOffset;
     showTalks(tracks, showTrack);
     window.setInterval(function() {

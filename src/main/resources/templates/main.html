@@ -70,12 +70,7 @@
         />
 
         <!-- Custom -->
-        {#bundle key="style" tag="style"/}
-
-        <!--
-            jQuery is still necessary for the countdown, we have to use another lib to get rid of jQuery.
-        -->
-        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+        {#bundle key="main"/}
 
         {#insert moreStyles/}
     </head>
@@ -517,25 +512,19 @@
 
         <!-- External libs -->
 
-        <!-- Modernizr build including the `webp` detect -->
-        <script src="/static/javascripts/libs/modernizr/modernizr-custom-webp.js"></script>
-
         <!-- Custom JS -->
         <script type="text/javascript">
 			window.quarkusCsrfHeader = "{inject:csrf.headerName}";
 			window.quarkusCsrfValue = "{inject:csrf.token}";
 		</script>
-        <script src="/static/javascripts/navbar-animated.js"></script>
-        <script src="/static/javascripts/map.js"></script>
-        <script src="/static/javascripts/schedule-filter.js"></script>
-        <script src="/static/javascripts/talk-like.js"></script>
 
         <!-- Google maps API -->
         {#if googleMapApiKey??}
         <script
+            type="module"
             async
             defer
-            src="https://maps.googleapis.com/maps/api/js?key={googleMapApiKey}&callback=initMap"
+            src="https://maps.googleapis.com/maps/api/js?key={googleMapApiKey}&oading=async&callback=initMap"
         ></script>
         {/if}
 
@@ -566,18 +555,6 @@
                 window.initBurgerMenu();
             };
 
-            // Detect if webp is supported by the web browser
-            Modernizr.on('webp', function (isSupported) {
-                let body = document.getElementsByTagName('body')[0];
-                if (isSupported) {
-                    // Has WebP support
-                    body.classList.add('webp');
-                }
-                else {
-                    // No WebP support
-                    body.classList.add('no-webp');
-                }
-            });
         </script>
     </body>
 </html>

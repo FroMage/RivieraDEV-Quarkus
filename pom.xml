@@ -16,7 +16,7 @@
     <skipITs>true</skipITs>
     <surefire-plugin.version>3.0.0-M7</surefire-plugin.version>
     <renarde.version>3.0.19</renarde.version>
-    <web-bundler.version>1.7.3</web-bundler.version>
+    <web-bundler.version>1.9.1</web-bundler.version>
     <ngrok.version>1.5.1</ngrok.version>
     <quarkus.poi.version>2.0.6</quarkus.poi.version>
   </properties>
@@ -120,6 +120,32 @@
       <artifactId>commons-csv</artifactId>
       <version>1.10.0</version>
     </dependency>
+    <!-- JS deps -->
+    <dependency>
+      <groupId>org.mvnpm</groupId>
+      <artifactId>jquery</artifactId>
+      <version>3.1.1</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mvnpm</groupId>
+      <artifactId>jquery-countdown</artifactId>
+      <version>2.2.0</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mvnpm</groupId>
+      <artifactId>clamp-js</artifactId>
+      <version>0.7.0</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mvnpm</groupId>
+      <artifactId>reveal.js</artifactId>
+      <version>3.7.0</version>
+      <scope>provided</scope>
+    </dependency>
+    <!-- Test deps -->
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-junit5</artifactId>

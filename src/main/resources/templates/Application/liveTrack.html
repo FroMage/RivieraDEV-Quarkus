@@ -13,7 +13,7 @@
 <link href="https://fonts.googleapis.com/css?family=Muli:300,400,600,700" rel="stylesheet">
 
 <!-- Custom -->
-{#bundle key="live" tag="style"/}
+{#bundle key="live"/}
 
 </head>
 <body>
@@ -24,35 +24,8 @@
 
     <div id="js-target" class="live"></div>
 
-    <!-- Modernizr build including the `webp` detect -->
-    <script src="/static/javascripts/libs/modernizr/modernizr-custom-webp.js"></script>
-    <script>
-        // Detect if webp is supported by the web browser
-        Modernizr.on('webp', function (isSupported) {
-            let body = document.getElementsByTagName('body')[0];
-            if (isSupported) {
-                // Has WebP support
-                body.classList.add('webp');
-            }
-            else {
-                // No WebP support
-                body.classList.add('no-webp');
-            }
-        });
-        
-        var globals = {
-                // Debugging by adding 3 days and 15 hours and 40 minutes
-                //nowOffset: 1000 * 60 * 60 * 24 * 1 + 1000 * 60 * 60 * 1 + 1000 * 60 * 40
-        		nowOffset: 0
-        };
-    </script>
-    
-    <!-- Add ellipsis when text is too long -->
-    <script src="/static/javascripts/libs/clamp.js"></script>
-
     <!-- Fill and animate the Live page -->
-    <script src="/static/javascripts/live.js"></script>
-    <script>
+    <script type="module">
 
         const showTrack = "{track}";
 
