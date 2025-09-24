@@ -19,10 +19,10 @@ import javax.imageio.ImageIO;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.quarkus.hibernate.orm.panache.Panache;
 import io.quarkus.runtime.annotations.RegisterForReflection;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
-import org.hibernate.engine.jdbc.BlobProxy;
 import org.jboss.resteasy.reactive.PartType;
 import org.jboss.resteasy.reactive.RestForm;
 
@@ -224,7 +224,7 @@ public class Admin extends Controller {
                                 BufferedImage scaledImage = ImageUtil.scaleImage(image, 400);
                                 ByteArrayOutputStream baos = new ByteArrayOutputStream();
                                 ImageUtil.writeImage(scaledImage, baos);
-                                speaker.photo = BlobProxy.generateProxy(baos.toByteArray());
+                                speaker.photo = Panache.getSession().getLobHelper().createBlob(baos.toByteArray());
                             }
                         } catch (FileNotFoundException x) {
                             // ignore, this is a 404
