@@ -1,2 +1,0 @@
-# Set this to 1 to allow rivieradev-quarkus-2025 to start
-IS_QUARKUS_CONFIGURED=0

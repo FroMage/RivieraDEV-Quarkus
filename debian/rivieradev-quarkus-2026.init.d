@@ -1,22 +1,22 @@
 #! /bin/sh
 #
-# Startup script for rivieradev-quarkus-2025.
+# Startup script for rivieradev-quarkus-2026.
 #
 # Stephane Epardaud <stef@epardaud.fr>
-# Copyright 2025, Stephane Epardaud
+# Copyright 2026, Stephane Epardaud
 #
 
 ### BEGIN INIT INFO
-# Provides: rivieradev-quarkus-2025
+# Provides: rivieradev-quarkus-2026
 # Required-Start: $local_fs $network $named
 # Required-Stop: $local_fs $network $named
 # Default-Start:  2 3 4 5
 # Default-Stop: 0 1 6
-# Short-Description: start and stop rivieradev-quarkus-2025
-# Description: rivieradev-quarkus-2025 application
+# Short-Description: start and stop rivieradev-quarkus-2026
+# Description: rivieradev-quarkus-2026 application
 ### END INIT INFO
 
-APP=rivieradev-quarkus-2025
+APP=rivieradev-quarkus-2026
 USER=quarkus
 CLUSTER=
 

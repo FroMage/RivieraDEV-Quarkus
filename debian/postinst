@@ -1,6 +1,6 @@
 #!/bin/sh
 
-APP=rivieradev-quarkus-2025
+APP=rivieradev-quarkus-2026
 QUARKUS_USER=quarkus
 CLUSTER=
 
