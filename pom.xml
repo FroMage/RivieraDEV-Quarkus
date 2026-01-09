@@ -12,10 +12,10 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
     <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
-    <quarkus.platform.version>3.26.4</quarkus.platform.version>
+    <quarkus.platform.version>3.30.6</quarkus.platform.version>
     <skipITs>true</skipITs>
     <surefire-plugin.version>3.0.0-M7</surefire-plugin.version>
-    <renarde.version>3.1.2</renarde.version>
+    <renarde.version>3.1.4</renarde.version>
     <web-bundler.version>1.9.1</web-bundler.version>
     <ngrok.version>1.8.0</ngrok.version>
     <quarkus.poi.version>2.0.6</quarkus.poi.version>
