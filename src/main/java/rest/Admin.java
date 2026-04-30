@@ -64,17 +64,10 @@ import util.JavaExtensions;
 public class Admin extends Controller {
 
     @RegisterForReflection
-    public static class JsonCategory {
-        public String id;
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    public static class JsonProgram {
         public String name;
-        public String description;
-    }
-
-    @RegisterForReflection
-    public static class JsonFormat {
-        public String id;
-        public String name;
-        public String description;
+        public List<JsonTalk> proposals;
     }
 
     @RegisterForReflection
@@ -85,14 +78,16 @@ public class Admin extends Controller {
         public String level;
         @JsonProperty("abstract")
         public String abstractField;
-        public List<JsonCategory> categories;
-        public List<JsonFormat> formats;
+        public List<String> categories;
+        public List<String> formats;
         public List<String> languages;
         public List<JsonSpeaker> speakers;
     }
 
     @RegisterForReflection
+    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class JsonSpeaker {
+        public String id;
         public String name;
         public String bio;
         public String company;
@@ -125,150 +120,155 @@ public class Admin extends Controller {
     @POST
     public void uploadProgram(@RestForm("program") @PartType(MediaType.APPLICATION_OCTET_STREAM) InputStream programInputStream) throws FileNotFoundException, IOException {
         flash("message", "Uploaded stuff");
+        Log.info("upload");
 
         // Workaround a Quarkus bug that I can't declare the parameter as List<JsonTalk>, to be filed
         String content = new BufferedReader(new InputStreamReader(programInputStream, StandardCharsets.UTF_8))
                 .lines()
                 .collect(Collectors.joining("\n"));
-        ObjectMapper mapper = new ObjectMapper();
-        List<JsonTalk> program = mapper.readValue(content, new TypeReference<List<JsonTalk>>() {
-        });
+        Log.info("upload 2");
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            JsonProgram program = mapper.readValue(content, new TypeReference<JsonProgram>() {
+            });
+            Log.info("upload 3");
 
-        Map<String,Speaker> jsonSpeakerIds = new HashMap<>();
-        Map<String,TalkTheme> jsonCategoryIds = new HashMap<>();
-        Map<String,TalkType> jsonFormatIds = new HashMap<>();
+            Map<String, Speaker> jsonSpeakerIds = new HashMap<>();
+            Map<String, TalkTheme> jsonCategoryByName = new HashMap<>();
+            Map<String, TalkType> jsonFormatByName = new HashMap<>();
 
-        int color = 0;
-        TalkThemeColor[] colors = TalkThemeColor.values();
+            int color = 0;
+            TalkThemeColor[] colors = TalkThemeColor.values();
 
-        for (JsonTalk jsonTalk : program) {
-            Log.infof("Importing %s categories", jsonTalk.categories.size());
-            for (JsonCategory jsonCategory : jsonTalk.categories) {
-                Log.infof(" Category %s", jsonCategory.name);
+            Log.info("upload 4");
+            for (JsonTalk jsonTalk : program.proposals) {
+                Log.infof("Importing %s categories", jsonTalk.categories.size());
+                for (String jsonCategory : jsonTalk.categories) {
+                    Log.infof(" Category %s", jsonCategory);
 
-                TalkTheme talkTheme = TalkTheme.find("importId", jsonCategory.id).firstResult();
-                if (talkTheme == null) {
-                    talkTheme = new TalkTheme();
-                    talkTheme.theme = jsonCategory.name;
-                    talkTheme.color = colors[color % colors.length];
-                    talkTheme.importId = jsonCategory.id;
-                    talkTheme.persist();
-                    color++;
-                }
-
-                jsonCategoryIds.put(jsonCategory.id, talkTheme);
-            }
-
-            Log.infof("Importing %s formats", jsonTalk.formats.size());
-            for (JsonFormat jsonFormat : jsonTalk.formats) {
-                Log.infof(" Format %s", jsonFormat.name);
-                TalkType talkType = TalkType.find("importId", jsonFormat.id).firstResult();
-                if (talkType == null) {
-                    talkType = new TalkType();
-                    talkType.typeEN = jsonFormat.name;
-                    talkType.importId = jsonFormat.id;
-                    talkType.persist();
-                }
-
-                jsonFormatIds.put(jsonFormat.id, talkType);
-            }
-
-            Log.infof("Importing %s speakers", jsonTalk.speakers.size());
-            for (JsonSpeaker jsonSpeaker : jsonTalk.speakers) {
-                Log.infof(" Speaker %s, bio: %s", jsonSpeaker.name, jsonSpeaker.bio);
-                Speaker speaker = Speaker.find("email", jsonSpeaker.email).firstResult();
-                if (speaker == null) {
-
-                    speaker = new Speaker();
-                    speaker.biography = jsonSpeaker.bio;
-                    if (speaker.biography == null || speaker.biography.isBlank()) {
-                        speaker.biography = "To be added";
+                    TalkTheme talkTheme = TalkTheme.find("theme", jsonCategory).firstResult();
+                    if (talkTheme == null) {
+                        talkTheme = new TalkTheme();
+                        talkTheme.theme = jsonCategory;
+                        talkTheme.color = colors[color % colors.length];
+                        talkTheme.persist();
+                        color++;
                     }
-                    speaker.company = jsonSpeaker.company;
-                    speaker.email = jsonSpeaker.email;
-                    if (jsonSpeaker.name == null) {
-                        speaker.firstName = "Anonymous";
-                        speaker.lastName = "Coward";
-                    } else {
-                        int firstSpace = jsonSpeaker.name.indexOf(' ');
-                        if (firstSpace != -1) {
-                            speaker.firstName = jsonSpeaker.name.substring(0, firstSpace);
-                            speaker.lastName = jsonSpeaker.name.substring(firstSpace + 1);
+
+                    jsonCategoryByName.put(jsonCategory, talkTheme);
+                }
+
+                Log.infof("Importing %s formats", jsonTalk.formats.size());
+                for (String jsonFormat : jsonTalk.formats) {
+                    Log.infof(" Format %s", jsonFormat);
+                    TalkType talkType = TalkType.find("typeEN", jsonFormat).firstResult();
+                    if (talkType == null) {
+                        talkType = new TalkType();
+                        talkType.typeEN = jsonFormat;
+                        talkType.persist();
+                    }
+
+                    jsonFormatByName.put(jsonFormat, talkType);
+                }
+
+                Log.infof("Importing %s speakers", jsonTalk.speakers.size());
+                for (JsonSpeaker jsonSpeaker : jsonTalk.speakers) {
+                    Log.infof(" Speaker %s, bio: %s", jsonSpeaker.name, jsonSpeaker.bio);
+                    Speaker speaker = Speaker.find("email", jsonSpeaker.email).firstResult();
+                    if (speaker == null) {
+
+                        speaker = new Speaker();
+                        speaker.biography = jsonSpeaker.bio;
+                        if (speaker.biography == null || speaker.biography.isBlank()) {
+                            speaker.biography = "To be added";
+                        }
+                        speaker.company = jsonSpeaker.company;
+                        speaker.email = jsonSpeaker.email;
+                        if (jsonSpeaker.name == null) {
+                            speaker.firstName = "Anonymous";
+                            speaker.lastName = "Coward";
                         } else {
-                            speaker.lastName = jsonSpeaker.name;
-                        }
-                    }
-                    speaker.twitterAccount = jsonSpeaker.socialLinks.stream()
-                            .map(s -> s.toLowerCase())
-                            .filter(s -> s.contains("twitter.com") || s.contains("x.com"))
-                            .map(s -> s.split("/")[s.split("/").length - 1]).findAny().orElse(null);
-
-
-                    speaker.linkedInAccount = jsonSpeaker.socialLinks.stream()
-                            .map(s -> s.toLowerCase())
-                            .filter(s -> s.contains("linkedin.com"))
-                            .map(s -> s.split("/")[s.split("/").length - 1]).findAny().orElse(null);
-
-
-                    speaker.githubAccount = jsonSpeaker.socialLinks.stream()
-                            .map(s -> s.toLowerCase())
-                            .filter(s -> s.contains("github.com"))
-                            .map(s -> s.split("/")[s.split("/").length - 1]).findAny().orElse(null);
-
-                    // FIXME: add language, github?
-                    if (jsonSpeaker.picture != null) {
-                        try (InputStream is = new URL(jsonSpeaker.picture).openStream()) {
-                            BufferedImage image = ImageIO.read(is);
-                            // this can be null if the stream is empty, I guess
-                            if (image != null) {
-                                BufferedImage scaledImage = ImageUtil.scaleImage(image, 400);
-                                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                                ImageUtil.writeImage(scaledImage, baos);
-                                speaker.photo = Panache.getSession().getLobHelper().createBlob(baos.toByteArray());
+                            int firstSpace = jsonSpeaker.name.indexOf(' ');
+                            if (firstSpace != -1) {
+                                speaker.firstName = jsonSpeaker.name.substring(0, firstSpace);
+                                speaker.lastName = jsonSpeaker.name.substring(firstSpace + 1);
+                            } else {
+                                speaker.lastName = jsonSpeaker.name;
                             }
-                        } catch (FileNotFoundException x) {
-                            // ignore, this is a 404
-                            Log.infof("Failed to load image from %s: %s", jsonSpeaker.picture, x.getMessage());
-                        } catch (IOException x) {
-                            // happens for 403 too
-                            Log.infof("Failed to load image from %s: %s", jsonSpeaker.picture, x.getMessage());
                         }
+                        speaker.twitterAccount = jsonSpeaker.socialLinks.stream()
+                                .map(s -> s.toLowerCase())
+                                .filter(s -> s.contains("twitter.com") || s.contains("x.com"))
+                                .map(s -> s.split("/")[s.split("/").length - 1]).findAny().orElse(null);
+
+
+                        speaker.linkedInAccount = jsonSpeaker.socialLinks.stream()
+                                .map(s -> s.toLowerCase())
+                                .filter(s -> s.contains("linkedin.com"))
+                                .map(s -> s.split("/")[s.split("/").length - 1]).findAny().orElse(null);
+
+
+                        speaker.githubAccount = jsonSpeaker.socialLinks.stream()
+                                .map(s -> s.toLowerCase())
+                                .filter(s -> s.contains("github.com"))
+                                .map(s -> s.split("/")[s.split("/").length - 1]).findAny().orElse(null);
+
+                        // FIXME: add language, github?
+                        if (jsonSpeaker.picture != null) {
+                            try (InputStream is = new URL(jsonSpeaker.picture).openStream()) {
+                                BufferedImage image = ImageIO.read(is);
+                                // this can be null if the stream is empty, I guess
+                                if (image != null) {
+                                    BufferedImage scaledImage = ImageUtil.scaleImage(image, 400);
+                                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                                    ImageUtil.writeImage(scaledImage, baos);
+                                    speaker.photo = Panache.getSession().getLobHelper().createBlob(baos.toByteArray());
+                                }
+                            } catch (FileNotFoundException x) {
+                                // ignore, this is a 404
+                                Log.infof("Failed to load image from %s: %s", jsonSpeaker.picture, x.getMessage());
+                            } catch (IOException x) {
+                                // happens for 403 too
+                                Log.infof("Failed to load image from %s: %s", jsonSpeaker.picture, x.getMessage());
+                            }
+                        }
+                        speaker.persist();
                     }
-                    speaker.persist();
+                    jsonSpeakerIds.put(jsonSpeaker.email, speaker);
                 }
-                jsonSpeakerIds.put(jsonSpeaker.email, speaker);
             }
-        }
 
-        Log.infof("Importing %s talks", program.size());
-        for (JsonTalk jsonTalk : program) {
-            Log.infof(" Talk %s", jsonTalk.id);
-            Talk talk = Talk.find("importId", jsonTalk.id).firstResult();
-        	if(talk == null) {
-        		talk = new Talk();
-        		talk.descriptionEN = jsonTalk.abstractField;
-        		// bullshit
-        		talk.importId = jsonTalk.title;
-        		if(jsonTalk.level == null)
-        			talk.level = Level.Beginner;
-        		else
-                    talk.level = Level.valueOf(io.quarkiverse.renarde.util.JavaExtensions.capitalised(jsonTalk.level.toLowerCase()));
-        		talk.titleEN = jsonTalk.title;
-                for (JsonSpeaker speaker : jsonTalk.speakers) {
-                    talk.speakers.add(jsonSpeakerIds.get(speaker.email));
+            Log.infof("Importing %s talks", program.proposals.size());
+            for (JsonTalk jsonTalk : program.proposals) {
+                Log.infof(" Talk %s", jsonTalk.id);
+                Talk talk = Talk.find("importId", jsonTalk.id).firstResult();
+                if (talk == null) {
+                    talk = new Talk();
+                    talk.descriptionEN = jsonTalk.abstractField;
+                    // bullshit
+                    talk.importId = jsonTalk.title;
+                    if (jsonTalk.level == null)
+                        talk.level = Level.Beginner;
+                    else
+                        talk.level = Level.valueOf(io.quarkiverse.renarde.util.JavaExtensions.capitalised(jsonTalk.level.toLowerCase()));
+                    talk.titleEN = jsonTalk.title;
+                    for (JsonSpeaker speaker : jsonTalk.speakers) {
+                        talk.speakers.add(jsonSpeakerIds.get(speaker.email));
+                    }
+                    talk.isBreak = BreakType.NotABreak;
+                    talk.type = jsonFormatByName.get(jsonTalk.formats.get(0));
+                    if (jsonTalk.categories != null) {
+                        talk.theme = jsonCategoryByName.get(jsonTalk.categories.get(0));
+                    }
+                    talk.language = jsonTalk.languages.contains("en") ? Language.EN : Language.FR;
+                    talk.persist();
+                } else {
+                    Log.infof(" Talk %s already exists", jsonTalk.id);
                 }
-        		talk.isBreak = BreakType.NotABreak;
-                talk.type = jsonFormatIds.get(jsonTalk.formats.get(0));
-        		if(jsonTalk.categories != null) {
-                    talk.theme = jsonCategoryIds.get(jsonTalk.categories.get(0));
-        		}
-                talk.language = jsonTalk.languages.contains("en") ? Language.EN : Language.FR;
-                talk.persist();
-            } else {
-                Log.infof(" Talk %s already exists", jsonTalk.id);
-        	}
+            }
+        }catch(Exception x) {
+            x.printStackTrace();
         }
-
         uploadProgramForm();
     }
     
