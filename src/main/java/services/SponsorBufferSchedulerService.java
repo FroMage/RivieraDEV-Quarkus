@@ -201,8 +201,6 @@ public class SponsorBufferSchedulerService {
             bp.error = e.getMessage();
             bp.persist();
         }
-        // FIXME: only do one
-        stopScheduler();
     }
 
     private static final ZoneId PARIS = ZoneId.of("Europe/Paris");
