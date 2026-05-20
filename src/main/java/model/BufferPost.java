@@ -18,6 +18,9 @@ public class BufferPost extends PanacheEntity {
     @OneToOne
     public Talk talk;
 
+    @OneToOne
+    public Sponsor sponsor;
+
     @JdbcTypeCode(Types.LONGVARCHAR)
     @Length(max = 10000)
     public String error;

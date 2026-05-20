@@ -1,6 +1,7 @@
 CREATE TABLE bufferpost (
     id BIGINT PRIMARY KEY,
     talk_id BIGINT UNIQUE REFERENCES talk(id),
+    sponsor_id BIGINT UNIQUE REFERENCES sponsor(id),
     error VARCHAR(10000),
     twitterPostId VARCHAR(255),
     blueskyPostId VARCHAR(255),

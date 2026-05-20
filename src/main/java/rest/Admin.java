@@ -60,6 +60,7 @@ import model.TalkType;
 import model.TemporarySlot;
 import util.ImageUtil;
 import util.JavaExtensions;
+import services.SponsorBufferSchedulerService;
 import services.TalkBufferSchedulerService;
 import jakarta.inject.Inject;
 
@@ -69,6 +70,9 @@ public class Admin extends Controller {
 
     @Inject
     TalkBufferSchedulerService bufferSchedulerService;
+
+    @Inject
+    SponsorBufferSchedulerService sponsorBufferSchedulerService;
 
     @RegisterForReflection
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -120,6 +124,8 @@ public class Admin extends Controller {
     	public static native TemplateInstance badgesForm();
 
     	public static native TemplateInstance bufferScheduler(TalkBufferSchedulerService.SchedulerStatus status, List<BufferPost> posts);
+
+    	public static native TemplateInstance sponsorScheduler(SponsorBufferSchedulerService.SchedulerStatus status, List<BufferPost> posts);
     }
     
     public TemplateInstance uploadProgramForm() {
@@ -398,7 +404,7 @@ public class Admin extends Controller {
 
     public TemplateInstance bufferScheduler() {
         TalkBufferSchedulerService.SchedulerStatus status = bufferSchedulerService.getStatus();
-        List<BufferPost> posts = BufferPost.listAll();
+        List<BufferPost> posts = BufferPost.list("talk IS NOT NULL");
         return Templates.bufferScheduler(status, posts);
     }
 
@@ -422,7 +428,7 @@ public class Admin extends Controller {
     }
 
     @POST
-    public void deleteBufferPost(@RestPath Long id) {
+    public void deleteBufferPost(@RestPath Long id, @RestForm String returnTo) {
         try {
             bufferSchedulerService.deleteBufferPost(id);
             flash("message", "Buffer post deleted successfully");
@@ -430,6 +436,35 @@ public class Admin extends Controller {
             Log.errorf(e, "Failed to delete Buffer post #%d", id);
             flash("error", "Failed to delete Buffer post: " + e.getMessage());
         }
-        bufferScheduler();
+        if ("sponsor".equals(returnTo)) {
+            sponsorScheduler();
+        } else {
+            bufferScheduler();
+        }
+    }
+
+    public TemplateInstance sponsorScheduler() {
+        SponsorBufferSchedulerService.SchedulerStatus status = sponsorBufferSchedulerService.getStatus();
+        List<BufferPost> posts = BufferPost.list("sponsor IS NOT NULL");
+        return Templates.sponsorScheduler(status, posts);
+    }
+
+    @POST
+    public void startSponsorScheduler() {
+        try {
+            sponsorBufferSchedulerService.startScheduler();
+            flash("message", "Sponsor scheduler started successfully");
+        } catch (Exception e) {
+            Log.errorf(e, "Failed to start Sponsor scheduler");
+            flash("error", "Failed to start scheduler: " + e.getMessage());
+        }
+        sponsorScheduler();
+    }
+
+    @POST
+    public void stopSponsorScheduler() {
+        sponsorBufferSchedulerService.stopScheduler();
+        flash("message", "Sponsor scheduler stopped");
+        sponsorScheduler();
     }
 }

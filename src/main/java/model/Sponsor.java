@@ -59,6 +59,9 @@ public class Sponsor extends PanacheEntity implements Comparable<Sponsor> {
 	public Integer width, height;
 	public Date lastUpdated;
 
+	@jakarta.persistence.OneToOne(mappedBy = "sponsor")
+	public BufferPost bufferPost;
+
 	@PreUpdate
 	@PrePersist
 	public void prePersist() {

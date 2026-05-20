@@ -32,6 +32,14 @@ import java.util.stream.Collectors;
 @ApplicationScoped
 public class TalkBufferSchedulerService {
 
+    static String nameWithHandle(String name, String handle) {
+        if (handle != null && !handle.isBlank()) {
+            String h = handle.startsWith("@") ? handle : "@" + handle;
+            return name + " (" + h + ")";
+        }
+        return name;
+    }
+
     private static final String SCHEDULER_IDENTITY = "talk-buffer-processor";
 
     @Inject
@@ -144,15 +152,17 @@ public class TalkBufferSchedulerService {
                 return;
             }
 
-            // Build speaker names and talk URL
-            String speakers = talk.speakers.stream()
-                    .map(s -> s.firstName + " " + s.lastName)
+            String twitterSpeakers = talk.speakers.stream()
+                    .map(s -> nameWithHandle(s.firstName + " " + s.lastName, s.twitterAccount))
+                    .collect(Collectors.joining(", "));
+            String linkedInSpeakers = talk.speakers.stream()
+                    .map(s -> nameWithHandle(s.firstName + " " + s.lastName, s.linkedInAccount))
                     .collect(Collectors.joining(", "));
             String talkUrl = baseUrl + "/session/" + talk.id;
 
             // Call Gemini to compose tweet
             Log.infof("Calling Gemini API for talk #%d", talk.id);
-            String shortText = summaryService.composeTweet(speakers, title, talkUrl, description);
+            String shortText = summaryService.composeTweet(twitterSpeakers, title, talkUrl, description);
             Log.infof("Generated tweet (%d chars): %s", shortText.length(), shortText);
 
             // Hard limit: truncate text before the URL if AI exceeded 280 chars
@@ -182,8 +192,7 @@ public class TalkBufferSchedulerService {
                     }
                     """;
 
-            // Build LinkedIn post text: full abstract with speakers, title, and link
-            String linkedInText = speakers + " presents: " + title + "\n\n" + description + "\n\n" + talkUrl;
+            String linkedInText = linkedInSpeakers + " presents: " + title + "\n\n" + description + "\n\n" + talkUrl;
 
             BufferPost bp = new BufferPost();
             bp.talk = talk;
@@ -322,9 +331,15 @@ public class TalkBufferSchedulerService {
             }
         }
 
-        bp.talk.bufferPost = null;
+        if(bp.sponsor != null)
+            bp.sponsor.bufferPost = null;
+        if(bp.talk != null)
+            bp.talk.bufferPost = null;
         bp.delete();
-        Log.infof("Deleted BufferPost #%d for talk #%d", id, bp.talk.id);
+        if(bp.talk != null)
+            Log.infof("Deleted BufferPost #%d for talk #%d", id, bp.talk.id);
+        else
+            Log.infof("Deleted BufferPost #%d for sponsor #%d", id, bp.sponsor.id);
     }
 
     public void stopScheduler() {
