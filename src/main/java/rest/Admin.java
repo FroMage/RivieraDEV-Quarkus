@@ -25,6 +25,7 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.jboss.resteasy.reactive.PartType;
 import org.jboss.resteasy.reactive.RestForm;
+import org.jboss.resteasy.reactive.RestPath;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -44,6 +45,7 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import model.BreakType;
+import model.BufferPost;
 import model.Language;
 import model.Level;
 import model.Organiser;
@@ -58,10 +60,15 @@ import model.TalkType;
 import model.TemporarySlot;
 import util.ImageUtil;
 import util.JavaExtensions;
+import services.TalkBufferSchedulerService;
+import jakarta.inject.Inject;
 
 @Blocking
 @Authenticated
 public class Admin extends Controller {
+
+    @Inject
+    TalkBufferSchedulerService bufferSchedulerService;
 
     @RegisterForReflection
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -109,8 +116,10 @@ public class Admin extends Controller {
 		public static native TemplateInstance speakerEmailsCompany(List<Speaker> speakers);
 
 		public static native TemplateInstance badges(List<Badge> badges);
-		
+
     	public static native TemplateInstance badgesForm();
+
+    	public static native TemplateInstance bufferScheduler(TalkBufferSchedulerService.SchedulerStatus status, List<BufferPost> posts);
     }
     
     public TemplateInstance uploadProgramForm() {
@@ -385,5 +394,42 @@ public class Admin extends Controller {
                     "select distinct date_trunc('day', startDate) from Slot ORDER BY date_trunc('day', startDate)");
 
         return Templates.index(days);
+    }
+
+    public TemplateInstance bufferScheduler() {
+        TalkBufferSchedulerService.SchedulerStatus status = bufferSchedulerService.getStatus();
+        List<BufferPost> posts = BufferPost.listAll();
+        return Templates.bufferScheduler(status, posts);
+    }
+
+    @POST
+    public void startBufferScheduler() {
+        try {
+            bufferSchedulerService.startScheduler();
+            flash("message", "Buffer scheduler started successfully");
+        } catch (Exception e) {
+            Log.errorf(e, "Failed to start Buffer scheduler");
+            flash("error", "Failed to start scheduler: " + e.getMessage());
+        }
+        bufferScheduler();
+    }
+
+    @POST
+    public void stopBufferScheduler() {
+        bufferSchedulerService.stopScheduler();
+        flash("message", "Buffer scheduler stopped");
+        bufferScheduler();
+    }
+
+    @POST
+    public void deleteBufferPost(@RestPath Long id) {
+        try {
+            bufferSchedulerService.deleteBufferPost(id);
+            flash("message", "Buffer post deleted successfully");
+        } catch (Exception e) {
+            Log.errorf(e, "Failed to delete Buffer post #%d", id);
+            flash("error", "Failed to delete Buffer post: " + e.getMessage());
+        }
+        bufferScheduler();
     }
 }

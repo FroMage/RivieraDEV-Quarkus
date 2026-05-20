@@ -6,19 +6,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.validator.constraints.Length;
 
 import io.quarkiverse.renarde.util.I18N;
 import io.quarkus.arc.Arc;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
@@ -63,9 +57,12 @@ public class Talk extends PanacheEntity implements Comparable<Talk> {
 	public String slidesUrl;
 
 	public Integer nbLikes = 0;
-	
+
 	// the cfp app id, if imported
     public String importId;
+
+	@OneToOne(mappedBy = "talk")
+	public BufferPost bufferPost;
 
 	// Permet de cacher ce talk dans la page qui liste les talks.
 	// (Ex: 'Keynote des Orga', 'Accueil', etc...)

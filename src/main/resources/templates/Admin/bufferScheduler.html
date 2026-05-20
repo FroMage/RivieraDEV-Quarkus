@@ -1,0 +1,109 @@
+{#include admin.html}
+{#title}Buffer Tweet Scheduler{/title}
+
+<div class="page-header">
+    <h2>Buffer Tweet Scheduler</h2>
+</div>
+
+{#if flash:message}
+<div class="alert alert-success">
+    {flash:message}
+</div>
+{/if}
+
+{#if flash:error}
+<div class="alert alert-error">
+    {flash:error}
+</div>
+{/if}
+
+<div class="well">
+    <h3>Scheduler Status</h3>
+    <dl class="dl-horizontal">
+        <dt>Status:</dt>
+        <dd><strong>{#if status.running}Running{#else}Stopped{/if}</strong></dd>
+
+        <dt>Total Talks:</dt>
+        <dd>{status.totalTalks}</dd>
+
+        <dt>Processed:</dt>
+        <dd>{status.processedTalks}</dd>
+
+        <dt>Remaining:</dt>
+        <dd>{status.remainingTalks}</dd>
+    </dl>
+</div>
+
+<div class="alert alert-info">
+    <h4>How it works:</h4>
+    <ul>
+        <li>Processes one talk every 30 seconds (3 Buffer API calls per talk)</li>
+        <li>Calls Gemini AI to generate a short version for Twitter/Bluesky (max 280 chars)</li>
+        <li>LinkedIn gets the full abstract with speaker names and title</li>
+        <li>Posts are scheduled two per day: 10AM and 2PM (Paris time), starting tomorrow</li>
+        <li>Automatically stops when all talks are processed</li>
+        <li>Skips talks without title or description</li>
+    </ul>
+</div>
+
+<div class="form-actions">
+    <a class="btn" href="{uri:Admin.index()}" title="Back to Admin">Back to Admin</a>
+
+    {#if status.running}
+        {#form uri:Admin.stopBufferScheduler()}
+            <input type="submit" class="btn btn-danger" value="Stop Scheduler"
+                title="Stop the Buffer scheduler"/>
+        {/form}
+    {#else}
+        {#if status.remainingTalks > 0}
+            {#form uri:Admin.startBufferScheduler()}
+                <input type="submit" class="btn btn-primary" value="Start Scheduler"
+                    title="Start processing talks and scheduling Buffer posts"/>
+            {/form}
+        {#else}
+            <button class="btn btn-primary" disabled>All Talks Processed</button>
+        {/if}
+    {/if}
+</div>
+
+{#if posts.size > 0}
+<h3>Scheduled Posts ({posts.size})</h3>
+<table class="table table-striped table-condensed">
+    <thead>
+        <tr>
+            <th>Talk</th>
+            <th>Status</th>
+            <th>Scheduled</th>
+            <th>Links</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {#for post in posts}
+        <tr>
+            <td><a href="{uri:Application.talk(post.talk.id)}">{post.talk.getTitle}</a></td>
+            <td>
+                {#if post.error}
+                    <span class="label label-important">{post.error}</span>
+                {#else}
+                    <span class="label label-success">OK</span>
+                {/if}
+            </td>
+            <td>{post.formattedScheduledDate}</td>
+            <td>
+                {#if post.twitterPostId}<a href="https://publish.buffer.com/post/{post.twitterPostId}" target="_blank" title="Twitter"><i class="fab fa-twitter"></i></a> {/if}
+                {#if post.blueskyPostId}<a href="https://publish.buffer.com/post/{post.blueskyPostId}" target="_blank" title="Bluesky"><i class="fas fa-cloud"></i></a> {/if}
+                {#if post.linkedInPostId}<a href="https://publish.buffer.com/post/{post.linkedInPostId}" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>{/if}
+            </td>
+            <td>
+                {#form uri:Admin.deleteBufferPost(post.id)}
+                    <button type="submit" class="btn btn-danger btn-mini" title="Delete"><i class="fas fa-trash"></i></button>
+                {/form}
+            </td>
+        </tr>
+        {/for}
+    </tbody>
+</table>
+{/if}
+
+{/include}
