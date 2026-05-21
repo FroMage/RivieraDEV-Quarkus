@@ -244,7 +244,7 @@ public class TalkBufferSchedulerService {
     private static final LocalTime AFTERNOON = LocalTime.of(14, 0);
 
     private Instant computeNextSlot() {
-        BufferPost latest = BufferPost.find("scheduledDate IS NOT NULL ORDER BY scheduledDate DESC").firstResult();
+        BufferPost latest = BufferPost.find("talk IS NOT NULL AND scheduledDate IS NOT NULL ORDER BY scheduledDate DESC").firstResult();
         Instant maxScheduled = latest != null ? latest.scheduledDate : null;
 
         ZonedDateTime now = ZonedDateTime.now(PARIS);
