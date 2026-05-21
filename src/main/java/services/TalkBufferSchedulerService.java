@@ -7,11 +7,11 @@ import graphql.buffer.ChannelsInput;
 import graphql.buffer.Mode;
 import graphql.buffer.SchedulingType;
 import io.quarkus.logging.Log;
-import io.quarkus.scheduler.Scheduler;
 import io.smallrye.graphql.client.GraphQLClient;
 import io.smallrye.graphql.client.Response;
 import io.smallrye.graphql.client.dynamic.api.DynamicGraphQLClient;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.control.ActivateRequestContext;
 import jakarta.inject.Inject;
 import jakarta.json.JsonObject;
 import jakarta.transaction.Transactional;
@@ -21,12 +21,13 @@ import model.Talk;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import java.time.Instant;
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @ApplicationScoped
@@ -40,10 +41,8 @@ public class TalkBufferSchedulerService {
         return name;
     }
 
-    private static final String SCHEDULER_IDENTITY = "talk-buffer-processor";
-
     @Inject
-    Scheduler scheduler;
+    ScheduledExecutorService executor;
 
     @Inject
     TalkSummaryService summaryService;
@@ -108,15 +107,22 @@ public class TalkBufferSchedulerService {
         Log.infof("Starting Buffer scheduler for %d short-text channels and LinkedIn: %s",
                 shortTextChannelIds.size(), linkedInChannelId != null ? "yes" : "no");
 
-        // Schedule to run every 10 seconds
-        scheduler.newJob(SCHEDULER_IDENTITY)
-                .setInterval("30s")
-                .setTask(executionContext -> {
-                    processNextTalk();
-                })
-                .schedule();
+        scheduleNext(0);
     }
 
+    private void scheduleNext(long delaySeconds) {
+        executor.schedule(() -> {
+            try {
+                processNextTalk();
+            } finally {
+                if (isRunning) {
+                    scheduleNext(30);
+                }
+            }
+        }, delaySeconds, TimeUnit.SECONDS);
+    }
+
+    @ActivateRequestContext
     @Transactional
     public void processNextTalk() {
         if (!isRunning) {
@@ -345,7 +351,6 @@ public class TalkBufferSchedulerService {
             return;
         }
 
-        scheduler.unscheduleJob(SCHEDULER_IDENTITY);
         isRunning = false;
         Log.info("Buffer scheduler stopped");
     }

@@ -7,11 +7,11 @@ import graphql.buffer.ChannelsInput;
 import graphql.buffer.Mode;
 import graphql.buffer.SchedulingType;
 import io.quarkus.logging.Log;
-import io.quarkus.scheduler.Scheduler;
 import io.smallrye.graphql.client.GraphQLClient;
 import io.smallrye.graphql.client.Response;
 import io.smallrye.graphql.client.dynamic.api.DynamicGraphQLClient;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.context.control.ActivateRequestContext;
 import jakarta.inject.Inject;
 import jakarta.json.JsonObject;
 import jakarta.transaction.Transactional;
@@ -27,15 +27,15 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class SponsorBufferSchedulerService {
 
-    private static final String SCHEDULER_IDENTITY = "sponsor-buffer-processor";
-
     @Inject
-    Scheduler scheduler;
+    ScheduledExecutorService executor;
 
     @Inject
     SponsorSummaryService summaryService;
@@ -97,14 +97,22 @@ public class SponsorBufferSchedulerService {
         Log.infof("Starting Sponsor Buffer scheduler for %d short-text channels and LinkedIn: %s",
                 shortTextChannelIds.size(), linkedInChannelId != null ? "yes" : "no");
 
-        scheduler.newJob(SCHEDULER_IDENTITY)
-                .setInterval("30s")
-                .setTask(executionContext -> {
-                    processNextSponsor();
-                })
-                .schedule();
+        scheduleNext(0);
     }
 
+    private void scheduleNext(long delaySeconds) {
+        executor.schedule(() -> {
+            try {
+                processNextSponsor();
+            } finally {
+                if (isRunning) {
+                    scheduleNext(30);
+                }
+            }
+        }, delaySeconds, TimeUnit.SECONDS);
+    }
+
+    @ActivateRequestContext
     @Transactional
     public void processNextSponsor() {
         if (!isRunning) {
@@ -263,7 +271,6 @@ public class SponsorBufferSchedulerService {
             return;
         }
 
-        scheduler.unscheduleJob(SCHEDULER_IDENTITY);
         isRunning = false;
         Log.info("Sponsor Buffer scheduler stopped");
     }
