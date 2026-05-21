@@ -199,6 +199,12 @@ public class TalkBufferSchedulerService {
                     """;
 
             String linkedInText = linkedInSpeakers + " presents: " + title + "\n\n" + description + "\n\n" + talkUrl;
+            if (linkedInText.length() > 3000) {
+                String prefix = linkedInSpeakers + " presents: " + title + "\n\n";
+                String suffix = "\n\n" + talkUrl;
+                int maxDesc = 3000 - prefix.length() - suffix.length() - 3;
+                linkedInText = prefix + description.substring(0, maxDesc) + "..." + suffix;
+            }
 
             BufferPost bp = new BufferPost();
             bp.talk = talk;

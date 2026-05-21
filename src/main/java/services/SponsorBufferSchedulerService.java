@@ -179,6 +179,12 @@ public class SponsorBufferSchedulerService {
 
             String linkedInName = TalkBufferSchedulerService.nameWithHandle(sponsor.company, sponsor.linkedInAccount);
             String linkedInText = linkedInName + "\n\n" + description + "\n\n" + sponsorUrl;
+            if (linkedInText.length() > 3000) {
+                String prefix = linkedInName + "\n\n";
+                String suffix = "\n\n" + sponsorUrl;
+                int maxDesc = 3000 - prefix.length() - suffix.length() - 3;
+                linkedInText = prefix + description.substring(0, maxDesc) + "..." + suffix;
+            }
 
             BufferPost bp = new BufferPost();
             bp.sponsor = sponsor;
