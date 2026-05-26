@@ -1,5 +1,19 @@
 {#include main.html}
 {#title}{talk.title} - {m:views.application.talk.title}{/title}
+{#twitterCard}
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:site" content="@RivieraDEV" />
+<meta name="twitter:title" content="Riviera DEV" />
+<meta
+    name="twitter:description"
+    content="{talk.title}"
+/>
+<meta
+    name="twitter:image"
+    content="{uriabs:Application.talkBannerImage(talk.id, 'en')}"
+/>
+<meta name="twitter:image:alt" content="Riviera DEV" />
+{/twitterCard}
 
 <div class="page__header speakers__header">
     <h1 class="page__mainTitle">{m:views.application.talk.title}</h1>
