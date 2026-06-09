@@ -56,13 +56,16 @@ public class ImageUtil {
 
     public static void writeImage(BufferedImage image, OutputStream output) throws IOException {
         ImageWriter imageWriter = ImageIO.getImageWritersByFormatName("jpeg").next();
-        ImageWriteParam iwp = imageWriter.getDefaultWriteParam();
-        iwp.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
-        iwp.setCompressionQuality(0.85f);
-        IIOImage iioImage = new IIOImage(image, null, null);
-        imageWriter.setOutput(ImageIO.createImageOutputStream(output));
-        imageWriter.write(null, iioImage, iwp);
-        imageWriter.dispose();
+        try (ImageOutputStream ios = ImageIO.createImageOutputStream(output)) {
+            ImageWriteParam iwp = imageWriter.getDefaultWriteParam();
+            iwp.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+            iwp.setCompressionQuality(0.85f);
+            IIOImage iioImage = new IIOImage(image, null, null);
+            imageWriter.setOutput(ios);
+            imageWriter.write(null, iioImage, iwp);
+        } finally {
+            imageWriter.dispose();
+        }
         output.close();
     }
 }

@@ -235,8 +235,10 @@ public class Admin extends Controller {
                                 // this can be null if the stream is empty, I guess
                                 if (image != null) {
                                     BufferedImage scaledImage = ImageUtil.scaleImage(image, 400);
+                                    image.flush();
                                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
                                     ImageUtil.writeImage(scaledImage, baos);
+                                    scaledImage.flush();
                                     speaker.photo = Panache.getSession().getLobHelper().createBlob(baos.toByteArray());
                                 }
                             } catch (FileNotFoundException x) {

@@ -75,6 +75,7 @@ public class Sponsor extends PanacheEntity implements Comparable<Sponsor> {
 				BufferedImage image = ImageIO.read(is);
 				this.width = image.getWidth();
 				this.height = image.getHeight();
+				image.flush();
 			} catch (IOException e) {
 				Log.error("Failed to read image", e);
 			} catch (SQLException e) {
