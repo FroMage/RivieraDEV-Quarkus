@@ -22,7 +22,7 @@ CLUSTER=
 
 PATH=/sbin:/bin:/usr/sbin:/usr/bin
 QUARKUS_PROFILE=
-QUARKUS_ARGS=-Djava.io.tmpdir=/tmp/$APP
+QUARKUS_ARGS="-Djava.io.tmpdir=/tmp/$APP -XX:+HeapDumpOnOutOfMemoryError -XX:+ExitOnOutOfMemoryError -Xmx512m -XX:HeapDumpPath=/tmp/$APP"
 
 if test -n "$CLUSTER"
 then
