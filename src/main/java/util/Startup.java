@@ -94,10 +94,6 @@ public class Startup {
         								if(entity instanceof Speaker sp) {
         									// for testing stuff
         									sp.email = "email@example.com";
-        								} else if(entity instanceof Slot slot) {
-        									// FIXME: we have a bug where dates are shifted +2h from prod to dev for some reason
-        									slot.startDate = Date.from(slot.startDate.toInstant().minus(2l, ChronoUnit.HOURS));
-        									slot.endDate = Date.from(slot.endDate.toInstant().minus(2l, ChronoUnit.HOURS));
         								}
         								// FIXME: this is not nice
         								// remove the ID, to get a fresh entity

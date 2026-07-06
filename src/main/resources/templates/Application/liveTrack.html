@@ -13,7 +13,10 @@
 <link href="https://fonts.googleapis.com/css?family=Muli:300,400,600,700" rel="stylesheet">
 
 <!-- Custom -->
-{#bundle key="live"/}
+{#bundle key="live" tag="style"/}
+
+    <!-- DO NOT use JS modules: the raspis don't support it -->
+    <script src="{inject:bundle.script("live")}"></script>
 
 </head>
 <body>
@@ -25,7 +28,7 @@
     <div id="js-target" class="live"></div>
 
     <!-- Fill and animate the Live page -->
-    <script type="module">
+    <script>
 
         const showTrack = "{track}";
 
