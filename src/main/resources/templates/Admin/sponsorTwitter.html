@@ -1,0 +1,61 @@
+{#include admin.html}
+{#title}Sponsor Twitter{/title}
+
+{#moreStyles}
+<style>
+    .sponsorTwitter__level {
+        margin-top: 1.5em;
+        border-bottom: 1px solid #ccc;
+    }
+    .sponsorTwitter__grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1em;
+        margin: 1em 0;
+    }
+    .sponsorTwitter__sponsor {
+        text-align: center;
+    }
+    .sponsorTwitter__logo {
+        max-width: 200px;
+        max-height: 100px;
+    }
+</style>
+{/moreStyles}
+
+<h1>Sponsor Twitter</h1>
+
+{#for entry in sponsors.entrySet()}
+<h2 class="sponsorTwitter__level">{entry.key}</h2>
+<div class="sponsorTwitter__grid">
+    {#for sponsor in entry.value}
+    <div class="sponsorTwitter__sponsor">
+        <a class="js-sponsorTwitterLink"
+           data-company="{sponsor.company}"
+           data-twitter="{sponsor.twitterAccount ?: ""}"
+           data-level="{entry.key}"
+           data-url="{uri:Application.sponsor(sponsor.id)}">
+            <img class="sponsorTwitter__logo" src="{uri:Application.sponsorLogo(sponsor.id)}" alt="{sponsor.company}" title="{sponsor.company}">
+        </a>
+    </div>
+    {/for}
+</div>
+{/for}
+
+{#moreScripts}
+<script>
+    var links = document.getElementsByClassName('js-sponsorTwitterLink');
+    for (var i = 0; i < links.length; i++) {
+        var link = links[i];
+        var company = link.getAttribute('data-company');
+        var twitter = link.getAttribute('data-twitter');
+        var level = link.getAttribute('data-level');
+        var url = link.getAttribute('data-url');
+        var name = twitter ? '@' + twitter : company;
+        var text = 'Merci à ' + name + ' qui est sponsor ' + level + ' de #RivieraDEV\n' + window.location.origin + url;
+        link.href = 'twitter://post?message=' + encodeURIComponent(text).replace(/'/g, '%27').replace(/"/g, '%22');
+    }
+</script>
+{/moreScripts}
+
+{/include}

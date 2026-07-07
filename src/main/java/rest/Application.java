@@ -105,6 +105,8 @@ public class Application extends ControllerWithUser<User> {
 
 		public static native TemplateInstance liveTrack(List<Track> tracks, String track, List<Talk> keynotes);
 
+		public static native TemplateInstance liveTwitter(List<Track> tracks, String track, List<Talk> keynotes);
+
 		public static native TemplateInstance schools(SponsorShip sponsorShip, List<Sponsor> sponsors);
 	}
 	
@@ -499,6 +501,14 @@ public class Application extends ControllerWithUser<User> {
         Collections.sort(tracks);
         List<Talk> keynotes = Talk.findKeynotes();
         return Templates.liveTrack(tracks, track, keynotes);
+    }
+
+    @Path("/live-twitter")
+    public TemplateInstance liveTwitter(@RestPath String track) {
+        List<Track> tracks = Track.listAll();
+        Collections.sort(tracks);
+        List<Talk> keynotes = Talk.findKeynotes();
+        return Templates.liveTwitter(tracks, track, keynotes);
     }
 
     @Path("/schools")

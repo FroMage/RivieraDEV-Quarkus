@@ -126,6 +126,8 @@ public class Admin extends Controller {
     	public static native TemplateInstance bufferScheduler(TalkBufferSchedulerService.SchedulerStatus status, List<BufferPost> posts);
 
     	public static native TemplateInstance sponsorScheduler(SponsorBufferSchedulerService.SchedulerStatus status, List<BufferPost> posts);
+
+    	public static native TemplateInstance sponsorTwitter(Map<SponsorShip, List<Sponsor>> sponsors);
     }
     
     public TemplateInstance uploadProgramForm() {
@@ -468,5 +470,10 @@ public class Admin extends Controller {
         sponsorBufferSchedulerService.stopScheduler();
         flash("message", "Sponsor scheduler stopped");
         sponsorScheduler();
+    }
+
+    public TemplateInstance sponsorTwitter() {
+        Map<SponsorShip, List<Sponsor>> sponsors = Sponsor.getSponsorsToDisplay().getSponsors();
+        return Templates.sponsorTwitter(sponsors);
     }
 }

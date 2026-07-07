@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+
+<html lang="{inject:i18n.get()}">
+<head>
+<title>{m:views.application.schedule.title}</title>
+
+<link rel="icon" type="image/png" href="/static/images/favicon.png">
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Muli:300,400,600,700" rel="stylesheet">
+
+<!-- Custom -->
+{#bundle key="live" tag="style"/}
+
+    <!-- DO NOT use JS modules: the raspis don't support it -->
+    <script src="{inject:bundle.script("live")}"></script>
+
+</head>
+<body>
+
+    <div class="live__currentDate">
+        <span id="js-live-currentDate"></span>
+    </div>
+
+    <div id="js-target" class="live"></div>
+
+    <!-- Fill and animate the Live page -->
+    <script>
+
+        const showTrack = "{track}";
+
+        const tracks = {
+            {#for track in tracks}
+                "{track.title}": [
+                    {#for talk in track.talks}
+                        {
+                            "id": {talk.id},
+                            "title": "{talk.getTitle().jsonEscape()}",
+                            "titleEN": "{talk.titleEN ?: talk.titleFR ?: ""}",
+                            "titleFR": "{talk.titleFR ?: talk.titleEN ?: ""}",
+                            "start": {talk.slot.startDate.time ?: "null"},
+                            "end": {talk.slot.endDate.time ?: "null"},
+                            {#if talk.theme}
+                                "theme": "{talk.theme}",
+                                "themeColor": "{talk.theme.color.code}",
+                            {/if}
+                            {#if talk.type}
+                                "type": "{talk.type}",
+                            {/if}
+                            {#if talk.level}
+                                "level": "{m:'views.application.schedule.level.' + talk.level.code}",
+                            {/if}
+                            {#if talk.language}
+                                "language": "{talk.language}",
+                            {/if}
+                            "track": "{track.title.jsonEscape()}",
+                            "speakers": [
+                            {#for speaker in talk.speakers}
+                                {
+                                    "name": "{speaker.firstName.jsonEscape()} {speaker.lastName.jsonEscape()}",
+                                    "photo": "{uri:Application.speakerPhoto(speaker.id)}",
+                                    "twitter": "{speaker.twitterAccount ?: ""}"
+                                }
+                                {#if !speaker_isLast},{/if}
+                            {/for}
+                            ]
+                        }
+                        {#if !talk_isLast},{/if}
+                    {/for}
+                ]
+                {#if !track_isLast},{/if}
+            {/for}
+        };
+
+        initLiveTwitter(tracks, showTrack, globals);
+    </script>
+</body>
+</html>

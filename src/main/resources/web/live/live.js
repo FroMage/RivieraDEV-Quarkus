@@ -279,3 +279,195 @@ window.initLiveSchedule = (tracks, showTrack, globals) => {
         window.location.reload();
     }, 1000 * 60 * 5);
 };
+
+function buildTweetUrl(talk, lang) {
+    const title = lang === 'fr' ? (talk.titleFR || talk.title) : (talk.titleEN || talk.title);
+    let text;
+    if (lang === 'fr') {
+        text = 'Je suis à #RivieraDEV et je regarde "' + title + '"';
+    } else {
+        text = 'I\'m at #RivieraDEV watching "' + title + '"';
+    }
+    const speakers = talk.speakers
+        .map(function(s) { return s.twitter ? '@' + s.twitter : s.name; })
+        .join(', ');
+    if (speakers) {
+        text += (lang === 'fr' ? ' par ' : ' by ') + speakers;
+    }
+    text += '\n' + window.location.origin + '/session/' + talk.id;
+    return 'twitter://post?message=' + encodeURIComponent(text).replace(/'/g, '%27').replace(/"/g, '%22');
+}
+
+function talkToTwitterString(talk, showTrack, smaller) {
+    if (talk == null) return '';
+
+    const start = new Date(talk.start);
+    const end = new Date(talk.end);
+
+    const themeColor = talk.themeColor ? talk.themeColor : 'none';
+    const tweetUrlEN = buildTweetUrl(talk, 'en');
+    const tweetUrlFR = buildTweetUrl(talk, 'fr');
+
+    let markup = "<div class='liveTalk'>";
+    markup +=
+        "<h2 class='liveTalk__track" +
+        (smaller ? ' liveTalk__track--smaller' : '') +
+        "'>";
+    markup += extractRoom(talk.track);
+    markup += '</h2>';
+    markup +=
+        "<div class='liveTalk__content " +
+        (talk.track == showTrack ? ' liveTalk__content--currentTrack ' : '') +
+        'fullSchedule__talk__item' +
+        "'>";
+
+    markup +=
+        "<div class='liveTalk__part1" +
+        (talk.track == showTrack
+            ? ' liveTalk__part1--currentTrack liveTalk__part1--currentTrack--' +
+              themeColor
+            : '') +
+        " fullSchedule__talk__part1'>";
+
+    markup +=
+        "<div class='js-liveTalks__title liveTalk__title fullSchedule__talk__title" +
+        (smaller ? ' liveTalk__title--smaller' : '') +
+        "'>";
+    markup += talk.title;
+    markup += '</div>';
+
+    markup +=
+        "<div class='liveTalk__slotTrack fullSchedule__talk__slotTrack" +
+        (smaller ? ' liveTalk__slotTrack--smaller' : '') +
+        "'>";
+    markup += "<div class='liveTalk__slot fullSchedule__talk__slot'>";
+    markup += "<span class='liveTalk__slotWhen'>";
+    markup += formatTime(start) + ' - ' + formatTime(end);
+    markup += '</span>';
+    markup += '</div>';
+    markup += '</div>';
+
+    markup += "<div class='liveTalk__twitterFlags'>";
+    markup += '<a href="' + tweetUrlEN + '" class="liveTalk__flagLink">🇬🇧</a>';
+    markup += '<a href="' + tweetUrlFR + '" class="liveTalk__flagLink">🇫🇷</a>';
+    markup += '</div>';
+
+    markup += '</div>';
+    markup += "<div class='liveTalk__part2 fullSchedule__talk__part2";
+    markup += ' fullSchedule__talk__part2--' + themeColor + ' ';
+    markup +=
+        talk.track == showTrack
+            ? ' liveTalk__part2--currentTrack  liveTalk__part2--currentTrack--' +
+              themeColor
+            : '';
+    markup += "'>";
+
+    markup += "<ul class='liveTalk__speakers fullSchedule__talk__speakers'>";
+    for (let n = 0; n < talk.speakers.length; n++) {
+        const speaker = talk.speakers[n];
+        markup += "<li class='liveTalk__speaker fullSchedule__talk__speaker'>";
+        markup +=
+            "<div class='liveTalk__speakerPhoto fullSchedule__talk__speakerPhoto' style='background-image: url(" +
+            speaker.photo +
+            ")'></div> ";
+        markup +=
+            "<span class='liveTalk__speakerName fullSchedule__talk__speakerName'>" +
+            speaker.name +
+            (speaker.twitter ? ' <span class="liveTalk__speakerTwitter">@' + speaker.twitter + '</span>' : '') +
+            '</span>';
+        markup += '</li>';
+    }
+    markup += '</ul>';
+
+    markup += '</div>';
+    markup += '</div>';
+    markup += '</div>';
+    return markup;
+}
+
+function showTalksTwitter(tracks, showTrack) {
+    const currentTalks = [];
+    const previousTalks = [];
+
+    for (let t in tracks) {
+        const track = tracks[t];
+        for (let i = 0; i < track.length; i++) {
+            const talk = track[i];
+            if (talk.start <= now && talk.end >= now) {
+                currentTalks.push(talk);
+            } else if (talk.end < now) {
+                let addIt = true;
+                for (let n = 0; n < previousTalks.length; n++) {
+                    if (previousTalks[n].start < talk.start) {
+                        previousTalks.splice(n, 1);
+                        n--;
+                    } else if (previousTalks[n].start > talk.start) {
+                        addIt = false;
+                        break;
+                    }
+                }
+                if (addIt) {
+                    previousTalks.push(talk);
+                }
+            }
+        }
+    }
+
+    document.getElementById('js-live-currentDate').innerHTML =
+        formatDate(new Date(now)) + ' ' + formatTimeSeconds(new Date(now));
+
+    const target = document.getElementById('js-target');
+    target.innerHTML = '';
+
+    let markup = "<h1 class='live__when live__when--current'>Currently</h1>";
+
+    const smaller = currentTalks.length > 4 || previousTalks.length > 4;
+
+    if (currentTalks.length > 0) {
+        markup += "<div class='live__talks'>";
+        for (let n = 0; n < currentTalks.length; n++) {
+            markup += talkToTwitterString(currentTalks[n], showTrack, smaller);
+        }
+        markup += '</div>';
+    } else {
+        markup +=
+            "<div class='live__nothing live__nothing--current fullSchedule__cofeeBreak'>";
+        markup += '<span>No talks for now. Enjoy!</span>';
+        markup += '</div>';
+    }
+
+    markup += "<h1 class='live__when live__when--next'>Previous</h1>";
+
+    if (previousTalks.length > 0) {
+        markup += "<div class='live__talks'>";
+        for (let n = 0; n < previousTalks.length; n++) {
+            markup += talkToTwitterString(previousTalks[n], showTrack, smaller);
+        }
+        markup += '</div>';
+    } else {
+        markup +=
+            "<div class='live__nothing live__nothing--next fullSchedule__cofeeBreak'>";
+        markup += '<span>No previous talks yet!</span>';
+        markup += '</div>';
+    }
+
+    target.innerHTML = markup;
+
+    const titles = document.getElementsByClassName('js-liveTalks__title');
+    for (let title of titles) {
+        $clamp(title, { clamp: 3 });
+    }
+}
+
+window.initLiveTwitter = (tracks, showTrack, globals) => {
+    now = new Date().getTime() + globals.nowOffset;
+    showTalksTwitter(tracks, showTrack);
+    window.setInterval(function() {
+        now = new Date().getTime() + globals.nowOffset;
+        showTalksTwitter(tracks, showTrack);
+    }, 1000);
+
+    window.setInterval(function() {
+        window.location.reload();
+    }, 1000 * 60 * 5);
+};

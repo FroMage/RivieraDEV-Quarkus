@@ -189,4 +189,21 @@
     &__speakers {
         text-shadow: 0 0 2px $color-black;
     }
+
+    &__twitterFlags {
+        display: flex;
+        gap: $space-sm;
+        margin-top: $space-sm;
+        justify-content: center;
+    }
+
+    &__flagLink {
+        font-size: $font-xxl;
+        text-decoration: none;
+    }
+
+    &__speakerTwitter {
+        font-size: 0.85em;
+        opacity: 0.8;
+    }
 }
