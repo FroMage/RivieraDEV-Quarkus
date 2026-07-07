@@ -7,6 +7,7 @@ public enum SponsorShip {
 	Silver			("silver"), 
 	Lunches			("lunches"), 
 	Party			("party"),
+	Coffee			("coffee"),
 	Basic			("basic"),
 	Partner			("partner"),
 	PreviousYears	("previousYears"),
