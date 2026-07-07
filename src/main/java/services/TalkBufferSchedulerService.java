@@ -299,13 +299,7 @@ public class TalkBufferSchedulerService {
         }
     }
 
-    @Transactional
-    public void deleteBufferPost(Long id) throws Exception {
-        BufferPost bp = BufferPost.findById(id);
-        if (bp == null) {
-            throw new RuntimeException("BufferPost not found: " + id);
-        }
-
+    public void cancelBufferApiPosts(BufferPost bp) {
         String mutation = """
                 mutation($input: DeletePostInput!) {
                     deletePost(input: $input) {
@@ -340,6 +334,16 @@ public class TalkBufferSchedulerService {
                 Log.warnf(e, "Error deleting Buffer post %s", postId);
             }
         }
+    }
+
+    @Transactional
+    public void deleteBufferPost(Long id) throws Exception {
+        BufferPost bp = BufferPost.findById(id);
+        if (bp == null) {
+            throw new RuntimeException("BufferPost not found: " + id);
+        }
+
+        cancelBufferApiPosts(bp);
 
         if(bp.sponsor != null)
             bp.sponsor.bufferPost = null;

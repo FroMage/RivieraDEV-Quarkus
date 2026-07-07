@@ -61,7 +61,7 @@ public class Talk extends PanacheEntity implements Comparable<Talk> {
 	// the cfp app id, if imported
     public String importId;
 
-	@OneToOne(mappedBy = "talk")
+	@OneToOne(mappedBy = "talk", cascade = jakarta.persistence.CascadeType.REMOVE)
 	public BufferPost bufferPost;
 
 	// Permet de cacher ce talk dans la page qui liste les talks.

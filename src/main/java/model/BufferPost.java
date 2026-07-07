@@ -1,11 +1,15 @@
 package model;
 
+import io.quarkus.arc.Arc;
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
+import io.quarkus.logging.Log;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.PreRemove;
 import jakarta.validation.constraints.NotBlank;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.validator.constraints.Length;
+import services.TalkBufferSchedulerService;
 
 import java.sql.Types;
 import java.time.Instant;
@@ -36,5 +40,17 @@ public class BufferPost extends PanacheEntity {
 
     public String getFormattedScheduledDate() {
         return scheduledDate != null ? FORMATTER.format(scheduledDate) : "";
+    }
+
+    @PreRemove
+    public void preRemove() {
+        if (scheduledDate != null && scheduledDate.isAfter(Instant.now())) {
+            try {
+                TalkBufferSchedulerService service = Arc.container().instance(TalkBufferSchedulerService.class).get();
+                service.cancelBufferApiPosts(this);
+            } catch (Exception e) {
+                Log.warnf(e, "Failed to cancel Buffer API posts for BufferPost #%d", id);
+            }
+        }
     }
 }
