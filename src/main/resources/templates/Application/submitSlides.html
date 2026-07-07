@@ -1,0 +1,79 @@
+{#include main.html}
+{#title}{m:views.application.submitSlides.title}{/title}
+
+<div class="page__header speakers__header">
+    <h1 class="page__mainTitle">{m:views.application.submitSlides.title}</h1>
+</div>
+
+<div class="page__container notFullWidth">
+    <div class="talkDetails">
+        <div class="talkDetails__header talkDetails__header--{talk.theme ? talk.theme.color.code : 'none'}">
+            <div class="talkDetails__header--title">
+                <div class="talkDetails__micro">
+                    <div class="talkDetails__title">&laquo; {talk.title} &raquo;</div>
+                </div>
+                {#if talk.speakers}
+                <div class="talkDetails__speakers">
+                    {#for speaker in talk.speakers}
+                    <div class="talkDetails__speaker">
+                        <span class="talkDetails__speaker--link">{speaker}</span>
+                    </div>
+                    {/for}
+                </div>
+                {/if}
+            </div>
+            <div class="talkDetails__header--schedule">
+                <div>
+                    {#if talk.slot}
+                        {talk.slot.startDate.format('EEEE d MMMM')} {talk.slot.startDate.format('HH:mm')} - {talk.slot.endDate.format('HH:mm')}
+                    {/if}
+                </div>
+                <div class="talkDetails__track">
+                    {#if talk.track}
+                        {talk.track.title}
+                    {/if}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {#if talk.slidesUrl}
+    <div style="margin: 20px 0; padding: 15px; background: #d4edda; border-radius: 5px;">
+        <p><strong>{m:views.application.submitSlides.current}</strong></p>
+        <p><a href="{talk.slidesUrl}" target="_blank">{talk.slidesUrl}</a></p>
+    </div>
+    {/if}
+
+    <div style="margin: 20px 0;">
+        <p>{m:views.application.submitSlides.advice}</p>
+        <ul>
+            <li><a href="https://docs.google.com/presentation" target="_blank">Google Slides</a></li>
+            <li><a href="https://speakerdeck.com" target="_blank">Speaker Deck</a></li>
+            <li><a href="https://www.slideshare.net" target="_blank">SlideShare</a></li>
+            <li>GitHub / GitLab</li>
+            <li>{m:views.application.submitSlides.advice.other}</li>
+        </ul>
+    </div>
+
+    {#form uri:Application.submitSlidesPost(talk.slidesSecret)}
+        <div style="margin: 20px 0;">
+            <label for="slidesUrl" style="display: block; margin-bottom: 8px; font-weight: bold;">
+                {m:views.application.submitSlides.label}
+            </label>
+            <input type="url" id="slidesUrl" name="slidesUrl" value="{talk.slidesUrl}"
+                   placeholder="https://..."
+                   style="width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 4px;"
+                   required />
+        </div>
+        <div style="margin: 20px 0;">
+            <input type="submit" class="button button--primary" value="{m:views.application.submitSlides.submit}" />
+        </div>
+    {/form}
+
+    <div style="margin: 20px 0;">
+        <p>
+            <a href="{uri:Application.talk(talk.id)}">{m:views.application.submitSlides.checkLink}</a>
+        </p>
+    </div>
+</div>
+{/include}

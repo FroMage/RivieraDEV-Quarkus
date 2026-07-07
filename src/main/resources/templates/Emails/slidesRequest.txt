@@ -1,0 +1,21 @@
+Hi,
+
+Thank you for speaking at Riviera DEV 2026! We hope you enjoyed the conference.
+
+We would love to include a link to your slides for your talk "{talk.title}" on our program page, so that attendees and other interested people can access them.
+
+You can submit your slides URL using this link:
+
+{uriabs:Application.submitSlides(talk.slidesSecret)}
+
+If you haven't uploaded your slides yet, here are some popular options:
+- Google Slides (https://docs.google.com/presentation) - publish to web
+- Speaker Deck (https://speakerdeck.com)
+- SlideShare (https://www.slideshare.net)
+- GitHub / GitLab repository
+- Your personal website or blog
+
+Thank you for helping us make the conference content accessible to everyone!
+
+Best regards,
+The Riviera DEV team

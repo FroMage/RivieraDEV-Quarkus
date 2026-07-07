@@ -4,6 +4,7 @@ import java.sql.Types;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import jakarta.persistence.*;
@@ -56,6 +57,8 @@ public class Talk extends PanacheEntity implements Comparable<Talk> {
 
 	public String slidesUrl;
 
+	public String slidesSecret;
+
 	public Integer nbLikes = 0;
 
 	// the cfp app id, if imported
@@ -76,6 +79,13 @@ public class Talk extends PanacheEntity implements Comparable<Talk> {
 	@ManyToMany
 	public List<Speaker> speakers = new ArrayList<Speaker>();
 	
+    @PrePersist
+    public void generateSlidesSecret() {
+        if (slidesSecret == null) {
+            slidesSecret = UUID.randomUUID().toString();
+        }
+    }
+
     public String getFeedbackUrl() {
     	return Configuration.getFeedbackUrl(id);
     }

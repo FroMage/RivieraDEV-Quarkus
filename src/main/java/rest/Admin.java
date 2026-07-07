@@ -44,6 +44,7 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import email.Emails;
 import model.BreakType;
 import model.BufferPost;
 import model.Language;
@@ -128,6 +129,8 @@ public class Admin extends Controller {
     	public static native TemplateInstance sponsorScheduler(SponsorBufferSchedulerService.SchedulerStatus status, List<BufferPost> posts);
 
     	public static native TemplateInstance sponsorTwitter(Map<SponsorShip, List<Sponsor>> sponsors);
+
+    	public static native TemplateInstance slidesSecrets(List<Talk> talks);
     }
     
     public TemplateInstance uploadProgramForm() {
@@ -475,5 +478,76 @@ public class Admin extends Controller {
     public TemplateInstance sponsorTwitter() {
         Map<SponsorShip, List<Sponsor>> sponsors = Sponsor.getSponsorsToDisplay().getSponsors();
         return Templates.sponsorTwitter(sponsors);
+    }
+
+    public TemplateInstance slidesSecrets() {
+        List<Talk> talks = Talk.list("isBreak = ?1", BreakType.NotABreak);
+        return Templates.slidesSecrets(talks);
+    }
+
+    private String[] speakerEmails(Talk talk) {
+        return talk.speakers.stream()
+            .map(s -> s.email)
+            .filter(e -> e != null && !e.isBlank())
+            .toArray(String[]::new);
+    }
+
+    @POST
+    public void sendSlidesEmails() {
+        List<Talk> talks = Talk.list("isBreak = ?1 AND slidesUrl IS NULL", BreakType.NotABreak);
+        int sent = 0;
+        List<String> errors = new ArrayList<>();
+        for (Talk talk : talks) {
+            String[] emails = speakerEmails(talk);
+            if (emails.length == 0) {
+                continue;
+            }
+            try {
+                Emails.slidesRequest(talk, emails);
+                sent++;
+            } catch (Exception e) {
+                Log.errorf(e, "Failed to send slides email for talk %s", talk.getTitle());
+                errors.add(talk.getTitle() + " <" + String.join(", ", emails) + ">: " + e.getMessage());
+            }
+        }
+        flash("message", "Sent " + sent + " email(s)");
+        if (!errors.isEmpty()) {
+            flash("error", "Failed to send: " + String.join("; ", errors));
+        }
+        slidesSecrets();
+    }
+
+    @POST
+    public void sendTestSlidesEmail(@RestPath Long id) {
+        Talk talk = Talk.findById(id);
+        notFoundIfNull(talk);
+        try {
+            Emails.slidesRequest(talk, "info@rivieradev.fr");
+            flash("message", "Test email sent to info@rivieradev.fr for: " + talk.getTitle());
+        } catch (Exception e) {
+            Log.errorf(e, "Failed to send test slides email for talk %s", talk.getTitle());
+            flash("error", "Failed to send test email: " + e.getMessage());
+        }
+        slidesSecrets();
+    }
+
+    @POST
+    public void sendSlidesEmailForTalk(@RestPath Long id) {
+        Talk talk = Talk.findById(id);
+        notFoundIfNull(talk);
+        String[] emails = speakerEmails(talk);
+        if (emails.length == 0) {
+            flash("error", "No speaker emails for: " + talk.getTitle());
+            slidesSecrets();
+            return;
+        }
+        try {
+            Emails.slidesRequest(talk, emails);
+            flash("message", "Email sent to " + String.join(", ", emails) + " for: " + talk.getTitle());
+        } catch (Exception e) {
+            Log.errorf(e, "Failed to send slides email for talk %s", talk.getTitle());
+            flash("error", "Failed to send email: " + e.getMessage());
+        }
+        slidesSecrets();
     }
 }

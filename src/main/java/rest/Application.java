@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.jboss.resteasy.reactive.RestForm;
 import org.jboss.resteasy.reactive.RestPath;
 import org.jboss.resteasy.reactive.RestQuery;
 import org.jboss.resteasy.reactive.common.jaxrs.AbstractResponseBuilder;
@@ -108,6 +109,8 @@ public class Application extends ControllerWithUser<User> {
 		public static native TemplateInstance liveTwitter(List<Track> tracks, String track, List<Talk> keynotes);
 
 		public static native TemplateInstance schools(SponsorShip sponsorShip, List<Sponsor> sponsors);
+
+		public static native TemplateInstance submitSlides(Talk talk);
 	}
 	
     @TemplateGlobal
@@ -355,6 +358,23 @@ public class Application extends ControllerWithUser<User> {
         notFoundIfNull(talk);
         boolean displayFullSchedule = Configuration.displayFullSchedule();
         return Templates.talk(talk, displayFullSchedule);
+    }
+
+    @Path("/talk/{secret}/submit-slides")
+    public TemplateInstance submitSlides(String secret) {
+        Talk talk = Talk.find("slidesSecret", secret).firstResult();
+        notFoundIfNull(talk);
+        return Templates.submitSlides(talk);
+    }
+
+    @Path("/talk/{secret}/submit-slides")
+    @POST
+    public void submitSlidesPost(String secret, @RestForm String slidesUrl) {
+        Talk talk = Talk.find("slidesSecret", secret).firstResult();
+        notFoundIfNull(talk);
+        talk.slidesUrl = slidesUrl;
+        flash("message", "Slides URL saved successfully!");
+        submitSlides(secret);
     }
 
     @Path("/sponsors")
