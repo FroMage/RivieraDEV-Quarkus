@@ -45,14 +45,7 @@
     {/if}
 
     <div style="margin: 20px 0;">
-        <p>{m:views.application.submitSlides.advice}</p>
-        <ul>
-            <li><a href="https://docs.google.com/presentation" target="_blank">Google Slides</a></li>
-            <li><a href="https://speakerdeck.com" target="_blank">Speaker Deck</a></li>
-            <li><a href="https://www.slideshare.net" target="_blank">SlideShare</a></li>
-            <li>GitHub / GitLab</li>
-            <li>{m:views.application.submitSlides.advice.other}</li>
-        </ul>
+        <p>{m:views.application.submitSlides.intro}</p>
     </div>
 
     {#form uri:Application.submitSlidesPost(talk.slidesSecret)}
@@ -61,7 +54,7 @@
                 {m:views.application.submitSlides.label}
             </label>
             <input type="url" id="slidesUrl" name="slidesUrl" value="{talk.slidesUrl}"
-                   placeholder="https://..."
+                   placeholder="https://speakerdeck.com/you/my-talk"
                    style="width: 100%; padding: 10px; font-size: 16px; border: 1px solid #ccc; border-radius: 4px;"
                    required />
         </div>
