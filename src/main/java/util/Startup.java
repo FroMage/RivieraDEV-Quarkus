@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import model.*;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import io.quarkiverse.renarde.transporter.DatabaseTransporter;
@@ -24,20 +25,6 @@ import io.quarkus.runtime.StartupEvent;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Observes;
 import jakarta.transaction.Transactional;
-import model.Configuration;
-import model.Organiser;
-import model.PreviousSpeaker;
-import model.PricePack;
-import model.PricePackDate;
-import model.Slot;
-import model.Speaker;
-import model.Sponsor;
-import model.Talk;
-import model.TalkTheme;
-import model.TalkType;
-import model.TemporarySlot;
-import model.Track;
-import model.User;
 
 @ApplicationScoped
 public class Startup {
