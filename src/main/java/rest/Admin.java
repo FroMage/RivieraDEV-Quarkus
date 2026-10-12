@@ -267,8 +267,8 @@ public class Admin extends Controller {
                 if (talk == null) {
                     talk = new Talk();
                     talk.descriptionEN = jsonTalk.abstractField;
-                    // bullshit
-                    talk.importId = jsonTalk.title;
+                    // this is what we look the talk up with when importing again
+                    talk.importId = jsonTalk.id;
                     if (jsonTalk.level == null)
                         talk.level = Level.Beginner;
                     else
