@@ -24,7 +24,9 @@ public class AccessControlTest {
             "/Admin/index", "/Admin/uploadProgramForm", "/Admin/speakerEmails", "/Admin/speakerEmailCompany",
             "/Admin/speakerBadges", "/Admin/organiserBadges", "/Admin/sponsorBadges", "/Admin/badgesForm",
             "/Admin/bufferScheduler", "/Admin/sponsorScheduler", "/Admin/sponsorTwitter", "/Admin/slidesSecrets",
-            "/Admin/speakerPhotosZip");
+            "/Admin/speakerPhotosZip",
+            // the schedule of the room duty, linked from the admin index
+            "/excel");
 
     static final List<String> BACKOFFICE_PAGES = List.of(
             "/_renarde/backoffice/index", "/_renarde/backoffice/Talk/index", "/_renarde/backoffice/Speaker/index",

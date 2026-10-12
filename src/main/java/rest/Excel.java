@@ -32,7 +32,9 @@ import model.Talk;
 import model.TalkTheme;
 import model.TalkType;
 import model.Track;
+import io.quarkus.security.Authenticated;
 
+@Authenticated
 public class Excel extends Controller {
 	@Produces("application/vnd.ms-excel")
 	@Path("/excel")
