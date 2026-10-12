@@ -7,12 +7,9 @@ import static org.hamcrest.Matchers.emptyOrNullString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
 
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
 import java.sql.Blob;
 
-import javax.imageio.ImageIO;
 
 import org.junit.jupiter.api.Test;
 
@@ -22,12 +19,11 @@ import io.restassured.response.Response;
 import jakarta.inject.Inject;
 import jakarta.transaction.UserTransaction;
 import model.Banner;
-import model.BreakType;
-import model.Language;
 import model.Speaker;
 import model.Sponsor;
 import model.SponsorShip;
 import model.Talk;
+import testdata.TestData;
 
 @QuarkusTest
 public class BannerCachingTest {
@@ -36,17 +32,6 @@ public class BannerCachingTest {
 
     @Inject
     UserTransaction tx;
-
-    private Talk createTalk() throws Exception {
-        tx.begin();
-        Talk talk = new Talk();
-        talk.titleEN = "Caching banners";
-        talk.isBreak = BreakType.NotABreak;
-        talk.language = Language.EN;
-        talk.persist();
-        tx.commit();
-        return talk;
-    }
 
     private static void assertIsPng(byte[] bytes) {
         assertThat(java.util.Arrays.copyOf(bytes, 4), equalTo(PNG_SIGNATURE));
@@ -87,7 +72,7 @@ public class BannerCachingTest {
 
     @Test
     public void talkBannerIsCacheable() throws Exception {
-        Talk talk = createTalk();
+        Talk talk = TestData.talk();
         String url = "/talk-banner/" + talk.id + "/en.png";
 
         Response first = given().get(url);
@@ -115,9 +100,7 @@ public class BannerCachingTest {
 
         // editing the talk invalidates the cache
         Thread.sleep(1100);
-        tx.begin();
-        Talk.<Talk> findById(talk.id).titleEN = "Changed title";
-        tx.commit();
+        TestData.update(talk, t -> t.titleEN = "Changed title");
         Response changed = given().header("If-None-Match", etag).get(url);
         changed.then().statusCode(200).header("ETag", not(etag));
 
@@ -126,7 +109,7 @@ public class BannerCachingTest {
 
     @Test
     public void renderedBannerIsMemoized() throws Exception {
-        Talk talk = createTalk();
+        Talk talk = TestData.talk();
         String url = "/talk-banner/" + talk.id + "/en.png";
         assertThat(storedBanner(talk, "en"), equalTo(null));
 
@@ -151,9 +134,7 @@ public class BannerCachingTest {
         // without leaving a large object behind
         long largeObjects = largeObjects();
         Thread.sleep(1100);
-        tx.begin();
-        Talk.<Talk> findById(talk.id).titleEN = "Changed title";
-        tx.commit();
+        TestData.update(talk, t -> t.titleEN = "Changed title");
         Response third = given().get(url);
         third.then().statusCode(200).header("ETag", not(first.header("ETag")));
         assertIsPng(third.asByteArray());
@@ -180,18 +161,7 @@ public class BannerCachingTest {
 
     @Test
     public void sponsorBannerIsCacheable() throws Exception {
-        tx.begin();
-        Sponsor sponsor = new Sponsor();
-        sponsor.company = "ACME";
-        sponsor.about = "About";
-        sponsor.aboutEN = "About";
-        BufferedImage logo = new BufferedImage(100, 50, BufferedImage.TYPE_INT_RGB);
-        ByteArrayOutputStream png = new ByteArrayOutputStream();
-        ImageIO.write(logo, "png", png);
-        sponsor.logo = Panache.getSession().getLobHelper().createBlob(png.toByteArray());
-        sponsor.level = SponsorShip.Gold;
-        sponsor.persist();
-        tx.commit();
+        Sponsor sponsor = TestData.sponsor(SponsorShip.Gold);
         String url = "/sponsor-banner/" + sponsor.id + "/en.png";
         Response first = given().get(url);
         first.then().statusCode(200).header("Cache-Control", containsString("max-age=86400"));
@@ -203,16 +173,9 @@ public class BannerCachingTest {
 
     @Test
     public void speakerBannerFollowsItsTalks() throws Exception {
-        Talk talk = createTalk();
-        tx.begin();
-        Speaker speaker = new Speaker();
-        speaker.firstName = "Jane";
-        speaker.lastName = "Doe";
-        speaker.biography = "Bio";
-        speaker.persist();
-        Talk.<Talk> findById(talk.id).speakers.add(speaker);
-        speaker.talks.add(Talk.findById(talk.id));
-        tx.commit();
+        Talk talk = TestData.talk();
+        Speaker speaker = TestData.speaker();
+        TestData.addSpeaker(talk, speaker);
         String url = "/speaker-banner/" + speaker.id + "/en.png";
         Response first = given().get(url);
         first.then().statusCode(200).header("Cache-Control", containsString("max-age=86400"));
@@ -222,9 +185,7 @@ public class BannerCachingTest {
 
         // the banner shows the talk titles
         Thread.sleep(1100);
-        tx.begin();
-        Talk.<Talk> findById(talk.id).titleEN = "Another title";
-        tx.commit();
+        TestData.update(talk, t -> t.titleEN = "Another title");
         given().header("If-None-Match", etag).get(url).then().statusCode(200).header("ETag", not(etag));
     }
 }
