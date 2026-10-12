@@ -240,6 +240,10 @@
                 <native.image.path>${project.build.directory}/${project.build.finalName}-runner</native.image.path>
                 <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
                 <maven.home>${maven.home}</maven.home>
+                <!-- run the executable with the test profile, as the prod one needs the production database and SMTP -->
+                <quarkus.test.integration-test-profile>test</quarkus.test.integration-test-profile>
+                <!-- the memory limit of production, see debian/rivieradev-quarkus-2026.init.d -->
+                <quarkus.test.arg-line>-Xmx512m</quarkus.test.arg-line>
               </systemPropertyVariables>
             </configuration>
           </execution>

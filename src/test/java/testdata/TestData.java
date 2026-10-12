@@ -126,22 +126,34 @@ public class TestData {
     }
 
     public static TalkTheme theme() {
+        return theme(t -> {
+        });
+    }
+
+    public static TalkTheme theme(Consumer<TalkTheme> customiser) {
         int n = next();
         return inTransaction(() -> {
             TalkTheme theme = new TalkTheme();
             theme.theme = "Theme " + n;
             theme.color = TalkThemeColor.Blue;
+            customiser.accept(theme);
             theme.persist();
             return theme;
         });
     }
 
     public static TalkType type() {
+        return type(t -> {
+        });
+    }
+
+    public static TalkType type(Consumer<TalkType> customiser) {
         int n = next();
         return inTransaction(() -> {
             TalkType type = new TalkType();
             type.typeEN = "Type " + n;
             type.typeFR = "Type " + n;
+            customiser.accept(type);
             type.persist();
             return type;
         });

@@ -36,6 +36,28 @@ The default production data source can be configured in `src/main/resources/appl
 You can change this to point to other years such as $YEAR. This will not fetch users, nor speaker emails,
 for confidentiality reasons. This only fetches data which is already public on our website.
 
+## Tests
+
+```shell script
+./mvnw test
+```
+
+Runs the tests on the JVM. They need a container runtime, as the database is started by Dev Services.
+
+The banners are compared with images that we checked by eye, in `src/test/resources/golden`. When a banner changes
+on purpose (template, font, background), record the new ones with `./mvnw test -Dtest=BannerGoldenTest -Dgolden.update=true`,
+look at them, and commit them.
+
+The tests of the native executable (`NativeAppIT`) check that it works, that banners are not rendered again when they
+have not changed, and that many banners requested at once do not exhaust the memory limit of production (`-Xmx512m`).
+They are only run with:
+
+```shell script
+./mvnw verify -Dnative
+```
+
+Use `-Dbanners.per.wave=80 -Dquarkus.test.arg-line=-Xmx1g` to try other numbers of simultaneous banners and memory limits.
+
 ## Packaging for production
 
 The application can be compiled natively using:
