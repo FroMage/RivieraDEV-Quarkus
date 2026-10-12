@@ -377,9 +377,26 @@ public class Application extends ControllerWithUser<User> {
     public void submitSlidesPost(String secret, @RestForm String slidesUrl) {
         Talk talk = Talk.find("slidesSecret", secret).firstResult();
         notFoundIfNull(talk);
-        talk.slidesUrl = slidesUrl;
-        flash("message", "Slides URL saved successfully!");
+        String url = slidesUrl == null ? "" : slidesUrl.trim();
+        if (isWebUrl(url)) {
+            talk.slidesUrl = url;
+            flash("message", "Slides URL saved successfully!");
+        } else {
+            // this is used as the target of a link on the page of the talk, so it must not be a javascript: one
+            flash("message", "Please enter a link starting with http:// or https://");
+        }
         submitSlides(secret);
+    }
+
+    private static boolean isWebUrl(String url) {
+        try {
+            java.net.URI uri = new java.net.URI(url);
+            return uri.getScheme() != null
+                    && (uri.getScheme().equalsIgnoreCase("http") || uri.getScheme().equalsIgnoreCase("https"))
+                    && uri.getHost() != null;
+        } catch (java.net.URISyntaxException e) {
+            return false;
+        }
     }
 
     @Path("/sponsors")
