@@ -105,6 +105,21 @@ public class PublicPagesTest {
     }
 
     @Test
+    public void talkWithoutALevelRenders() {
+        // the level is optional in the backoffice, and the schedule pages must cope with it
+        Talk withoutLevel = TestData.talk(t -> {
+            t.level = null;
+            t.track = track;
+            t.slot = talk.slot;
+        });
+        for (String page : List.of("/schedule", "/schedule-supersecret", "/session/" + withoutLevel.id, "/talks")) {
+            given().get(page).then().statusCode(200);
+        }
+        String schedule = given().get("/schedule-supersecret").then().statusCode(200).extract().asString();
+        assertTrue(schedule.contains(withoutLevel.titleEN), "Talk without a level missing from the schedule");
+    }
+
+    @Test
     public void unknownEntitiesAreNotFound() {
         for (String page : List.of("/speaker/0", "/sponsor/0", "/session/0", "/talk/no-such-secret/submit-slides")) {
             given().get(page).then().statusCode(404);

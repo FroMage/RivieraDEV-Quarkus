@@ -7,7 +7,7 @@
                 js-fullSchedule-talk-item
                 js-talksFilter-item 
                 {#if talk.theme}js-talksFilter-theme-{talk.theme.theme.slugify()}{/if} 
-                js-talksFilter-level-{talk.level.code}
+                {#if talk.level}js-talksFilter-level-{talk.level.code}{/if}
                 {#if talk.type}js-talksFilter-type-{talk.type.toString().slugify()}{/if}
                 js-talksFilter-language-{talk.language.toString().slugify()}">
 
