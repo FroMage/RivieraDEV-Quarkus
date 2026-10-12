@@ -30,6 +30,11 @@ public class Serialiser extends Controller {
 					return null;
 				}
 			}
+			if(entityType == Talk.class) {
+				// whoever has this can submit the slides of the talk, and a new one is generated on import
+				if(fieldName.equals("slidesSecret"))
+					return null;
+			}
 			return value;
 		}, 
 				// FIXME: this could be better, somehow
