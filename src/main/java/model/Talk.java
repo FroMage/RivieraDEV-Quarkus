@@ -1,6 +1,7 @@
 package model;
 
 import java.sql.Types;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -79,12 +80,21 @@ public class Talk extends PanacheEntity implements Comparable<Talk> {
 	@ManyToMany
 	public List<Speaker> speakers = new ArrayList<Speaker>();
 	
+	// used for HTTP caching of the banner
+	public Date lastUpdated;
+
     @PrePersist
-    public void generateSlidesSecret() {
+    public void prePersist() {
         if (slidesSecret == null) {
             slidesSecret = UUID.randomUUID().toString();
         }
+        lastUpdated = Date.from(Instant.now());
     }
+
+	@PreUpdate
+	public void preUpdate() {
+		lastUpdated = Date.from(Instant.now());
+	}
 
     public String getFeedbackUrl() {
     	return Configuration.getFeedbackUrl(id);
