@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.sql.Blob;
 import java.util.Date;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
@@ -16,6 +17,8 @@ import io.quarkus.narayana.jta.QuarkusTransaction;
 import model.BreakType;
 import model.Language;
 import model.Level;
+import model.Organiser;
+import model.PreviousSpeaker;
 import model.Slot;
 import model.Speaker;
 import model.Sponsor;
@@ -181,6 +184,39 @@ public class TestData {
     /** Applies a change to a talk, in its own transaction (and so triggers the lifecycle callbacks) */
     public static void update(Talk talk, Consumer<Talk> change) {
         QuarkusTransaction.requiringNew().run(() -> change.accept(Talk.findById(talk.id)));
+    }
+
+    /** A large object for a photo or logo, to be used in the lambda of one of the methods above */
+    public static Blob blob(byte[] bytes) {
+        return Panache.getSession().getLobHelper().createBlob(bytes);
+    }
+
+    public static PreviousSpeaker previousSpeaker(Consumer<PreviousSpeaker> customiser) {
+        int n = next();
+        return inTransaction(() -> {
+            PreviousSpeaker speaker = new PreviousSpeaker();
+            speaker.firstName = "Previous" + n;
+            speaker.lastName = "Speaker" + n;
+            speaker.company = "Old company " + n;
+            speaker.year = 2025;
+            customiser.accept(speaker);
+            speaker.persist();
+            return speaker;
+        });
+    }
+
+    public static Organiser organiser(Consumer<Organiser> customiser) {
+        int n = next();
+        return inTransaction(() -> {
+            Organiser organiser = new Organiser();
+            organiser.firstName = "Orga" + n;
+            organiser.lastName = "Niser" + n;
+            organiser.biography = "Organises things " + n;
+            organiser.orga = true;
+            customiser.accept(organiser);
+            organiser.persist();
+            return organiser;
+        });
     }
 
     public static byte[] png(int width, int height) {

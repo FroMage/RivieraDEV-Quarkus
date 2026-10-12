@@ -3,6 +3,7 @@ package testdata;
 import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import io.restassured.response.Response;
@@ -24,6 +25,14 @@ public class Login {
                 .formParam("password", TestData.ADMIN_PASSWORD)
                 .post("/_renarde/security/login");
         assertEquals(303, login.statusCode(), "Login should redirect, not show the form again: " + login.asString());
-        return login.cookies();
+        // keep the CSRF token as well, as an admin who posts forms needs it
+        Map<String, String> cookies = new HashMap<>(login.cookies());
+        cookies.put("csrf-token", csrf);
+        return cookies;
+    }
+
+    /** The CSRF token to send, as a cookie and as a form field, with a POST to a public page */
+    public static String csrfToken() {
+        return given().get("/_renarde/security/login").then().statusCode(200).extract().cookie("csrf-token");
     }
 }
