@@ -553,15 +553,16 @@ public class Application extends ControllerWithUser<User> {
 
     @Produces(Pdf.IMAGE_PNG)
     @Path("/speaker-banner/{id}/{language}.png")
-    public TemplateInstance speakerBannerImage(@RestPath Long id, @RestPath String language, Request request) {
+    public Response speakerBannerImage(@RestPath Long id, @RestPath String language, Request request) {
         Speaker speaker = Speaker.findById(id);
         notFoundIfNull(speaker);
         BannerCache.Key key = bannerCache.key("speaker", language).add(speaker);
         // the banner lists the talks of the speaker
         speaker.talks.forEach(key::add);
-        bannerCache.check(request, key);
-        i18n.setForCurrentRequest(language);
-        return Templates.speakerBanner(speaker);
+        return bannerCache.serve(request, speaker, language, key, () -> {
+            i18n.setForCurrentRequest(language);
+            return Templates.speakerBanner(speaker);
+        });
     }
 
     @Path("/sponsor-banner")
@@ -574,12 +575,14 @@ public class Application extends ControllerWithUser<User> {
     
     @Produces(Pdf.IMAGE_PNG)
     @Path("/sponsor-banner/{id}/{language}.png")
-    public TemplateInstance sponsorBannerImage(@RestPath Long id, @RestPath String language, Request request) {
+    public Response sponsorBannerImage(@RestPath Long id, @RestPath String language, Request request) {
         Sponsor sponsor = Sponsor.findById(id);
         notFoundIfNull(sponsor);
-        bannerCache.check(request, bannerCache.key("sponsor", language).add(sponsor));
-        i18n.setForCurrentRequest(language);
-        return Templates.sponsorBanner(sponsor);
+        BannerCache.Key key = bannerCache.key("sponsor", language).add(sponsor);
+        return bannerCache.serve(request, sponsor, language, key, () -> {
+            i18n.setForCurrentRequest(language);
+            return Templates.sponsorBanner(sponsor);
+        });
     }
 
     @Path("/talk-banner")
@@ -592,15 +595,16 @@ public class Application extends ControllerWithUser<User> {
 
     @Produces(Pdf.IMAGE_PNG)
     @Path("/talk-banner/{id}/{language}.png")
-    public TemplateInstance talkBannerImage(@RestPath Long id, @RestPath String language, Request request) {
+    public Response talkBannerImage(@RestPath Long id, @RestPath String language, Request request) {
         Talk talk = Talk.findById(id);
         notFoundIfNull(talk);
         BannerCache.Key key = bannerCache.key("talk", language).add(talk);
         // the banner shows the speakers of the talk
         talk.speakers.forEach(key::add);
-        bannerCache.check(request, key);
-        i18n.setForCurrentRequest(language);
-        return Templates.talkBanner(talk);
+        return bannerCache.serve(request, talk, language, key, () -> {
+            i18n.setForCurrentRequest(language);
+            return Templates.talkBanner(talk);
+        });
     }
 
 }
