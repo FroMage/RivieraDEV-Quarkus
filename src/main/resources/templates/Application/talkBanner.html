@@ -100,6 +100,9 @@
             position: absolute;
             color: #f5ede7;
             text-align: center;
+            /* The width of the whitespace between the speakers is the one of the default font of the machine that
+               renders the banner, so it is removed, and the gap is set below: it must not depend on the machine. */
+            font-size: 0;
         }
 
         .speakers--1 {
@@ -124,6 +127,11 @@
 
         .speaker {
             display: inline-block;
+            /* the default size, as the font size of .speakers is 0 */
+            font-size: 16px;
+        }
+        .speaker + .speaker {
+            margin-left: 5px;
         }
 
         .speaker--1 {
