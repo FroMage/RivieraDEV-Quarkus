@@ -60,4 +60,71 @@ public class ImagesTest {
         assertEquals(Double.POSITIVE_INFINITY, Images.difference(a, b));
         assertEquals("the size is 120x60 instead of 100x60", Images.describeDifferences(a, b));
     }
+
+    /** Strokes like the ones of text, which a machine can draw a pixel away from where another one does */
+    private static byte[] strokes(int shift) throws Exception {
+        BufferedImage image = new BufferedImage(320, 160, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g = image.createGraphics();
+        g.setColor(Color.WHITE);
+        g.fillRect(0, 0, 320, 160);
+        g.setColor(Color.BLACK);
+        for (int x = 20; x < 300; x += 4) {
+            g.fillRect(x + shift, 30, 1, 100);
+        }
+        g.dispose();
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        ImageIO.write(image, "png", out);
+        return out.toByteArray();
+    }
+
+    @Test
+    public void glyphsDrawnAPixelAwayAreTheSameImage() throws Exception {
+        byte[] a = strokes(0);
+        byte[] b = strokes(1);
+        // they differ pixel by pixel, a lot...
+        assertTrue(Images.difference(a, b) > 20, "" + Images.difference(a, b));
+        // ...but not when looking at blocks
+        assertTrue(Images.coarseDifference(a, b).within(Images.TOLERANCE, Images.LOCAL_TOLERANCE),
+                Images.coarseDifference(a, b).toString());
+    }
+
+    @Test
+    public void aMovedImageIsNotTheSameImage() throws Exception {
+        // 300x100 block, moved by 12 pixels (more than the gap between speakers that we had to fix)
+        byte[] a = block(0);
+        byte[] b = block(12);
+        assertTrue(!Images.coarseDifference(a, b).within(Images.TOLERANCE, Images.LOCAL_TOLERANCE),
+                Images.coarseDifference(a, b).toString());
+    }
+
+    @Test
+    public void aMissingElementIsNotTheSameImage() throws Exception {
+        byte[] a = image(400, 200, Color.WHITE, null, 0, 0);
+        // a block of text-sized stripes that is not there any more
+        byte[] b = strokes(0);
+        BufferedImage bigger = new BufferedImage(320, 160, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g = bigger.createGraphics();
+        g.setColor(Color.WHITE);
+        g.fillRect(0, 0, 320, 160);
+        g.dispose();
+        ByteArrayOutputStream blank = new ByteArrayOutputStream();
+        ImageIO.write(bigger, "png", blank);
+        assertTrue(!Images.coarseDifference(b, blank.toByteArray()).within(Images.TOLERANCE, Images.LOCAL_TOLERANCE),
+                Images.coarseDifference(b, blank.toByteArray()).toString());
+        // and a different size is always different
+        assertEquals(Double.POSITIVE_INFINITY, Images.coarseDifference(a, b).rootMeanSquare());
+    }
+
+    private static byte[] block(int shift) throws Exception {
+        BufferedImage image = new BufferedImage(400, 200, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g = image.createGraphics();
+        g.setColor(Color.WHITE);
+        g.fillRect(0, 0, 400, 200);
+        g.setColor(new Color(0x011f47));
+        g.fillRect(40 + shift, 50, 300, 100);
+        g.dispose();
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        ImageIO.write(image, "png", out);
+        return out.toByteArray();
+    }
 }

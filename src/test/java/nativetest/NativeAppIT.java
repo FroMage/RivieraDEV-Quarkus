@@ -33,12 +33,6 @@ import testdata.Images;
 @QuarkusIntegrationTest
 public class NativeAppIT implements DevServicesContext.ContextAware {
 
-    /**
-     * The golden images were recorded on the JVM, the native executable renders with the same code but not exactly
-     * the same fonts rendering.
-     */
-    static final double TOLERANCE = 4.0;
-
     private DevServicesContext context;
 
     @Override
@@ -95,12 +89,10 @@ public class NativeAppIT implements DevServicesContext.ContextAware {
     public void bannersLookLikeTheGoldenOnes() {
         try (Seeder seeder = seeder()) {
             Fixture fixture = goldenFixture(seeder);
-            Images.assertLooksLike("talk-banner-en", png("/talk-banner/" + fixture.talk() + "/en.png"), TOLERANCE);
-            Images.assertLooksLike("talk-banner-fr", png("/talk-banner/" + fixture.talk() + "/fr.png"), TOLERANCE);
-            Images.assertLooksLike("speaker-banner-en", png("/speaker-banner/" + fixture.speaker() + "/en.png"),
-                    TOLERANCE);
-            Images.assertLooksLike("sponsor-banner-en", png("/sponsor-banner/" + fixture.sponsor() + "/en.png"),
-                    TOLERANCE);
+            Images.assertLooksLike("talk-banner-en", png("/talk-banner/" + fixture.talk() + "/en.png"));
+            Images.assertLooksLike("talk-banner-fr", png("/talk-banner/" + fixture.talk() + "/fr.png"));
+            Images.assertLooksLike("speaker-banner-en", png("/speaker-banner/" + fixture.speaker() + "/en.png"));
+            Images.assertLooksLike("sponsor-banner-en", png("/sponsor-banner/" + fixture.sponsor() + "/en.png"));
         }
     }
 

@@ -11,15 +11,13 @@ import testdata.Images;
 
 /**
  * Renders the banners for a fixed talk, speaker and sponsor and compares them with images we checked by eye, so that
- * we notice when a template, a font, a background or the renderer changes how they look.
+ * we notice when a template, a font, a background or the renderer changes how they look. The comparison ignores how
+ * machines draw the strokes of the glyphs, see {@link Images}.
  *
  * When it changes on purpose, record the new ones with -Dgolden.update=true (and look at them).
  */
 @QuarkusTest
 public class BannerGoldenTest {
-
-    /** The same machine renders the same pixels, but allow for a different JDK or fonts to move a few of them */
-    static final double TOLERANCE = 2.0;
 
     static GoldenFixture.Ids ids;
 
@@ -34,21 +32,21 @@ public class BannerGoldenTest {
 
     @Test
     public void talkBannerInEnglish() {
-        Images.assertLooksLike("talk-banner-en", banner("/talk-banner/" + ids.talk() + "/en.png"), TOLERANCE);
+        Images.assertLooksLike("talk-banner-en", banner("/talk-banner/" + ids.talk() + "/en.png"));
     }
 
     @Test
     public void talkBannerInFrench() {
-        Images.assertLooksLike("talk-banner-fr", banner("/talk-banner/" + ids.talk() + "/fr.png"), TOLERANCE);
+        Images.assertLooksLike("talk-banner-fr", banner("/talk-banner/" + ids.talk() + "/fr.png"));
     }
 
     @Test
     public void speakerBanner() {
-        Images.assertLooksLike("speaker-banner-en", banner("/speaker-banner/" + ids.speaker() + "/en.png"), TOLERANCE);
+        Images.assertLooksLike("speaker-banner-en", banner("/speaker-banner/" + ids.speaker() + "/en.png"));
     }
 
     @Test
     public void sponsorBanner() {
-        Images.assertLooksLike("sponsor-banner-en", banner("/sponsor-banner/" + ids.sponsor() + "/en.png"), TOLERANCE);
+        Images.assertLooksLike("sponsor-banner-en", banner("/sponsor-banner/" + ids.sponsor() + "/en.png"));
     }
 }

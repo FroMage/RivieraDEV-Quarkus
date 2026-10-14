@@ -17,6 +17,11 @@ import javax.imageio.ImageIO;
 /**
  * Comparison of rendered images with the ones we expect ("golden" images, in src/test/resources/golden).
  *
+ * Machines do not rasterise text the same way (hinting, anti-aliasing, the FreeType they use), which moves pixels of
+ * the glyphs around, so the images are compared by the average colour of blocks of {@link #BLOCK} x {@link #BLOCK}
+ * pixels. That ignores how the strokes of the letters are drawn, but still notices when a font, an image, the layout or
+ * a text changes.
+ *
  * To record the expected image of something that changed on purpose, run the test with -Dgolden.update=true,
  * then look at the result and commit it.
  */
@@ -24,6 +29,62 @@ public class Images {
 
     private static final Path GOLDEN_DIRECTORY = Path.of("src/test/resources/golden");
     private static final Path DIFFERENCES_DIRECTORY = Path.of("target/golden-differences");
+
+    /** Size of the blocks whose average colour is compared */
+    public static final int BLOCK = 16;
+
+    /** The largest root mean square difference of the average colours of the blocks, from 0 to 255 */
+    public static final double TOLERANCE = 3.5;
+
+    /** The largest difference of the average colour of any block, from 0 to 255: a missing word or image is more */
+    public static final double LOCAL_TOLERANCE = 45;
+
+    /** How much two images differ when compared by blocks, see {@link #BLOCK} */
+    public record Coarse(double rootMeanSquare, double largestBlock) {
+        public boolean within(double tolerance, double localTolerance) {
+            return rootMeanSquare <= tolerance && largestBlock <= localTolerance;
+        }
+    }
+
+    public static Coarse coarseDifference(byte[] expected, byte[] actual) {
+        BufferedImage a = read(expected);
+        BufferedImage b = read(actual);
+        if (a.getWidth() != b.getWidth() || a.getHeight() != b.getHeight()) {
+            return new Coarse(Double.POSITIVE_INFINITY, Double.POSITIVE_INFINITY);
+        }
+        int blocksX = a.getWidth() / BLOCK;
+        int blocksY = a.getHeight() / BLOCK;
+        double sum = 0;
+        double largest = 0;
+        for (int by = 0; by < blocksY; by++) {
+            for (int bx = 0; bx < blocksX; bx++) {
+                double[] meanA = mean(a, bx * BLOCK, by * BLOCK);
+                double[] meanB = mean(b, bx * BLOCK, by * BLOCK);
+                for (int channel = 0; channel < 3; channel++) {
+                    double d = Math.abs(meanA[channel] - meanB[channel]);
+                    sum += d * d;
+                    largest = Math.max(largest, d);
+                }
+            }
+        }
+        return new Coarse(Math.sqrt(sum / (3.0 * blocksX * blocksY)), largest);
+    }
+
+    private static double[] mean(BufferedImage image, int x0, int y0) {
+        double[] sum = new double[3];
+        for (int y = y0; y < y0 + BLOCK; y++) {
+            for (int x = x0; x < x0 + BLOCK; x++) {
+                int p = image.getRGB(x, y);
+                sum[0] += (p >> 16) & 255;
+                sum[1] += (p >> 8) & 255;
+                sum[2] += p & 255;
+            }
+        }
+        for (int channel = 0; channel < 3; channel++) {
+            sum[channel] /= BLOCK * BLOCK;
+        }
+        return sum;
+    }
 
     /** Root mean square difference of the colour channels, from 0 (identical) to 255 */
     public static double difference(byte[] expected, byte[] actual) {
@@ -47,11 +108,13 @@ public class Images {
     }
 
     /**
-     * Checks that an image looks like the golden one of that name.
-     *
-     * @param tolerance the largest difference that we accept, see {@link #difference}
+     * Checks that an image looks like the golden one of that name, see {@link #BLOCK}.
      */
-    public static void assertLooksLike(String name, byte[] actual, double tolerance) {
+    public static void assertLooksLike(String name, byte[] actual) {
+        assertLooksLike(name, actual, TOLERANCE, LOCAL_TOLERANCE);
+    }
+
+    public static void assertLooksLike(String name, byte[] actual, double tolerance, double localTolerance) {
         Path golden = GOLDEN_DIRECTORY.resolve(name + ".png");
         try {
             if (Boolean.getBoolean("golden.update")) {
@@ -64,15 +127,17 @@ public class Images {
                 assertNotNull(in, "No golden image for " + name + ": run with -Dgolden.update=true to record it");
                 expected = in.readAllBytes();
             }
-            double difference = difference(expected, actual);
-            if (difference > tolerance) {
+            Coarse coarse = coarseDifference(expected, actual);
+            if (!coarse.within(tolerance, localTolerance)) {
                 Files.createDirectories(DIFFERENCES_DIRECTORY);
                 Files.write(DIFFERENCES_DIRECTORY.resolve(name + ".png"), actual);
                 Files.write(DIFFERENCES_DIRECTORY.resolve(name + "-expected.png"), expected);
                 Files.write(DIFFERENCES_DIRECTORY.resolve(name + "-differences.png"), differencesImage(expected, actual));
-                fail("Image " + name + " differs from the golden one by " + difference + " (more than " + tolerance
-                        + "): " + describeDifferences(expected, actual) + ". Look at " + name + ".png (what we got), "
-                        + name + "-expected.png and " + name + "-differences.png in " + DIFFERENCES_DIRECTORY);
+                fail("Image " + name + " differs from the golden one: by " + coarse.rootMeanSquare() + " on average (at most "
+                        + tolerance + ") and by " + coarse.largestBlock() + " in the worst " + BLOCK + "x" + BLOCK
+                        + " block (at most " + localTolerance + "); " + describeDifferences(expected, actual)
+                        + ". Look at " + name + ".png (what we got), " + name + "-expected.png and " + name
+                        + "-differences.png in " + DIFFERENCES_DIRECTORY);
             }
         } catch (IOException e) {
             throw new UncheckedIOException(e);
