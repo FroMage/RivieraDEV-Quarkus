@@ -21,3 +21,10 @@ jobs:
           cache: maven
       - name: Build
         run: ./mvnw verify -B
+      - name: Upload golden banner differences
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: golden-differences
+          path: target/golden-differences
+          if-no-files-found: ignore
