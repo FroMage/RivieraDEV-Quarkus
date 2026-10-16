@@ -68,6 +68,9 @@
             font-family: 'Humant', sans-serif;
             text-transform: uppercase;
             font-size: 50px;
+            /* not "normal": that comes from the metrics of the font, which the machine that renders the banner
+               reads differently (1.2 on the CI), moving everything below the title */
+            line-height: 69px;
             margin: 0;
         }
 
@@ -215,6 +218,7 @@
             font-family: 'Humant', sans-serif;
             text-transform: uppercase;
             font-size: 25px;
+            line-height: 34.5px;
         }
 
         .speaker__company {
